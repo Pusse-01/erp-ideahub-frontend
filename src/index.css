@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.drawer-content-custom{
+  @apply drawer-content flex flex-col items-center justify-center
+}
+
+.rdp{
+  margin: 0px !important;
+  --rdp-cell-size: 40px
+}
+.grid-cols-14{
+  grid-template-columns: repeat(13, minmax(0, 1fr));
+}
+
+.grid-cols-16{
+  grid-template-columns: repeat(16, minmax(0, 1fr));
+}
+
+.col-span-16 {
+  grid-column: span 16 / span 16;
+}
+
+.container{
+  min-width: 100vw;
+  /* min-height: 80vh; */
+}
+
+.collapse-title, :where(.collapse > input[type="checkbox"]), :where(.collapse > input[type="radio"]) {
+  min-height: 45px;
+}
+
+body, html { 
+  font-family: 'Inter', sans-serif;
+  margin:0;
+  padding:0;
+  background: #ffffff;  
+}
+
+.multiselect{
+  /* height: 32px !important; */
+}
+
+.dropdown-container{
+  height: 32px !important;
+  background-color:#F2F3F5 !important;
+  border-radius: 5px;
+  font-size: 14px;
+  border-width: 0 !important; 
+}
+
+.f9{
+  background-color: #f9f9f9;
+}
+
+.active-link{
+  /* background-color: #f7f6fc; */
+  background-color: #5C4EC90D;
+  color: #5c4ec9 !important;
+}
+
+.active-icon {
+  filter: brightness(0) saturate(100%) invert(36%) sepia(63%) saturate(5466%) hue-rotate(237deg) brightness(84%) contrast(85%);
+}
+
+.active-tab{
+  color: #5c4ec9;
+  border-color:  #5c4ec9;
+}
+
+.svg-icon {
+  /* filter: brightness(0) saturate(100%) invert(36%) sepia(63%) saturate(5466%) hue-rotate(237deg) brightness(84%) contrast(85%); */
+}
+
+.input{
+  padding-left: 2px;
+}
+
+.login-icon-container{
+  /* background: linear-gradient(217.64deg, #9181F4 -5.84%, #5038ED 106.73%) */
+  background-image: url('./resources/Rectangle 4.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.login-icon-container-2{
+  width: 30vw;
+  height:68vh;
+  background: rgba(255, 255, 255, 0.21);
+  border: 1px solid rgba(255, 255, 255, 0.52);
+  backdrop-filter: blur(6.8px);
+  /* Note: backdrop-filter has minimal browser support */
+  border-radius: 46px;
+}
+
+.circle-x{
+  transform: translate(50%, 50%);
+
+}
+
+.login-btn{
+  background: linear-gradient(99.78deg, #9181F4 -5.85%, #5038ED 109.55%)
+}
+
+.login-container{
+
+font-style: normal;
+font-weight: 700;
+font-size: 30px;
+line-height: 45px;
+
+}
+
+.drawer-side{
+  height: fit-content;
+}
+
+.toggle:disabled {
+  background-color: black !important;
+  opacity: 0.6;
+}
