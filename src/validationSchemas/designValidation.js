@@ -7,16 +7,22 @@ const fileJsonNamesSchema = Joi.object({
   itemname: Joi.string().required().messages({
     'any.required': 'itemname is required.',
     'string.base': 'itemname must be a string.',
-    "string.empty": "itemname should not be empty",
+    'string.empty': 'itemname should not be empty',
   }),
   comment: Joi.string().required().messages({
     'any.required': 'comment is required.',
     'string.base': 'comment must be a string.',
-    "string.empty": "comment should not be empty",
-  })
+    'string.empty': 'comment should not be empty',
+  }),
+  containername: Joi.string().messages({
+    'string.base': 'containername must be a string.',
+  }),
+  blobname: Joi.string().messages({
+    'string.base': 'blobname must be a string.',
+  }),
 });
 
- const designSchema = Joi.object({
+const designSchema = Joi.object({
   date: Joi.date().messages({
     'any.required': 'Date is required.',
     'date.base': 'Date must be a valid date.',
@@ -28,7 +34,7 @@ const fileJsonNamesSchema = Joi.object({
   sitemeaurements: Joi.boolean().required().messages({
     'any.required': 'SiteMeaurements is required.',
   }),
-  inquiry_no:Joi.number().integer().required().messages({
+  inquiry_no: Joi.number().integer().required().messages({
     'any.required': 'inquiry_no is required.',
   }),
   vname: Joi.string().required().messages({
@@ -40,8 +46,5 @@ const fileJsonNamesSchema = Joi.object({
     'array.min': 'At least one file entry is required.',
   }),
 });
-
-
-
 
 export default designSchema;

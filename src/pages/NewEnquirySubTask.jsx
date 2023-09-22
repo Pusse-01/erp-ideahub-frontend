@@ -1,21 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate, Link, useParams } from "react-router-dom";
-import { toast } from "react-toastify";
-import {
-  reset,
-  createEnquiry,
-  getEnquiryIDs,
-  getEnquiryByID,
-} from "../features/enquiries/enquirySlice";
-import Spinner from "../components/Spinner";
-import BackButton from "../components/BackButton";
-import { getJob } from "../features/jobs/jobSlice";
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate, Link, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { reset, createEnquiry, getEnquiryIDs, getEnquiryByID } from '../features/enquiries/enquirySlice';
+import Spinner from '../components/Spinner';
+import BackButton from '../components/BackButton';
+import { getJob } from '../features/jobs/jobSlice';
 
 function NewEnquiry() {
   const { user } = useSelector((state) => state.auth);
 
-  const { isLoading, isError, isSuccess, message, enquiry, createEnquiryIsSuccess, createEnquiryIsError} = useSelector(
+  const { isLoading, isError, isSuccess, message, enquiry, createEnquiryIsSuccess, createEnquiryIsError } = useSelector(
     (state) => state.enquiry
   );
 
@@ -31,30 +26,29 @@ function NewEnquiry() {
 
   const { jobId } = useParams();
 
-  const [client_name, setClient_name] = useState("");
-  const [project_name, setProject_name] = useState("");
-  const [contactNo, setContactNo] = useState("");
-  const [IHT_Member, setIHT_Member] = useState("");
-  const [Brief, setBrief] = useState("");
+  const [client_name, setClient_name] = useState('');
+  const [project_name, setProject_name] = useState('');
+  const [contactNo, setContactNo] = useState('');
+  const [IHT_Member, setIHT_Member] = useState('');
+  const [Brief, setBrief] = useState('');
   const [site_visit, setSite_visit] = useState(false);
 
   const [sub_task, setSub_task] = useState(true);
-  const [status, setStatus] = useState("Pending");
+  const [status, setStatus] = useState('Pending');
 
-  console.log("subtask " + sub_task);
+  console.log('subtask ' + sub_task);
 
   useEffect(() => {
-  
     if (isError) {
       toast.error(message);
-    }else if(createEnquiryIsError) {
+    } else if (createEnquiryIsError) {
       toast.error(message);
     }
 
     if (createEnquiryIsSuccess) {
-      toast.success('Enquiry Added!')
+      toast.success('Enquiry Added!');
       dispatch(reset());
-      navigate("/enquiries");
+      navigate('/enquiries');
     }
 
     dispatch(reset());
@@ -77,11 +71,11 @@ function NewEnquiry() {
   }, [job]);
 
   useEffect(() => {
-      if(sub_task)
-      {setClient_name(enquiry.client_name);
+    if (sub_task) {
+      setClient_name(enquiry.client_name);
       setContactNo(enquiry.contact_no);
-      setIHT_Member(enquiry.iht_member)}
-
+      setIHT_Member(enquiry.iht_member);
+    }
   }, [enquiry]);
 
   const onSubmit = (e) => {
@@ -110,9 +104,7 @@ function NewEnquiry() {
       <div className=" inline-block bg-white mt-5 w-[92%] p-5">
         <div className=" float-left">
           <h1 className="font-bold ">Add Job Enquiry</h1>
-          <p className="text-xs">
-            Add an enquiry for sub task
-          </p>
+          <p className="text-xs">Add an enquiry for sub task</p>
         </div>
         {/* <Link
           to="/new-job"
@@ -131,14 +123,14 @@ function NewEnquiry() {
         </Link> */}
         <div className="float-right">
           {/* <button className="btn login-btn btn-sm bg-[#5c4ec9] text-white hover:bg-[#4b3bc2]">Create Job</button> */}
-          <Link  to={`/job/${job.job_no}/add-subtask`} className="font-medium">
+          <Link to={`/job/${job.job_no}/add-subtask`} className="font-medium">
             <button
               type="button"
               className="btn h-[40px] btn-sm bg-[#5c4ec9] text-white hover:bg-[#4b3bc2] text-sm normal-case font-medium m-1 min-w-[128px]"
             >
               Create Sub Task
               <img
-                src={require("../resources/ic_round-keyboard-arrow-right.png")}
+                src={require('../resources/ic_round-keyboard-arrow-right.png')}
                 className=" justify-center items-center"
               />
             </button>
@@ -223,9 +215,7 @@ function NewEnquiry() {
             </p>
           </div>
           <div className="col-span-1">
-            <label class="cursor-pointer label text-xs">
-              Site visit required
-            </label>
+            <label class="cursor-pointer label text-xs">Site visit required</label>
             <input
               type="checkbox"
               class="toggle toggle-primary toggle-xs ml-1"
@@ -236,9 +226,7 @@ function NewEnquiry() {
           </div>
           <div className="col-span-2 inline-block">
             <div className="float-right">
-              <button className="btn btn-sm m-1 text-sm normal-case font-medium">
-                Cancel
-              </button>
+              <button className="btn btn-sm m-1 text-sm normal-case font-medium">Cancel</button>
               <button
                 className="btn btn-sm bg-blue-700 hover:bg-blue-800 text-white ml-1 submit text-sm normal-case font-medium"
                 onClick={onSubmit}

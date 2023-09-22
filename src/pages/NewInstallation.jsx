@@ -1,19 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import {
-  getJobIDs,
-  getJob,
-} from "../features/jobs/jobSlice";
-import Spinner from "../components/Spinner";
-import BackButton from "../components/BackButton";
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { getJobIDs, getJob, GetJobIdsQCExists } from '../features/jobs/jobSlice';
+import Spinner from '../components/Spinner';
+import BackButton from '../components/BackButton';
 
-import { format } from "date-fns";
-import { DayPicker } from "react-day-picker";
-import "react-day-picker/dist/style.css";
-import { createInstallation, reset as installationReset } from "../features/installations/installationSlice";
-import { installationSchema } from "../validationSchemas/installationSchema";
+import { format } from 'date-fns';
+import { DayPicker } from 'react-day-picker';
+import 'react-day-picker/dist/style.css';
+import { createInstallation, reset as installationReset } from '../features/installations/installationSlice';
+import { installationSchema } from '../validationSchemas/installationSchema';
 
 function NewInstallation() {
   const { user } = useSelector((state) => state.auth);
@@ -38,30 +35,29 @@ function NewInstallation() {
   const [index_no, setIndex_no] = useState(1);
   const [job_no, setJob_no] = useState('');
 
-  const [client_name, setClient_name] = useState("");
+  const [client_name, setClient_name] = useState('');
   const [description, setDescription] = useState('');
-  const [feedback, setFeedback] = useState("");
+  const [feedback, setFeedback] = useState('');
 
   const [installation_date, setInstallation_date] = useState(null);
   const [installation_dateIsRendered, setInstallation_dateIsRendered] = useState(false);
 
-    const [selectedFiles, setSelectedFiles] = useState([]);
-    const [fileDataArr, setFileDataArr] = useState([]);
-
+  const [selectedFiles, setSelectedFiles] = useState([]);
+  const [fileDataArr, setFileDataArr] = useState([]);
 
   const dayPickerStyles = {
-    caption: { position: "relative" }, // Center the caption text
-    caption_label: { left: "90px", fontWeight: "500", color: "#4e5969" },
+    caption: { position: 'relative' }, // Center the caption text
+    caption_label: { left: '90px', fontWeight: '500', color: '#4e5969' },
     nav_button_previous: {
-      position: "absolute",
-      left: "2px",
-      color: "#4e5969",
+      position: 'absolute',
+      left: '2px',
+      color: '#4e5969',
     }, // Position the previous button on the left
-    nav_button_next: { color: "#4e5969" }, // Position the next button on the right
-    head: { color: "#86909c" },
-    nav_icon: { height: "10px" },
-    row: { border: "2 px" },
-    day: { color: "#272e3b" },
+    nav_button_next: { color: '#4e5969' }, // Position the next button on the right
+    head: { color: '#86909c' },
+    nav_icon: { height: '10px' },
+    row: { border: '2 px' },
+    day: { color: '#272e3b' },
     // selected: {
     //   backgroundColor: 'red !important',
     //   // Add other styles as needed
@@ -74,28 +70,23 @@ function NewInstallation() {
     }
 
     if (createInstallationIsSuccess) {
-      toast.success("Installation Added!");
+      toast.success('Installation Added!');
       dispatch(installationReset());
-      setJob_no('')
-      setClient_name('')
-      setDescription('')
-      setFeedback('')
-      setInstallation_date(null)
-      setSelectedFiles([])
-      setFileDataArr([])
+      setJob_no('');
+      setClient_name('');
+      setDescription('');
+      setFeedback('');
+      setInstallation_date(null);
+      setSelectedFiles([]);
+      setFileDataArr([]);
     }
 
     dispatch(installationReset());
-  }, [
-    createInstallationIsError,
-    dispatch,
-    createInstallationIsSuccess,
-    navigate,
-    installationMessage,
-  ]);
+  }, [createInstallationIsError, dispatch, createInstallationIsSuccess, navigate, installationMessage]);
 
   useEffect(() => {
-    dispatch(getJobIDs());
+    // dispatch(getJobIDs());
+    dispatch(GetJobIdsQCExists());
   }, []);
 
   useEffect(() => {
@@ -107,26 +98,25 @@ function NewInstallation() {
   const onSubmit = (e) => {
     e.preventDefault();
 
-  const installationData = {
+    const installationData = {
       index_no,
-      //created_date, 
+      //created_date,
       installation_date,
       job_no,
       description,
       feedback,
       client_name,
-      files: fileDataArr
+      files: fileDataArr,
+    };
+
+    const { error } = installationSchema.validate(installationData);
+    if (error) {
+      toast.error(error.message);
+      return null;
+    }
+
+    dispatch(createInstallation({ installationData, selectedFiles }));
   };
-
-  const { error } = installationSchema.validate(installationData);
-        if (error) {
-          toast.error(error.message);
-          return null; 
-        }
-      
-  dispatch(createInstallation({installationData, selectedFiles}))
-
-  }
 
   if (jobIsLoading) {
     return <Spinner />;
@@ -143,32 +133,27 @@ function NewInstallation() {
   };
 
   const onJobIDSelect = (jobID) => {
-    setJob_no(jobID)
+    setJob_no(jobID);
     dispatch(getJob(jobID));
   };
 
- // Function to handle file selection
- const handleFileSelect = (event) => {
+  // Function to handle file selection
+  const handleFileSelect = (event) => {
     const files = event.target.files;
     const allowedTypes = ['image/jpeg', 'image/png'];
 
-    const selectedValidFiles = Array.from(files).filter((file) =>
-      allowedTypes.includes(file.type)
-    );
+    const selectedValidFiles = Array.from(files).filter((file) => allowedTypes.includes(file.type));
 
-    setSelectedFiles((prevSelectedFiles) => [
-      ...prevSelectedFiles,
-      ...selectedValidFiles,
-    ]);
+    setSelectedFiles((prevSelectedFiles) => [...prevSelectedFiles, ...selectedValidFiles]);
 
-    const fileData = selectedValidFiles.map((file)=>{
+    const fileData = selectedValidFiles.map((file) => {
       return {
         containerName: file.name,
-        blobName: file.name
-      }
-    })
+        blobName: file.name,
+      };
+    });
 
-    setFileDataArr((preFileData)=>[...preFileData, ...fileData])
+    setFileDataArr((preFileData) => [...preFileData, ...fileData]);
   };
 
   // Function to handle file drop and prevent default behavior
@@ -177,14 +162,9 @@ function NewInstallation() {
     const files = event.dataTransfer.files;
     const allowedTypes = ['image/jpeg', 'image/png'];
 
-    const droppedValidFiles = Array.from(files).filter((file) =>
-      allowedTypes.includes(file.type)
-    );
+    const droppedValidFiles = Array.from(files).filter((file) => allowedTypes.includes(file.type));
 
-    setSelectedFiles((prevSelectedFiles) => [
-      ...prevSelectedFiles,
-      ...droppedValidFiles,
-    ]);
+    setSelectedFiles((prevSelectedFiles) => [...prevSelectedFiles, ...droppedValidFiles]);
   };
 
   // Function to handle click on the drop area (trigger file input click)
@@ -248,9 +228,7 @@ function NewInstallation() {
                 value={job_no}
                 className="select select-sm w-full px-2 outline-none text-gray-600 bg-[#F2F3F5] rounded font-normal"
               >
-                <option value="">
-                  Select a job ID
-                </option>
+                <option value="">Select a job ID</option>
                 {jobIDs.length > 0
                   ? jobIDs.map((jobID) => (
                       <>
@@ -263,9 +241,7 @@ function NewInstallation() {
           </div>
 
           <div className="col-span-2 col-start-1 inline relative row-start-4">
-            <label className="cursor-pointer label text-xs">
-              Installation Date
-            </label>
+            <label className="cursor-pointer label text-xs">Installation Date</label>
 
             <div className="flex flex-col">
               <div className="mx-auto my-auto w-full sm:w-full md:w-full">
@@ -274,19 +250,12 @@ function NewInstallation() {
                     className=" py-2 w-full px-2 outline-none text-gray-600 bg-[#F2F3F5] rounded"
                     type="text"
                     placeholder="YYYY-MM-DD"
-                    value={
-                      installation_date
-                        ? format(installation_date, "yyyy-MM-dd")
-                        : ""
-                    }
+                    value={installation_date ? format(installation_date, 'yyyy-MM-dd') : ''}
                     disabled
                   />
                   <span className="flex items-center rounded rounded-l-none border-0 px-2 ">
                     <button onClick={renderInstallation_dateDatePicker}>
-                      <img
-                        src={require("../resources/cal.png")}
-                        className=" justify-center items-center"
-                      />
+                      <img src={require('../resources/cal.png')} className=" justify-center items-center" />
                     </button>
                   </span>
                 </form>
@@ -307,35 +276,33 @@ function NewInstallation() {
           </div>
 
           <div className=" col-span-3 col-start-4 row-start-2 row-span-3 p-5">
-            <label className="cursor-pointer label text-xs">
-              Images
-            </label>
+            <label className="cursor-pointer label text-xs">Images</label>
             <div className=" bg-[#F7F8FA] p-5 rounded-2xl ">
-            <div>
-              <div
-                className="drop-area relative p-5 min-h-[120px]  rounded-2xl flex items-center justify-center border-dashed border"
-                onClick={handleDropAreaClick}
-                onDrop={handleFileDrop}
-                onDragOver={(event) => event.preventDefault()}
-              >
-                <p className=" text-sm">Click to browse or drag and drop files here</p>
-                <input
-                  type="file"
-                  accept=".jpg, .jpeg, .png"
-                  multiple
-                  onChange={handleFileSelect}
-                  ref={fileInputRef}
-                  style={{ display: "none" }}
-                />
-              </div>
-              <div className="selected-files">
-                <p className=" text-xs p-1">{selectedFiles.length > 0 && <h2>Selected Files:</h2>}
-                {renderSelectedFiles()}</p>
-                
+              <div>
+                <div
+                  className="drop-area relative p-5 min-h-[120px]  rounded-2xl flex items-center justify-center border-dashed border"
+                  onClick={handleDropAreaClick}
+                  onDrop={handleFileDrop}
+                  onDragOver={(event) => event.preventDefault()}
+                >
+                  <p className=" text-sm">Click to browse or drag and drop files here</p>
+                  <input
+                    type="file"
+                    accept=".jpg, .jpeg, .png"
+                    multiple
+                    onChange={handleFileSelect}
+                    ref={fileInputRef}
+                    style={{ display: 'none' }}
+                  />
+                </div>
+                <div className="selected-files">
+                  <p className=" text-xs p-1">
+                    {selectedFiles.length > 0 && <h2>Selected Files:</h2>}
+                    {renderSelectedFiles()}
+                  </p>
+                </div>
               </div>
             </div>
-            </div>
-            
           </div>
 
           <div className="col-span-6 row-start-5 ">
@@ -370,9 +337,7 @@ function NewInstallation() {
 
           <div className="col-span-6 inline-block">
             <div className="float-right">
-              <button className="btn btn-sm m-1 text-sm normal-case font-medium">
-                Cancel
-              </button>
+              <button className="btn btn-sm m-1 text-sm normal-case font-medium">Cancel</button>
               <button
                 className="btn btn-sm bg-blue-700 hover:bg-blue-800 text-white ml-1 submit text-sm normal-case font-medium"
                 onClick={onSubmit}

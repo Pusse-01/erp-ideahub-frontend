@@ -1,54 +1,35 @@
-import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate, Link, useParams } from "react-router-dom";
-import { toast } from "react-toastify";
-// import {
-//   ,
-//   createQuotation,
-//   getQuotationIDs,
-//   getQuotationByID,
-// } from "../features/quotations/quotationSlice";
-import Spinner from "../components/Spinner";
-import {
-  getEnquiryByID,
-  getEnquiryIDs,
-} from "../features/enquiries/enquirySlice";
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate, Link, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import Spinner from '../components/Spinner';
+import { getEnquiryByID, getEnquiryIDs } from '../features/enquiries/enquirySlice';
 import {
   materialsSchema,
   preQuotationsSchema,
   quotationSchema,
   quotationsSchema,
-} from "../validationSchemas/quotationValidation";
+} from '../validationSchemas/quotationValidation';
 
-import removeIcon from "../resources/remove.svg";
-import {
-  createQuotation,
-  reset as quotationReset,
-} from "../features/quotations/quotationSlice";
+import removeIcon from '../resources/remove.svg';
+import { createQuotation, reset as quotationReset } from '../features/quotations/quotationSlice';
 
-import arrowUpIcon from "../resources/arrow-up.svg";
-import arrowDownIcon from "../resources/arrow-down.svg";
-import { getItemsFromDesign } from "../features/designs/designSlice";
+import arrowUpIcon from '../resources/arrow-up.svg';
+import arrowDownIcon from '../resources/arrow-down.svg';
+import { getItemsFromDesign } from '../features/designs/designSlice';
 
 function NewQuotation() {
   const { user } = useSelector((state) => state.auth);
 
-  const {
-    isLoading,
-    isError,
-    isSuccess,
-    createQuotationIsSuccess,
-    createQuotationIsError,
-    message,
-    quotation,
-  } = useSelector((state) => state.quotation);
+  const { isLoading, isError, isSuccess, createQuotationIsSuccess, createQuotationIsError, message, quotation } =
+    useSelector((state) => state.quotation);
 
   const {
     isLoading: designIsLoading,
     isError: designIsError,
     isSuccess: designIsSuccess,
-    message:designMessage,
-    enquiryDesignItems
+    message: designMessage,
+    enquiryDesignItems,
   } = useSelector((state) => state.design);
 
   const {
@@ -63,81 +44,101 @@ function NewQuotation() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [client_name, setClient_name] = useState("");
-  const [inquiry_number, setInquiry_number] = useState("");
+  const [client_name, setClient_name] = useState('');
+  const [inquiry_number, setInquiry_number] = useState('');
   const [sitemeasurements, setSitemeasurements] = useState(false);
-  const [IHT_Member, setIHT_Member] = useState("");
-  const [brief, setBrief] = useState("");
+  const [IHT_Member, setIHT_Member] = useState('');
+  const [brief, setBrief] = useState('');
 
-  const [location, setLocation] = useState("create quotation");
+  const [location, setLocation] = useState('create quotation');
   const [itemIndex, setItemIndex] = useState(0);
 
   const [itemInputSets, setItemInputSets] = useState([
     {
       created_date: new Date().toISOString(),
       site_measurements: false,
-      item_code: "",
-      itemname: "",
-      description: "",
+      item_code: '',
+      itemname: '',
+      description: '',
       qty: 0,
       rate: 0,
-      comments: "",
+      comments: '',
       amount: 0,
-      label: "",
+      label: '',
     },
   ]);
 
-  useEffect(()=>{
-    if(enquiryDesignItems.length > 0){
-      const initialItemInputSets = enquiryDesignItems.map((item)=>{
+  useEffect(() => {
+    if (enquiryDesignItems.length > 0) {
+      const initialItemInputSets = enquiryDesignItems.map((item) => {
         return {
           created_date: new Date().toISOString(),
           site_measurements: false,
-          item_code: "",
+          item_code: '',
           itemname: item.itemname,
-          description: "",
+          description: '',
           qty: 0,
           rate: 0,
           comments: item.comment || '',
           amount: 0,
-          label: "",
-        }
-      })
+          label: '',
+        };
+      });
 
-      setItemInputSets(initialItemInputSets)
+      setItemInputSets(initialItemInputSets);
     }
-  },[enquiryDesignItems])
+  }, [enquiryDesignItems]);
 
   const itemsSet = [
     {
       index_no: 1,
-      category: "Timber",
-      Description: "Local Teak 1”",
+      category: 'Timber',
+      Description: 'Local Teak 1”',
       last_purchased_price: 1250.0,
-      purchased_store: "",
-      unit: "Sq.Ft",
+      purchased_store: '',
+      unit: 'Sq.Ft',
       threshold: 10,
       availability: 20,
     },
     {
       index_no: 2,
-      category: "Timber",
-      Description: "Local Teak 1 1/8”",
+      category: 'Timber',
+      Description: 'Local Teak 1 1/8”',
       last_purchased_price: 1250.0,
-      purchased_store: "",
-      unit: "Sq.Ft",
+      purchased_store: '',
+      unit: 'Sq.Ft',
       threshold: 10,
       availability: 20,
     },
     {
       index_no: 3,
-      category: "Boards",
-      Description: "MDF 8 x 4 -9 mm",
+      category: 'Boards',
+      Description: 'MDF 8 x 4 -9 mm',
       last_purchased_price: 5700.0,
-      purchased_store: "",
-      unit: "Sheet",
+      purchased_store: '',
+      unit: 'Sheet',
       threshold: 10,
       availability: 20,
+    },
+    {
+      index_no: 4,
+      category: 'Labor',
+      Description: 'Machine',
+      last_purchased_price: 500.0,
+      purchased_store: '',
+      unit: 'Hrs',
+      threshold: 0,
+      availability: 0,
+    },
+    {
+      index_no: 5,
+      category: 'Labor',
+      Description: 'Acrylic',
+      last_purchased_price: 600.0,
+      purchased_store: '',
+      unit: 'Hrs',
+      threshold: 0,
+      availability: 0,
     },
   ];
 
@@ -153,24 +154,25 @@ function NewQuotation() {
 
   const [items, setItems] = useState([]);
 
-  const [categoryTotal, setCategoryTotal] = useState([])
+  const [categoryTotal, setCategoryTotal] = useState([]);
 
-  const [total, setTotal] = useState([])
+  const [total, setTotal] = useState([]);
+  const [materialTotal, setMaterialTotal] = useState([]);
 
   const [newComponent, setNewComponent] = useState({
     //"index_no": 1,
-    category: "",
-    Description: "",
+    category: '',
+    Description: '',
     last_purchased_price: 0,
-    purchased_store: "",
-    unit: "",
+    purchased_store: '',
+    unit: '',
     threshold: 10,
     availability: 20,
     qtyPerUnit: 0,
     costPerUnit: 0,
     material_qty: 0,
     total_material_cost: 0,
-    remarks: "",
+    remarks: '',
     active: true,
   });
 
@@ -188,7 +190,7 @@ function NewQuotation() {
       active: false,
       // name: item.Description,
       // rate: item.last_purchased_price,
-      purchased_store: "",
+      purchased_store: '',
       threshold: 0,
       availability: 0,
     };
@@ -216,18 +218,15 @@ function NewQuotation() {
     if (error) {
       console.log(error);
       toast.error(error.message);
-      return null; // You might want to return something specific here
+      return null;
     } else {
-      console.log("schema was valid");
+      console.log('schema was valid');
     }
 
     let updatedItems = [...items]; // Copy the items array
 
     if (updatedItems[itemIndex]) {
-      updatedItems[itemIndex] = [
-        ...updatedItems[itemIndex],
-        formattedNewComponent,
-      ];
+      updatedItems[itemIndex] = [...updatedItems[itemIndex], formattedNewComponent];
       setItems(updatedItems);
     }
   };
@@ -240,14 +239,14 @@ function NewQuotation() {
       {
         created_date: new Date().toISOString(),
         site_measurements: false,
-        item_code: "",
-        itemname: "",
-        description: "",
+        item_code: '',
+        itemname: '',
+        description: '',
         qty: 0,
         rate: 0,
-        comments: "",
+        comments: '',
         amount: 0,
-        label: "",
+        label: '',
       },
     ]);
   };
@@ -255,8 +254,8 @@ function NewQuotation() {
   const handleItemInputChange = (index, field, value) => {
     const updatedInputSets = [...itemInputSets];
     updatedInputSets[index][field] = value;
-    if(field === 'qty'){
-      updatedInputSets[index]['amount'] = value * updatedInputSets[index]['rate']
+    if (field === 'qty') {
+      updatedInputSets[index]['amount'] = value * updatedInputSets[index]['rate'];
     }
     setItemInputSets(updatedInputSets);
   };
@@ -278,66 +277,75 @@ function NewQuotation() {
       }
       updatedItems[itemIndex][index][field] = value; // Update the value at the specified indices
 
-      if(field === 'last_purchased_price' || field === 'material_qty' || field === 'total_material_cost' ){
-        updatedItems[itemIndex][index]['total_material_cost'] = parseFloat(updatedItems[itemIndex][index]['last_purchased_price']) * parseFloat(updatedItems[itemIndex][index]['material_qty'])
+      if (field === 'last_purchased_price' || field === 'material_qty' || field === 'total_material_cost') {
+        updatedItems[itemIndex][index]['total_material_cost'] =
+          parseFloat(updatedItems[itemIndex][index]['last_purchased_price']) *
+          parseFloat(updatedItems[itemIndex][index]['material_qty']);
       }
 
       console.log(updatedItems);
       setItems(updatedItems);
     }
 
-    if((field === 'last_purchased_price' || field === 'material_qty' || field === 'total_material_cost' || field === 'active')){ 
-      console.log(items[itemIndex][index]['active'])
+    if (
+      field === 'last_purchased_price' ||
+      field === 'material_qty' ||
+      field === 'total_material_cost' ||
+      field === 'active'
+    ) {
+      console.log(items[itemIndex][index]['active']);
 
-     let categoryTotalCopy =  [...categoryTotal] ;
+      let categoryTotalCopy = [...categoryTotal];
 
-     let catToChange = updatedItems[itemIndex][index]["category"];
-     console.log(catToChange)
+      let catToChange = updatedItems[itemIndex][index]['category'];
+      console.log(catToChange);
 
-     if(!categoryTotalCopy[itemIndex]){
-      categoryTotalCopy[itemIndex] = {}
-     }
+      if (!categoryTotalCopy[itemIndex]) {
+        categoryTotalCopy[itemIndex] = {};
+      }
 
-     categoryTotalCopy[itemIndex] [catToChange] = 0;
+      categoryTotalCopy[itemIndex][catToChange] = 0;
 
-     updatedItems[itemIndex].map((item) => {
-       if (item.category === catToChange && item.active === true) {
-          console.log(item.active)
-          console.log(categoryTotalCopy[itemIndex][catToChange])
-          console.log( parseFloat(item["total_material_cost"] || 0))
-         categoryTotalCopy[itemIndex][catToChange] =parseFloat(categoryTotalCopy[itemIndex][catToChange] || 0) + parseFloat(item["total_material_cost"] || 0);
-       }
-       return item;
-     });
+      updatedItems[itemIndex].map((item) => {
+        if (item.category === catToChange && item.active === true) {
+          console.log(item.active);
+          console.log(categoryTotalCopy[itemIndex][catToChange]);
+          console.log(parseFloat(item['total_material_cost'] || 0));
+          categoryTotalCopy[itemIndex][catToChange] =
+            parseFloat(categoryTotalCopy[itemIndex][catToChange] || 0) + parseFloat(item['total_material_cost'] || 0);
+        }
+        return item;
+      });
 
-     console.log(categoryTotalCopy)
-     setCategoryTotal(categoryTotalCopy);
+      console.log(categoryTotalCopy);
+      setCategoryTotal(categoryTotalCopy);
 
-     let totalSum = 0;
+      let totalSum = 0;
 
-     console.log(categoryTotalCopy)
+      console.log(categoryTotalCopy);
       for (const value of Object.values(categoryTotalCopy[itemIndex])) {
-        console.log(parseFloat(value))
-        totalSum +=  parseFloat(value);
+        console.log(parseFloat(value));
+        totalSum += parseFloat(value);
       }
 
-      const totalCopy = [...total]
-      totalCopy[itemIndex] = totalSum
-      setTotal(totalCopy)
-  
-      const itemInputSetscopy = [...itemInputSets]
-      itemInputSetscopy[itemIndex]['rate'] = totalSum
+      const totalCopy = [...total];
+      totalCopy[itemIndex] = totalSum;
+      setTotal(totalCopy);
 
-      if(itemInputSets[itemIndex]['qty'] && itemInputSets[itemIndex]['qty'] > 0){
-        itemInputSetscopy[itemIndex]['amount'] = itemInputSetscopy[itemIndex]['rate'] * itemInputSets[itemIndex]['qty']
+      const itemInputSetscopy = [...itemInputSets];
+      itemInputSetscopy[itemIndex]['rate'] = totalSum;
+
+      if (itemInputSets[itemIndex]['qty'] && itemInputSets[itemIndex]['qty'] > 0) {
+        itemInputSetscopy[itemIndex]['amount'] = itemInputSetscopy[itemIndex]['rate'] * itemInputSets[itemIndex]['qty'];
       }
 
-      setItemInputSets(itemInputSetscopy)
-  }
+      setItemInputSets(itemInputSetscopy);
+    }
+    updateMaterialCost(itemIndex)
   };
 
   const goToComponents = (index) => {
-    setLocation("component");
+    setLocation('component');
     setItemIndex(index);
     console.log(index);
 
@@ -389,19 +397,18 @@ function NewQuotation() {
     //validate materials
     newItemsArray.map((subArray) =>
       subArray.map((item) => {
-        const { error } = materialsSchema.validate(item); // Corrected variable name and input data
+        const { error } = materialsSchema.validate(item);
         if (error) {
           console.log(error);
           toast.error(error.message);
-          return null; // You might want to return something specific here
+          return null;
         }
         return item;
       })
     );
 
-
     if (newItemsArray.length !== itemInputSets.length) {
-      toast.error("some items do not have quotation details");
+      toast.error('some items do not have quotation details');
       return null;
     }
 
@@ -412,11 +419,11 @@ function NewQuotation() {
 
     //validate quotations
     newItemInputSetsArray.map((ItemInputSet) => {
-      const { error } = quotationSchema.validate(ItemInputSet); // Corrected variable name and input data
+      const { error } = quotationSchema.validate(ItemInputSet);
       if (error) {
         console.log(error);
         toast.error(error.message);
-        return null; // You might want to return something specific here
+        return null;
       }
       return ItemInputSet;
     });
@@ -438,9 +445,6 @@ function NewQuotation() {
     }
 
     dispatch(createQuotation(finalQuotationsObj));
-
-    
-    
   };
 
   useEffect(() => {
@@ -449,21 +453,13 @@ function NewQuotation() {
     }
 
     if (createQuotationIsSuccess) {
-      toast.success("Quotation Added!");
+      toast.success('Quotation Added!');
       dispatch(quotationReset());
-      navigate("/quotations");
+      navigate('/quotations');
     }
 
     // dispatch(reset());
-  }, [
-    isError,
-    dispatch,
-    isSuccess,
-    navigate,
-    message,
-    createQuotationIsError,
-    createQuotationIsSuccess,
-  ]);
+  }, [isError, dispatch, isSuccess, navigate, message, createQuotationIsError, createQuotationIsSuccess]);
 
   useEffect(() => {}, []);
 
@@ -494,8 +490,8 @@ function NewQuotation() {
       toast.error(error.message);
       console.log(error);
     } else {
-      setLocation("items");
-      dispatch(getItemsFromDesign(inquiry_number))
+      setLocation('items');
+      dispatch(getItemsFromDesign(inquiry_number));
     }
   };
 
@@ -507,10 +503,23 @@ function NewQuotation() {
   };
 
   const handleSiteMeasurementsChange = (event) => {
-    setSitemeasurements(event.target.value === "true"); // Update the selected option when a radio button is clicked
+    setSitemeasurements(event.target.value === 'true'); // Update the selected option when a radio button is clicked
   };
 
   let lastRenderedCategory = null;
+
+  const updateMaterialCost = (itemIndex) =>{
+    let sum = 0;
+    let items = categoryTotal[itemIndex]
+    for (const key in items) {
+      if (key !== 'Labor') {
+        sum += items[key];
+      }
+    }
+    let materialTotalCopy = [...materialTotal]
+    materialTotalCopy[itemIndex] = sum
+    setMaterialTotal(materialTotalCopy)
+  }
 
   return (
     <div className="drawer-content-custom f9">
@@ -518,23 +527,17 @@ function NewQuotation() {
         <div className=" float-left">
           <div className="text-sm breadcrumbs">
             <ul>
-              {location && location === "create quotation" ? (
+              {location && location === 'create quotation' ? (
                 <li>
-                  <a
-                  // onClick={() => setLocation("create quotation")}
-                  >
-                    Create Quotation
-                  </a>
+                  <a>Create Estimation</a>
                 </li>
               ) : (
                 <></>
               )}
-              {location && location === "items" ? (
+              {location && location === 'items' ? (
                 <>
                   <li>
-                    <a onClick={() => setLocation("create quotation")}>
-                      Create Quotation
-                    </a>
+                    <a onClick={() => setLocation('create quotation')}>Create Estimation</a>
                   </li>
                   <li>
                     <a>Items</a>
@@ -543,15 +546,13 @@ function NewQuotation() {
               ) : (
                 <></>
               )}
-              {location && location === "component" ? (
+              {location && location === 'component' ? (
                 <>
                   <li>
-                    <a onClick={() => setLocation("create quotation")}>
-                      Create Quotation
-                    </a>
+                    <a onClick={() => setLocation('create quotation')}>Create Estimation</a>
                   </li>
                   <li>
-                    <a onClick={() => setLocation("items")}>Items</a>
+                    <a onClick={() => setLocation('items')}>Items</a>
                   </li>
                   <li>
                     <a>Components</a>
@@ -562,21 +563,16 @@ function NewQuotation() {
               )}
             </ul>
           </div>
-          <h1 className="font-bold text-2xl">Quotations</h1>
-          <p className="text-xs">
-            You are viewing every Quotations that's made so far...
-          </p>
+          <h1 className="font-bold text-2xl">New Estimation</h1>
         </div>
       </div>
       <hr />
 
       <div className="w-[92%] bg-white">
-        {/* <form onSubmit={onSubmit}></form> */}
-
-        {location === "create quotation" ? (
+        {location === 'create quotation' ? (
           <div className="lg:grid grid-cols-2 gap-2 bg-white p-5 shadow-lg m-2 lg:m-10">
             <div className="col-span-2 font-medium">
-              <p>Add an inquiry</p>
+              <p>Add quotation</p>
             </div>
             <div className="col-span-1 ">
               <p>
@@ -603,23 +599,25 @@ function NewQuotation() {
                 <select
                   onChange={(e) => onEnquiryIDSelect(e.target.value)}
                   value={enquiry.index_no}
-                  className="select select-sm  w-full px-2 outline-none text-gray-600 bg-[#F2F3F5] rounded font-normal"
+                  className="select select-sm  w-full px-2 outline-none text-gray-600 bg-[#F2F3F5] rounded font-normal text-xs"
                 >
-                  <option value="" selected disabled>Select an enquiry ID</option>
+                  <option value="" selected disabled>
+                    Select an enquiry ID
+                  </option>
                   {enquiryIDs.length > 0
                     ? enquiryIDs.map((enquiryID, index) => (
                         <>
                           <option key={index}>{enquiryID.index_no}</option>
                         </>
                       ))
-                    : ""}
+                    : ''}
                 </select>
               </p>
             </div>
             <div className="col-span-1 ">
               <p>
                 <label className=" text-xs" htmlFor="">
-                  IHT Client Service Member
+                  IHT Client Service Number
                 </label>
                 <input
                   className="input input-sm  w-full px-2 outline-none text-gray-600 bg-[#F2F3F5] rounded"
@@ -631,9 +629,7 @@ function NewQuotation() {
               </p>
             </div>
             <div className="col-span-1">
-              <label className="cursor-pointer label text-xs">
-                Site Measurements
-              </label>
+              <label className="cursor-pointer label text-xs">Site Measurements</label>
               <div className="flex">
                 <div className="flex items-center">
                   <input
@@ -688,7 +684,7 @@ function NewQuotation() {
           <></>
         )}
 
-        {location === "items" ? (
+        {location === 'items' ? (
           <>
             <div className="lg:grid grid-cols-16 gap-1 bg-white p-5 pt-2 shadow-lg m-2 mt-2 lg:m-10 lg:mt-2">
               <div className=" col-span-16 flex justify-between pb-2">
@@ -701,51 +697,25 @@ function NewQuotation() {
                 </button>
               </div>
 
-              <div className=" col-start-1 col-span-1 text-sm flex items-center">
-                No
-              </div>
-              <div className=" col-span-2 text-sm flex justify-center">
-                Item Code *
-              </div>
-              <div className=" col-span-2 text-sm flex justify-center">
-                Item name
-              </div>
-              <div className=" col-span-2 text-sm flex justify-center">
-                Item label
-              </div>
-              <div className=" col-span-2 text-sm flex justify-center">
-                Description *
-              </div>
-              <div className=" col-span-2 text-sm flex justify-center">
-                Qty *
-              </div>
-              <div className=" col-span-2 text-sm flex justify-center">
-                Rate(LKR) *
-              </div>
-              <div className=" col-span-2 text-sm flex justify-center">
-                Amount *
-              </div>
+              <div className=" col-start-1 col-span-1 text-sm flex items-center">No</div>
+              <div className=" col-span-2 text-sm flex justify-center">Item Code *</div>
+              <div className=" col-span-2 text-sm flex justify-center">Item name</div>
+              <div className=" col-span-2 text-sm flex justify-center">Item label</div>
+              <div className=" col-span-2 text-sm flex justify-center">Description *</div>
+              <div className=" col-span-2 text-sm flex justify-center">Qty *</div>
+              <div className=" col-span-2 text-sm flex justify-center">Rate(LKR) *</div>
+              <div className=" col-span-2 text-sm flex justify-center">Amount *</div>
               <div className=" col-span-1 text-sm"></div>
 
               {itemInputSets.map((inputSet, index) => (
-                <div
-                  //key={inputSet.item_code}
-                  key={index}
-                  className=" col-span-16 lg:grid grid-cols-16 gap-1 bg-white "
-                >
+                <div key={index} className=" col-span-16 lg:grid grid-cols-16 gap-1 bg-white ">
                   <div className=" col-span-1"></div>
                   <div className=" col-span-2">
                     <input
                       type="text"
                       placeholder="Item Code"
                       value={inputSet.item_code}
-                      onChange={(e) =>
-                        handleItemInputChange(
-                          index,
-                          "item_code",
-                          e.target.value
-                        )
-                      }
+                      onChange={(e) => handleItemInputChange(index, 'item_code', e.target.value)}
                       className="input input-sm outline-none text-gray-600 bg-[#F2F3F5] rounded w-4/5 m-1 p-0"
                     />
                   </div>
@@ -754,9 +724,7 @@ function NewQuotation() {
                       type="text"
                       placeholder="Item Name"
                       value={inputSet.itemname}
-                      onChange={(e) =>
-                        handleItemInputChange(index, "itemname", e.target.value)
-                      }
+                      onChange={(e) => handleItemInputChange(index, 'itemname', e.target.value)}
                       className=" input input-sm outline-none text-gray-600 bg-[#F2F3F5] rounded w-4/5 m-1 p-0"
                     />
                   </div>
@@ -765,9 +733,7 @@ function NewQuotation() {
                       type="text"
                       placeholder="Label"
                       value={inputSet.label}
-                      onChange={(e) =>
-                        handleItemInputChange(index, "label", e.target.value)
-                      }
+                      onChange={(e) => handleItemInputChange(index, 'label', e.target.value)}
                       className=" input input-sm outline-none text-gray-600 bg-[#F2F3F5] rounded w-4/5 m-1 p-0"
                     />
                   </div>
@@ -776,13 +742,7 @@ function NewQuotation() {
                       type="text"
                       placeholder="Description"
                       value={inputSet.description}
-                      onChange={(e) =>
-                        handleItemInputChange(
-                          index,
-                          "description",
-                          e.target.value
-                        )
-                      }
+                      onChange={(e) => handleItemInputChange(index, 'description', e.target.value)}
                       className=" input input-sm outline-none text-gray-600 bg-[#F2F3F5] rounded w-4/5 m-1 p-0"
                     />
                   </div>
@@ -791,9 +751,7 @@ function NewQuotation() {
                       type="number"
                       placeholder="Qty"
                       value={inputSet.qty}
-                      onChange={(e) =>
-                        handleItemInputChange(index, "qty", e.target.value)
-                      }
+                      onChange={(e) => handleItemInputChange(index, 'qty', e.target.value)}
                       className=" input input-sm outline-none text-gray-600 bg-[#F2F3F5] rounded w-4/5 m-1 p-0"
                     />
                   </div>
@@ -802,9 +760,7 @@ function NewQuotation() {
                       type="text"
                       placeholder="Rate"
                       value={inputSet.rate}
-                      onChange={(e) =>
-                        handleItemInputChange(index, "rate", e.target.value)
-                      }
+                      onChange={(e) => handleItemInputChange(index, 'rate', e.target.value)}
                       readOnly
                       className=" input input-sm outline-none text-gray-600 bg-[#F2F3F5] rounded w-4/5 m-1 p-0"
                     />
@@ -814,9 +770,7 @@ function NewQuotation() {
                       type="text"
                       placeholder="Amount"
                       value={inputSet.amount}
-                      onChange={(e) =>
-                        handleItemInputChange(index, "amount", e.target.value)
-                      }
+                      onChange={(e) => handleItemInputChange(index, 'amount', e.target.value)}
                       readOnly
                       className=" input input-sm outline-none text-gray-600 bg-[#F2F3F5] rounded w-4/5 m-1 p-0"
                     />
@@ -826,23 +780,15 @@ function NewQuotation() {
                       <label tabIndex={0} className=" m-1 text-3xl">
                         ...
                       </label>
-                      <ul
-                        tabIndex={0}
-                        className="dropdown-content z-[1] menu shadow bg-base-100 rounded-box"
-                      >
+                      <ul tabIndex={0} className="dropdown-content z-[1] menu shadow bg-base-100 rounded-box">
                         <li>
-                          <button
-                            onClick={() => handleRemoveInputSet(index)}
-                            className=" "
-                          >
+                          <button onClick={() => handleRemoveInputSet(index)} className=" ">
                             Remove item
                             {/* <img src={removeIcon} className=" max-w-none w-[24px]" alt="add input set" /> */}
                           </button>
                         </li>
                         <li>
-                          <div onClick={() => goToComponents(index)}>
-                            component
-                          </div>
+                          <div onClick={() => goToComponents(index)}>component</div>
                         </li>
                       </ul>
                     </div>
@@ -852,9 +798,7 @@ function NewQuotation() {
             </div>
             <div className=" flex w-full justify-end px-12">
               <div className="">
-                <button className="btn btn-sm m-1 text-sm normal-case font-medium">
-                  Cancel
-                </button>
+                <button className="btn btn-sm m-1 text-sm normal-case font-medium">Cancel</button>
                 <button
                   className="btn btn-sm bg-blue-700 hover:bg-blue-800 text-white ml-1 submit text-sm normal-case font-medium"
                   onClick={handleSave}
@@ -868,7 +812,7 @@ function NewQuotation() {
           <></>
         )}
 
-        {location === "component" ? (
+        {location === 'component' ? (
           <>
             <div className="lg:grid grid-cols-10 gap-1 bg-white p-5 pt-2 shadow-lg m-2 mt-2 lg:m-10 lg:mt-2">
               <div className=" col-span-10 flex justify-between pb-2">
@@ -882,14 +826,8 @@ function NewQuotation() {
               </div>
 
               <dialog id="add_component_modal" className="modal">
-                <form
-                  method="dialog"
-                  className="modal-box rounded-md lg:min-w-[800px] p-1 min-h-[600px] relative"
-                >
-                  <div
-                    //key={index}
-                    className=" col-span-2 grid grid-cols-2 gap-1 bg-white p-5  m-5"
-                  >
+                <form method="dialog" className="modal-box rounded-md lg:min-w-[800px] p-1 min-h-[600px] relative">
+                  <div className=" col-span-2 grid grid-cols-2 gap-1 bg-white p-5  m-5">
                     <div className="col-span-1 flex flex-col">
                       <label className=" text-xs ml-1" htmlFor="Category">
                         Category
@@ -995,10 +933,7 @@ function NewQuotation() {
                       />
                     </div>
                     <div className=" col-span-1 flex flex-col">
-                      <label
-                        className=" text-xs ml-1"
-                        htmlFor="Total material qty"
-                      >
+                      <label className=" text-xs ml-1" htmlFor="Total material qty">
                         Total material qty
                       </label>
                       <input
@@ -1015,10 +950,7 @@ function NewQuotation() {
                       />
                     </div>
                     <div className=" col-span-1 flex flex-col">
-                      <label
-                        className=" text-xs ml-1"
-                        htmlFor="total_material_cost"
-                      >
+                      <label className=" text-xs ml-1" htmlFor="total_material_cost">
                         Total Material Cost
                       </label>
                       <input
@@ -1070,83 +1002,57 @@ function NewQuotation() {
               </dialog>
 
               <div className=" col-start-1 col-span-1 text-sm flex items-center"></div>
-              <div className=" col-span-2 text-sm flex justify-center">
-                Description
-              </div>
-              <div className=" col-span-1 text-sm flex justify-center">
-                Unit
-              </div>
-              <div className=" col-span-1 text-sm flex justify-center">
-                Rate(Rs)
-              </div>
-              <div className=" col-span-1 text-sm flex justify-center">
-                Qty per Unit
-              </div>
-              <div className=" col-span-1 text-sm flex justify-center">
-                Cost per Unit
-              </div>
-              <div className=" col-span-1 text-sm flex justify-center">
-                Total Material Qty
-              </div>
-              <div className=" col-span-1 text-sm flex justify-center">
-                Total Material Cost
-              </div>
-              <div className=" col-span-1 text-sm flex justify-center">
-                Remarks
-              </div>
+              <div className=" col-span-2 text-sm flex justify-center">Description</div>
+              <div className=" col-span-1 text-sm flex justify-center">Unit</div>
+              <div className=" col-span-1 text-sm flex justify-center">Rate(Rs)</div>
+              <div className=" col-span-1 text-sm flex justify-center">Qty per Unit</div>
+              <div className=" col-span-1 text-sm flex justify-center">Cost per Unit</div>
+              <div className=" col-span-1 text-sm flex justify-center">Total Material Qty</div>
+              <div className=" col-span-1 text-sm flex justify-center">Total Material Cost</div>
+              <div className=" col-span-1 text-sm flex justify-center">Remarks</div>
 
               {items &&
                 items[itemIndex] &&
                 items[itemIndex].map((item, index) => {
-                  
-                  let shouldRenderCategory =
-                    item.category !== lastRenderedCategory;
+                  let shouldRenderCategory = item.category !== lastRenderedCategory;
 
                   if (shouldRenderCategory) {
                     lastRenderedCategory = item.category;
                   }
 
-                  let isCategoryCollapsed = collapsedCategories.includes(
-                    item.category
-                  );
+                  let isCategoryCollapsed = collapsedCategories.includes(item.category);
 
                   return (
-                    <div
-                      key={index}
-                      //key={item.index_no}
-                      className=" col-span-10 lg:grid grid-cols-10 gap-1 bg-white "
-                    >
-                      
-
+                    <div key={index} className=" col-span-10 lg:grid grid-cols-10 gap-1 bg-white ">
                       {shouldRenderCategory && (
+                      <>
+                        {item.category === 'Labor' ?  <div className="col-span-10 bg-[#BDE3FF] py-2 px-5 flex justify-between">
+                        <p>Total Material Cost</p>
+                        <p>{materialTotal[itemIndex]}</p>
+                      </div> : ''}
                         <div
                           className="col-span-10 bg-[#D9D9D9] py-2 px-5 flex justify-between"
                           onClick={() => toggleCategoryCollapse(item.category)}
-                          style={{ cursor: "pointer" }}
+                          style={{ cursor: 'pointer' }}
                         >
                           <p>{item.category}</p>
-                          <img
-                            className={`${
-                              isCategoryCollapsed ? "V" : "hidden"
-                            } w-5`}
-                            src={arrowDownIcon}
-                          />
-                          <img
-                            className={`${
-                              !isCategoryCollapsed ? "V" : "hidden"
-                            } w-5`}
-                            src={arrowUpIcon}
-                          />
+                          <img className={`${isCategoryCollapsed ? 'V' : 'hidden'} w-5`} src={arrowDownIcon} />
+                          <img className={`${!isCategoryCollapsed ? 'V' : 'hidden'} w-5`} src={arrowUpIcon} />
+                        </div>
+                        </>
+                      )}
+
+                      {shouldRenderCategory && !isCategoryCollapsed && item.category !== 'Labor' && (
+                        <div className="col-span-10 bg-[#BDE3FF] py-2 px-5 flex ">
+                          <p> Sub Total</p>
+                          <p className=" px-5">
+                            {categoryTotal[itemIndex] &&
+                              categoryTotal[itemIndex][item.category] &&
+                              categoryTotal[itemIndex][item.category]}
+                          </p>
                         </div>
                       )}
 
-                      {shouldRenderCategory && !isCategoryCollapsed && (
-                        <div className="col-span-10 bg-[#BDE3FF] py-2 px-5 flex ">
-                        <p>Total Cost</p>
-                        <p className=" px-5">{ categoryTotal[itemIndex] && categoryTotal[itemIndex][item.category] && (categoryTotal[itemIndex][item.category])}</p>
-                      </div>
-                      )}
-                      
                       {!isCategoryCollapsed && (
                         <>
                           <div className="col-span-1 flex justify-center items-center">
@@ -1156,15 +1062,7 @@ function NewQuotation() {
                               className="checkbox checkbox-sm "
                               checked={item.active}
                               value={item.active}
-                              onChange={(e) =>
-                                handleItemValueChange(
-                                  //item
-                                  itemIndex,
-                                  index,
-                                  "active",
-                                  e.target.checked
-                                )
-                              }
+                              onChange={(e) => handleItemValueChange(itemIndex, index, 'active', e.target.checked)}
                             />
                           </div>
                           <div className=" col-span-2 flex  items-center">
@@ -1179,61 +1077,41 @@ function NewQuotation() {
                               placeholder="Rate"
                               value={item.last_purchased_price}
                               onChange={(e) =>
-                                handleItemValueChange(
-                                  itemIndex,
-                                  index,
-                                  "last_purchased_price",
-                                  e.target.value
-                                )
+                                handleItemValueChange(itemIndex, index, 'last_purchased_price', e.target.value)
                               }
                               className=" input input-sm outline-none text-gray-600 bg-[#F2F3F5] rounded w-4/5 m-1 p-0"
                             />
                           </div>
-                          <div className=" col-span-1">
-                            <input
-                              type="text"
-                              placeholder="Qty per unit"
-                              value={item.qtyPerUnit}
-                              onChange={(e) =>
-                                handleItemValueChange(
-                                  itemIndex,
-                                  index,
-                                  "qtyPerUnit",
-                                  e.target.value
-                                )
+                              {
+                                item.category !== 'Labor' ?
+                                <>
+                                <div className=" col-span-1">
+                                  <input
+                                    type="text"
+                                    placeholder="Qty per unit"
+                                    value={item.qtyPerUnit}
+                                    onChange={(e) => handleItemValueChange(itemIndex, index, 'qtyPerUnit', e.target.value)}
+                                    className=" input input-sm outline-none text-gray-600 bg-[#F2F3F5] rounded w-4/5 m-1 p-0"
+                                  />
+                                </div>
+                                <div className=" col-span-1">
+                                  <input
+                                    type="number"
+                                    placeholder="cost per unit"
+                                    value={item.costPerUnit}
+                                    onChange={(e) => handleItemValueChange(itemIndex, index, 'costPerUnit', e.target.value)}
+                                    className=" input input-sm outline-none text-gray-600 bg-[#F2F3F5] rounded w-4/5 m-1 p-0"
+                                  />
+                                </div>
+                                </> :
+                                ''
                               }
-                              className=" input input-sm outline-none text-gray-600 bg-[#F2F3F5] rounded w-4/5 m-1 p-0"
-                            />
-                          </div>
-                          <div className=" col-span-1">
-                            <input
-                              type="number"
-                              placeholder="cost per unit"
-                              value={item.costPerUnit}
-                              onChange={(e) =>
-                                handleItemValueChange(
-                                  itemIndex,
-                                  index,
-                                  "costPerUnit",
-                                  e.target.value
-                                )
-                              }
-                              className=" input input-sm outline-none text-gray-600 bg-[#F2F3F5] rounded w-4/5 m-1 p-0"
-                            />
-                          </div>
-                          <div className=" col-span-1">
+                          <div className=" col-span-1 col-start-8">
                             <input
                               type="text"
                               placeholder="Total material qty"
                               value={item.material_qty}
-                              onChange={(e) =>
-                                handleItemValueChange(
-                                  itemIndex,
-                                  index,
-                                  "material_qty",
-                                  e.target.value
-                                )
-                              }
+                              onChange={(e) => handleItemValueChange(itemIndex, index, 'material_qty', e.target.value)}
                               className=" input input-sm outline-none text-gray-600 bg-[#F2F3F5] rounded w-4/5 m-1 p-0"
                             />
                           </div>
@@ -1242,14 +1120,6 @@ function NewQuotation() {
                               type="text"
                               placeholder="Amount"
                               value={item.total_material_cost}
-                              // onChange={(e) =>
-                              //   handleItemValueChange(
-                              //     itemIndex,
-                              //     index,
-                              //     "total_material_cost",
-                              //     e.target.value
-                              //   )
-                              // }
                               disabled
                               className=" input input-sm outline-none text-gray-600 disabled:text-black  bg-[#F2F3F5] rounded w-4/5 m-1 p-0"
                             />
@@ -1259,43 +1129,34 @@ function NewQuotation() {
                               type="text"
                               placeholder="Remarks"
                               value={item.remarks}
-                              onChange={(e) =>
-                                handleItemValueChange(
-                                  itemIndex,
-                                  index,
-                                  "remarks",
-                                  e.target.value
-                                )
-                              }
+                              onChange={(e) => handleItemValueChange(itemIndex, index, 'remarks', e.target.value)}
                               className=" input input-sm outline-none text-gray-600 bg-[#F2F3F5] rounded w-4/5 m-1 p-0"
                             />
                           </div>
-
-                          {/* {shouldRenderCategory && (
-                            <div className="col-span-10 bg-[#BDE3FF] py-2 px-5 flex justify-between">
-                              <p>Total Cost</p>
-                              <p></p>
-                            </div>
-                          )} */}
                         </>
                       )}
-
-
-
-                    
                     </div>
                   );
                 })}
 
+              <div className="col-span-10 bg-[#BDE3FF] py-2 px-5 flex justify-between">
+                <p>Total Labor Cost</p>
+                <p>{categoryTotal[itemIndex] &&
+                              categoryTotal[itemIndex]['Labor'] &&
+                              categoryTotal[itemIndex]['Labor']}</p>
+              </div>
               <div className="col-span-10 bg-[#C94E4E4F] py-2 px-5 flex justify-between">
                 <p>Total Cost</p>
-                <p>{total[itemIndex] && (total[itemIndex])}</p>
+                <p>{total[itemIndex] && total[itemIndex]}</p>
               </div>
             </div>
 
             <div className=" flex w-full justify-end px-12">
               <div className="">
-                <button className="btn btn-sm m-1 text-sm normal-case font-medium">
+                <button
+                  className="btn btn-sm m-1 text-sm normal-case font-medium"
+                  onClick={() => navigate('/quotations')}
+                >
                   Cancel
                 </button>
                 <button

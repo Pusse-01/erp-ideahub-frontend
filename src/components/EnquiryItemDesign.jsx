@@ -1,28 +1,34 @@
-import React from "react";
-import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-import { deleteEnquiry } from "../features/enquiries/enquirySlice";
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { deleteEnquiry } from '../features/enquiries/enquirySlice';
 
 function EnquiryItemDesign({ enquiry }) {
   console.log(enquiry);
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const handleDeleteEnquiry = () =>{
-    console.log("delete enquiry ran "+enquiry.index_no)
-    dispatch(deleteEnquiry(parseInt(enquiry.index_no) ))
-  }
+  const handleDeleteEnquiry = () => {
+    console.log('delete enquiry ran ' + enquiry.index_no);
+    dispatch(deleteEnquiry(parseInt(enquiry.index_no)));
+  };
 
- const showStatus = () =>{
-  switch(enquiry.status){
-    case 'Pending' : return <div className=" rounded p-2 bg-[#FBF5C4] text-[#8B5401] inline-block text-xs lg:text-sm  ">Pending</div>
-    case 'Approved' : return <div className=" rounded p-2 bg-[#FBF5C4] text-[#8B5401] inline-block text-xs lg:text-sm">Approved</div>
-    case 'Revision' : return <div className=" rounded p-2 bg-[#FBF5C4] text-[#8B5401] inline-block text-xs lg:text-sm">Revision</div>
-    case 'Rejected' : return <div className=" rounded p-2 bg-[#FBF5C4] text-[#8B5401] inline-block text-xs lg:text-sm">Rejected</div>
-    case 'Completed' : return <div className=" rounded p-2 bg-[#97FAB8] text-[#14AE5C] text-xs lg:text-sm inline-block">Complete</div>
-  }
- }
-  
+  const showStatus = () => {
+    switch (enquiry.status) {
+      case 'Pending':
+        return (
+          <div className=" rounded p-2 bg-[#FBF5C4] text-[#8B5401] inline-block text-xs lg:text-sm  ">Pending</div>
+        );
+      case 'Approved':
+        return <div className=" rounded p-2 bg-[#FBF5C4] text-[#8B5401] inline-block text-xs lg:text-sm">Approved</div>;
+      case 'Revision':
+        return <div className=" rounded p-2 bg-[#FBF5C4] text-[#8B5401] inline-block text-xs lg:text-sm">Revision</div>;
+      case 'Rejected':
+        return <div className=" rounded p-2 bg-[#FBF5C4] text-[#8B5401] inline-block text-xs lg:text-sm">Rejected</div>;
+      case 'Completed':
+        return <div className=" rounded p-2 bg-[#97FAB8] text-[#14AE5C] text-xs lg:text-sm inline-block">Complete</div>;
+    }
+  };
 
   return (
     <>
@@ -35,14 +41,11 @@ function EnquiryItemDesign({ enquiry }) {
       <div className="col-span-1 ">
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className=" m-1 text-3xl">
-          ...
+            ...
           </label>
-          <ul
-            tabIndex={0}
-            className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box"
-          >
+          <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box">
             <li>
-            <Link to={`/design/${enquiry.index_no}/view`} className="">
+              <Link to={`/design/${enquiry.index_no}/view`} className="">
                 View
               </Link>
             </li>

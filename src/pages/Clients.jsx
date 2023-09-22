@@ -1,23 +1,23 @@
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react';
 
-import { getJobs, reset } from "../features/jobs/jobSlice";
-import { useDispatch, useSelector } from "react-redux";
-import Spinner from "../components/Spinner";
-import JobItem from "../components/JobItem";
-import HeadCard from "../components/HeadCard";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { getJobs, reset } from '../features/jobs/jobSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import Spinner from '../components/Spinner';
+import JobItem from '../components/JobItem';
+import HeadCard from '../components/HeadCard';
+import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
-import folderIcon from "../resources/folder.svg";
-import infoIcon from "../resources/Info.svg";
-import refreshIcon from "../resources/refresh.svg";
+import folderIcon from '../resources/folder.svg';
+import infoIcon from '../resources/Info.svg';
+import refreshIcon from '../resources/refresh.svg';
 
 function Clients() {
   const { jobs, isLoading, isSuccess } = useSelector((state) => state.job);
 
   const dispatch = useDispatch();
 
-  const [activeTab, setActiveTab] = useState("");
+  const [activeTab, setActiveTab] = useState('');
 
   useEffect(() => {
     //run on unmount
@@ -42,7 +42,7 @@ function Clients() {
     return <Spinner />;
   }
 
-  console.log("Before rendering JobItem", jobs); // Add this log statement to check the jobs array before mapping
+  console.log('Before rendering JobItem', jobs); // Add this log statement to check the jobs array before mapping
 
   return (
     <>
@@ -63,7 +63,7 @@ function Clients() {
               >
                 Add Client
                 <img
-                  src={require("../resources/ic_round-keyboard-arrow-right.png")}
+                  src={require('../resources/ic_round-keyboard-arrow-right.png')}
                   className=" justify-center items-center"
                 />
               </button>
@@ -80,9 +80,7 @@ function Clients() {
             </div>
             <div className="w-[70%] float-right h-full px-4">
               <div className=" p-2 ">
-                <h1 className=" font-medium text-base text-gray-600">
-                  Lisy Store
-                </h1>
+                <h1 className=" font-medium text-base text-gray-600">Lisy Store</h1>
                 <div className=" text-sm font-normal text-gray-400">
                   <p className="py-2">1A/Krihnarajapuram, 3 rd street sulur</p>
                   <p className="py-2"> Coimbatore - 6313403</p>
@@ -100,9 +98,7 @@ function Clients() {
             </div>
             <div className="w-[70%] float-right h-full px-4">
               <div className=" p-2 ">
-                <h1 className=" font-medium text-base text-gray-600">
-                  Lisy Store
-                </h1>
+                <h1 className=" font-medium text-base text-gray-600">Lisy Store</h1>
                 <div className=" text-sm font-normal text-gray-400">
                   <p className="py-2">1A/Krihnarajapuram, 3 rd street sulur</p>
                   <p className="py-2"> Coimbatore - 6313403</p>
@@ -120,9 +116,7 @@ function Clients() {
             </div>
             <div className="w-[70%] float-right h-full px-4">
               <div className=" p-2 ">
-                <h1 className=" font-medium text-base text-gray-600">
-                  Lisy Store
-                </h1>
+                <h1 className=" font-medium text-base text-gray-600">Lisy Store</h1>
                 <div className=" text-sm font-normal text-gray-400">
                   <p className="py-2">1A/Krihnarajapuram, 3 rd street sulur</p>
                   <p className="py-2"> Coimbatore - 6313403</p>
@@ -131,8 +125,7 @@ function Clients() {
               </div>
             </div>
           </div>
-        </div>        
-
+        </div>
       </div>
     </>
   );

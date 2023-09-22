@@ -20,13 +20,12 @@ function EnquiryItem({ enquiry }) {
     case 'Revision' : return <div className=" rounded p-2 bg-[#FBF5C4] text-[#8B5401] inline-block text-xs lg:text-sm">Revision</div>
     case 'Rejected' : return <div className=" rounded p-2 bg-[#FBF5C4] text-[#8B5401] inline-block text-xs lg:text-sm">Rejected</div>
     case 'Completed' : return <div className=" rounded p-2 bg-[#97FAB8] text-[#14AE5C] text-xs lg:text-sm inline-block">Complete</div>
-  }
+    }
  }
   
 
   return (
     <>
-      <div className="col-start-1 flex items-center "></div>
       <div className="col-start-2 flex items-center ">{enquiry.index_no}</div>
       <div className="col-start-3 col-span-2 flex items-center">{enquiry.client_name}</div>
       <div className="col-start-5 col-span-2 flex items-center ">{enquiry.project_name}</div>
@@ -35,19 +34,19 @@ function EnquiryItem({ enquiry }) {
       <div className="col-start-11 col-span-1 ">
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className=" m-1 text-3xl">
-          ...
+            ...
           </label>
           <ul
             tabIndex={0}
             className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box"
           >
             <li>
-            <Link to={`/enquiry/${enquiry.index_no}/edit`} className="">
+              <Link to={`/enquiry/${enquiry.index_no}/edit`} className="">
                 Edit
               </Link>
             </li>
             <li>
-            <div onClick={handleDeleteEnquiry}>Delete</div>
+              <div onClick={handleDeleteEnquiry}>Delete</div>
             </li>
           </ul>
         </div>

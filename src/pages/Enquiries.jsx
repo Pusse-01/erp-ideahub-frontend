@@ -85,7 +85,7 @@ function Enquiries() {
         <div className=" inline-block bg-white mt-5 w-[92%] p-5">
           <h className="font-bold text-2xl">Job Inquiries</h>
           <p className=" font-normal text-base text-[#9FA1A6]">
-            You Have requests awaiting your approval
+            You have requests awaiting your approval
           </p>
         </div>
         <hr />
@@ -113,7 +113,7 @@ function Enquiries() {
           </div>
         </div>
 
-        <div className=" lg:flex items-center justify-start bg-white w-[92%] p-1 lg:p-5">
+        <div className="flex flex-wrap items-center justify-between bg-white w-[92%] p-1 lg:p-5">
           <div className="dropdown dropdown-bottom dropdown-end m-1">
             <label
               tabIndex={0}
@@ -148,27 +148,6 @@ function Enquiries() {
             </ul>
           </div>
 
-          
-
-          <form class="flex flex-row focus-within:outline-[#1b53c5] focus-within:outline rounded bg-[#F2F3F5] min-h-0 h-[40px] m-1 w-[310px]">
-            <span class="flex items-center rounded rounded-l-none border-0 px-2 ">
-              <button
-              >
-                <img
-                  src={require("../resources/charm_search.png")}
-                  className=" justify-center items-center"
-                />
-              </button>
-            </span>
-            <input
-              class=" py-2 lg:w-full px-2 outline-none text-gray-600 bg-[#F2F3F5] rounded text-sm  min-w-[120px]"
-              type="text"
-              placeholder="Search or type a command (Ctrl + G)"
-              // value={project_start ? project_start.toISOString().slice(0, 10) : null}
-              // onChange={handleProject_startDateSelect}
-            />
-          </form>
-
           <Link to="/new-enquiry" className="font-medium">
             <button
               type="button"
@@ -184,7 +163,6 @@ function Enquiries() {
         </div>
 
         <div className="grid grid-cols-11  grid-flow-row bg-white w-[92%] gap-1 lg:gap-2 text-sm lg:text-base">
-          <div className="col-start-1 "></div>
           <div className="col-start-2 ">No</div>
           <div className="col-start-3 col-span-2 ">Client name</div>
           <div className="col-start-5 col-span-2 m-[-2px]">Project name</div>

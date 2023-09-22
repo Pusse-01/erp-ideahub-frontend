@@ -1,5 +1,5 @@
-import axios from "axios";
-import API_BASE_URL from "../../config";
+import axios from 'axios';
+import API_BASE_URL from '../../config';
 const API_URL = `${API_BASE_URL}/quotation`;
 
 //create a new quotation
@@ -10,11 +10,7 @@ const createQuotation = async (quotationData, token) => {
     },
   };
 
-  const response = await axios.post(
-    API_URL + "/CreateQuotation",
-    quotationData,
-    config
-  );
+  const response = await axios.post(API_URL + '/CreateQuotation', quotationData, config);
 
   return response.data;
 };
@@ -27,11 +23,7 @@ const updateQuotationStatus = async (quotationData, token) => {
     },
   };
 
-  const response = await axios.put(
-    API_URL + "/UpdateQuotation",
-    quotationData,
-    config
-  );
+  const response = await axios.put(API_URL + '/UpdateQuotation', quotationData, config);
 
   return response.data;
 };
@@ -44,11 +36,7 @@ const getQuotations = async (filters, token) => {
     },
   };
 
-  const response = await axios.post(
-    API_URL + "/GetQuotationsAll",
-    filters,
-    config
-  );
+  const response = await axios.post(API_URL + '/GetQuotationsAll', filters, config);
   console.log(response.data);
 
   return response.data.data;
@@ -62,10 +50,7 @@ const getQuotation = async (quotationId, token) => {
     },
   };
 
-  const response = await axios.get(
-    API_URL + "/GetQuotation/" + quotationId,
-    config
-  );
+  const response = await axios.get(API_URL + '/GetQuotation/' + quotationId, config);
 
   return response.data.data;
 };
@@ -78,10 +63,7 @@ const deleteQuotation = async (quotationId, token) => {
     },
   };
 
-  const response = await axios.delete(
-    API_URL + "/DeleteQuotation/" + quotationId,
-    config
-  );
+  const response = await axios.delete(API_URL + '/DeleteQuotation/' + quotationId, config);
 
   return response.data;
 };

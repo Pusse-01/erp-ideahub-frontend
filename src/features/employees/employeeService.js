@@ -1,5 +1,5 @@
-import axios from "axios";
-import API_BASE_URL from "../../config";
+import axios from 'axios';
+import API_BASE_URL from '../../config';
 const API_URL = `${API_BASE_URL}/employee`;
 
 //create a new employee
@@ -37,7 +37,7 @@ const getEmployees = async (filters, token) => {
   };
 
   const response = await axios.post(API_URL + '/GetEmployees', filters, config);
-  console.log(response.data)
+  console.log(response.data);
 
   return response.data.data;
 };
@@ -69,7 +69,7 @@ const getEmployeeCount = async (token) => {
   return response.data.data.count;
 };
 
-//get department managers count 
+//get department managers count
 const getDepartmentmangersCount = async (token) => {
   const config = {
     headers: {
@@ -83,7 +83,7 @@ const getDepartmentmangersCount = async (token) => {
   return response.data.data.count;
 };
 
-//get department managers count 
+//get department managers count
 const getDepartments = async (token) => {
   const config = {
     headers: {
@@ -95,7 +95,15 @@ const getDepartments = async (token) => {
   //console.log(response.data)
 
   //return response.data.data;
-  return [{ 'dep_id': 1, 'name': 'design' }, { 'dep_id': 2, 'name': 'quotation' }, { 'dep_id': 3, 'name': 'bom' }]
+  return [
+    { dep_id: 1, name: 'Design' },
+    { dep_id: 2, name: 'Quotation' },
+    { dep_id: 3, name: 'BOM' },
+    { dep_id: 4, name: 'Purchasing' },
+    { dep_id: 5, name: 'Manufacturing' },
+    { dep_id: 6, name: 'QC' },
+    { dep_id: 7, name: 'Installation' },
+  ];
 };
 
 //get user employee
@@ -119,7 +127,7 @@ const employeeService = {
   getDepartmentmangersCount,
   getDepartments,
   updateEmployee,
-  deleteEmployee
+  deleteEmployee,
 };
 
 export default employeeService;

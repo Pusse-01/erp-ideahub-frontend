@@ -1,72 +1,72 @@
-import React from "react";
-import { useState } from "react";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import pinIcon from "../resources/push-pin.svg";
-import pcIcon from "../resources/pc.svg";
-import checkIcon from "../resources/check-sign.svg";
-import profileIcon from "../resources/profile-svgrepo-com.svg";
-import { toast } from "react-toastify";
-import {
-  taskSchema,
-  taskSchemaUpdate,
-} from "../validationSchemas/taskValidation";
-import { format } from "date-fns";
-import { DayPicker } from "react-day-picker";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { getJobIDs } from "../features/jobs/jobSlice";
-import { useSelector } from "react-redux";
-import { MultiSelect } from "react-multi-select-component";
-import { getEmployeeWithAvailibilityCheck } from "../features/tasks/taskSlice";
-import productionSchema from "../validationSchemas/productionSchema";
+import React from 'react';
+import { useState } from 'react';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import pinIcon from '../resources/push-pin.svg';
+import pcIcon from '../resources/pc.svg';
+import checkIcon from '../resources/check-sign.svg';
+import editIcon from '../resources/edit.svg';
+import { toast } from 'react-toastify';
+import { taskSchema, taskSchemaUpdate } from '../validationSchemas/taskValidation';
+import { format, isBefore } from 'date-fns';
+import { DayPicker } from 'react-day-picker';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { GetJobIdsBOMExists, getJob, getJobIDs } from '../features/jobs/jobSlice';
+import { useSelector } from 'react-redux';
+import { MultiSelect } from 'react-multi-select-component';
+import { getEmployeeWithAvailibilityCheck } from '../features/tasks/taskSlice';
+import productionSchema from '../validationSchemas/productionSchema';
 import {
   createProduction,
   getProductionByJobNo,
   updateProduction,
-} from "../features/productions/productionSlice";
-import { v4 as uuidv4 } from "uuid";
+  reset as productionReset,
+} from '../features/productions/productionSlice';
+import { v4 as uuidv4 } from 'uuid';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const statuses = [
-  { id: "x1", name: "new" },
-  { id: "x2", name: "ongoing" },
-  { id: "x3", name: "complete" },
+  { id: 'x1', name: 'new' },
+  { id: 'x2', name: 'ongoing' },
+  { id: 'x3', name: 'complete' },
 ];
 
 function UpdateManufacturing() {
-  const [job_no, setJob_no] = useState("");
-  const [project_name, setProject_name] = useState("");
-  const [main_job_id, setMain_job_id] = useState("");
+  const [job_no, setJob_no] = useState('');
+  const [project_name, setProject_name] = useState('');
+  const [main_job_id, setMain_job_id] = useState('');
 
-  const [description, setDescription] = useState("");
+  const [description, setDescription] = useState('');
 
-  const [emp_no, setEmp_no] = useState("");
+  const [emp_no, setEmp_no] = useState('');
   const [taskJob_no, setTaskJobNo] = useState(null);
-  const [taskName, setTaskName] = useState("");
+  const [taskName, setTaskName] = useState('');
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-  const [taskDescription, setTaskDescription] = useState("");
+  const [taskDescription, setTaskDescription] = useState('');
   const [items, setItems] = useState([]);
   const [taskIndexNo, setTaskIndexNo] = useState(null);
-  const [taskStatus, setTaskStatus] = useState("new"); // Rename 'status' to avoid conflict
+  const [taskStatus, setTaskStatus] = useState('new'); // Rename 'status' to avoid conflict
   const [urgent, setUrgent] = useState(false);
   const [taskID, setTaskID] = useState('');
+  const [remarks, setRemarks] = useState('');
 
   const [tasksDataUpdated, setTasksDataUpdated] = useState(true);
 
   const [startDateIsRendered, setStartDateIsRendered] = useState(false);
   const [endDateIsRendered, setEndDateIsRendered] = useState(false);
 
-  const [productionIndex_no, setProductionIndex_no] = useState("");
-  const [productionStatus, setProductionStatus] = useState("");
-  const [productionRemarks, setProductionRemarks] = useState("");
-  const [productionDescription, setProductionDescription] = useState("");
+  const [productionIndex_no, setProductionIndex_no] = useState('');
+  const [productionStatus, setProductionStatus] = useState('');
+  const [productionRemarks, setProductionRemarks] = useState('');
+  const [productionDescription, setProductionDescription] = useState('');
   const [productionCreatedDate, setProductionCreatedDate] = useState(null);
 
-  
-
   const dispatch = useDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  const { jobIDs, message: jobMessage } = useSelector((state) => state.job);
+  const { job, jobIDs, message: jobMessage } = useSelector((state) => state.job);
 
   const {
     production,
@@ -74,32 +74,46 @@ function UpdateManufacturing() {
     isError: productionIsError,
     isSuccess: productionIsSuccess,
     message: productionMessage,
+    updateProductionIsError,
+    updateProductionIsSuccess,
   } = useSelector((state) => state.production);
 
-  const { availableEmployees, message: taskMessage } = useSelector(
-    (state) => state.task
-  );
+  const { availableEmployees, message: taskMessage } = useSelector((state) => state.task);
 
   const [selected, setSelected] = useState([]);
 
   const dayPickerStyles = {
-    caption: { position: "relative" }, // Center the caption text
-    caption_label: { left: "90px", fontWeight: "500", color: "#4e5969" },
+    caption: { position: 'relative' }, // Center the caption text
+    caption_label: { left: '90px', fontWeight: '500', color: '#4e5969' },
     nav_button_previous: {
-      position: "absolute",
-      left: "2px",
-      color: "#4e5969",
+      position: 'absolute',
+      left: '2px',
+      color: '#4e5969',
     }, // Position the previous button on the left
-    nav_button_next: { color: "#4e5969" }, // Position the next button on the right
-    head: { color: "#86909c" },
-    nav_icon: { height: "10px" },
-    row: { border: "2 px" },
-    day: { color: "#272e3b" },
+    nav_button_next: { color: '#4e5969' }, // Position the next button on the right
+    head: { color: '#86909c' },
+    nav_icon: { height: '10px' },
+    row: { border: '2 px' },
+    day: { color: '#272e3b' },
     // selected: {
     //   backgroundColor: 'red !important',
     //   // Add other styles as needed
     // },
   };
+
+  useEffect(() => {
+    if (updateProductionIsError) {
+      toast.error(productionMessage);
+    }
+
+    if (updateProductionIsSuccess) {
+      toast.success('Production Plan Added!');
+      dispatch(productionReset());
+      navigate('/manufacturing');
+    }
+
+    dispatch(productionReset());
+  }, [dispatch, navigate, productionMessage, updateProductionIsError, updateProductionIsSuccess]);
 
   const handleStartDateSelect = (date) => {
     setStartDate(date);
@@ -123,8 +137,26 @@ function UpdateManufacturing() {
   };
 
   useEffect(() => {
-    dispatch(getJobIDs());
+        // dispatch(getJobIDs());
+        dispatch(GetJobIdsBOMExists());
   }, []);
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const planId = queryParams.get('planId');
+    if (planId) {
+      setJob_no(planId);
+      dispatch(getProductionByJobNo(parseInt(planId)));
+      dispatch(getJob(parseInt(planId)));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (job) {
+      setProject_name(job.project_name);
+      setMain_job_id(job.main_job_id);
+    }
+  }, [job]);
 
   useEffect(() => {
     if (endDate) {
@@ -143,10 +175,8 @@ function UpdateManufacturing() {
       setDescription(tasksByJobNo[0].production_description);
       setProductionIndex_no(tasksByJobNo[0].production_index_no);
       setProductionStatus(tasksByJobNo[0].production_status);
-      setProductionCreatedDate(
-        new Date(tasksByJobNo[0].production_created_date)
-      );
-      setProductionRemarks(tasksByJobNo[0].production_remarks || "");
+      setProductionCreatedDate(new Date(tasksByJobNo[0].production_created_date));
+      setProductionRemarks(tasksByJobNo[0].production_remarks || '');
     }
 
     const tasksFromJobNo = tasksByJobNo.map((task) => {
@@ -161,6 +191,7 @@ function UpdateManufacturing() {
         status: task.status,
         urgent: task.urgent,
         Index_no: JSON.stringify(task.index_no),
+        remarks: task.remarks
       };
 
       const { error } = taskSchema.validate(formData);
@@ -175,21 +206,19 @@ function UpdateManufacturing() {
         ...formData,
       };
 
-      return newTask
+      return newTask;
     });
 
     setTasksData(tasksFromJobNo);
-
   }, [tasksByJobNo]);
 
-const options = [
-    { label: "pc", value: "pc" },
-    { label: "pen", value: "pen" },
-    { label: "pencil", value: "pencil" },
+  const options = [
+    { label: 'pc', value: 'pc' },
+    { label: 'pen', value: 'pen' },
+    { label: 'pencil', value: 'pencil' },
   ];
 
   const onSubmit = () => {
-    
     let tasksDataCopy = tasksData.map((task) => {
       const { taskID, ...rest } = task;
       return rest;
@@ -232,6 +261,7 @@ const options = [
       description: taskDescription,
       items: items,
       status: taskStatus,
+      remarks: remarks,
       urgent,
     };
 
@@ -253,37 +283,43 @@ const options = [
   };
 
   const UpdateTaskOnSubmit = () => {
-    const updatedTasksData = tasksData.map((task)=>{
-      if(task.taskID === taskID && task.Index_no === null){
+    const updatedTasksData = tasksData.map((task, index) => {
+      if (task.taskID === taskID && !task.Index_no) {
         return {
-              //   job_no: parseInt(taskJob_no),
-              job_no: job_no,
-              Emp_no: parseInt(emp_no),
-              task_name: taskName,
-              start_date: startDate,
-              end_date: endDate,
-              description: taskDescription,
-              items: items,
-              status: taskStatus,
-              urgent,          
-        }
-      }else if(task.taskID === taskID && task.Index_no){
+          //   job_no: parseInt(taskJob_no),
+          job_no: job_no,
+          Emp_no: parseInt(emp_no),
+          task_name: taskName,
+          start_date: startDate,
+          end_date: endDate,
+          description: taskDescription,
+          items: items,
+          status: taskStatus,
+          urgent,
+          taskID: task.taskID,
+          remarks: remarks
+        };
+      } else if (task.taskID === taskID) {
         return {
           job_no: job_no,
-              Emp_no: parseInt(emp_no),
-              task_name: taskName,
-              start_date: startDate,
-              end_date: endDate,
-              description: taskDescription,
-              items: items,
-              status: taskStatus,
-              urgent,
-              Index_no: task.Index_no
-        }
-      } else {}
-    })
+          Emp_no: parseInt(emp_no),
+          task_name: taskName,
+          start_date: startDate,
+          end_date: endDate,
+          description: taskDescription,
+          items: items,
+          status: taskStatus,
+          urgent,
+          Index_no: task.Index_no,
+          taskID: task.taskID,
+          remarks: remarks
+        };
+      } else {
+        return task
+      }
+    });
 
-    setTasksData(updatedTasksData)
+    setTasksData(updatedTasksData);
 
     setTasksDataUpdated(true); // Toggle the state to trigger re-render
   };
@@ -313,9 +349,7 @@ const options = [
     //Create a copy of the tasks data to avoid mutating state directly
     const updatedTasks = [...tasksData];
 
-    const foundIndex = updatedTasks.findIndex(
-      (task) => task.taskID === result.draggableId
-    );
+    const foundIndex = updatedTasks.findIndex((task) => task.taskID === result.draggableId);
 
     if (foundIndex !== -1) {
       //console.log(`Index found at position: ${foundIndex}`);
@@ -333,14 +367,14 @@ const options = [
     //movedTask.status = result.destination.droppableId;
 
     switch (result.destination.droppableId) {
-      case "x1":
-        movedTask.status = "new";
+      case 'x1':
+        movedTask.status = 'new';
         break;
-      case "x2":
-        movedTask.status = "ongoing";
+      case 'x2':
+        movedTask.status = 'ongoing';
         break;
-      case "x3":
-        movedTask.status = "complete";
+      case 'x3':
+        movedTask.status = 'complete';
         break;
     }
 
@@ -351,6 +385,9 @@ const options = [
 
     // // Update the state with the new tasks data
     setTasksData(updatedTasks);
+    if(result.destination.droppableId === 'x3'){
+      onEditClick(result.draggableId)
+    }
   };
 
   const onJobIDSelect = (jobID) => {
@@ -367,15 +404,10 @@ const options = [
     setTaskJobNo(parseInt(jobID));
   };
 
-  const onEmployeeIDSelect = (empID) => {
-    setEmp_no(parseInt(empID));
-  };
-
   const onEditClick = (taskID) => {
     tasksData.map((task) => {
       if (task.taskID === taskID) {
-
-        setTaskID(taskID)
+        setTaskID(taskID);
 
         setEmp_no(task.Emp_no);
         setTaskName(task.task_name);
@@ -384,60 +416,80 @@ const options = [
         setTaskDescription(task.description);
 
         setItems(task.items);
-        
-        const selec = task.items.map((items) => {
-            return { label: items.name, value: items.name }
-          })
 
-        setSelected([
-          ...selec
-        ]);
+        const selec = task.items.map((items) => {
+          return { label: items.name, value: items.name };
+        });
+
+        setSelected([...selec]);
 
         setTaskStatus(task.status);
         setUrgent(task.urgent);
-        if(task.Index_no){
+        if (task.Index_no) {
           setTaskIndexNo(JSON.stringify(task.Index_no));
         }
-        
+        setRemarks(task.remarks)
       }
     });
 
     window.my_modal_2.showModal();
   };
 
-  const setTaskItems =(selectedItems)=>{
+  const setTaskItems = (selectedItems) => {
+    const selItems = selectedItems.map((sel) => {
+      return {
+        name: sel.value,
+        qty: 1,
+      };
+    });
 
-    const selItems = selectedItems.map((sel)=>{
-        return {
-            name:sel.value,
-            qty: 1
-        }
-    })
-
-    setItems([...selItems])
-    setSelected(selectedItems)    
-    
-  }
-
-  const showModalOne = () => {
-    if(job_no){
-      window.my_modal_1.showModal()
-    }else{
-      toast.error("Select job number first");
-    }
-    
+    setItems([...selItems]);
+    setSelected(selectedItems);
   };
 
-  
+  const showModalOne = () => {
+    if (job_no) {
+      window.my_modal_1.showModal();
+    } else {
+      toast.error('Select job number first');
+    }
+  };
+
+  const onEmployeeIDSelect = (empID) => {
+    const selectedEmployee = availableEmployees.find((employee) => employee.emp_no === parseInt(empID));
+
+    if (selectedEmployee && selectedEmployee.has_uncompleted_tasks) {
+      const isConfirmed = window.confirm('Are you sure you want to select an employee with uncompleted tasks?');
+
+      if (isConfirmed) {
+        setEmp_no(parseInt(empID));
+      }
+    } else {
+      setEmp_no(parseInt(empID));
+    }
+  };
+
+  const groupedEmployees = availableEmployees.reduce((acc, employee) => {
+    if (employee.has_uncompleted_tasks) {
+      if (!acc.hasUncompleted) {
+        acc.hasUncompleted = [];
+      }
+      acc.hasUncompleted.push(employee);
+    } else {
+      if (!acc.noUncompleted) {
+        acc.noUncompleted = [];
+      }
+      acc.noUncompleted.push(employee);
+    }
+    return acc;
+  }, {});
 
   return (
     <div className="drawer-content-custom f9">
       <div className=" inline-block bg-white mt-5 w-[92%] p-5">
         <div className=" float-left">
           <h1 className="font-bold ">Project</h1>
-          <p className="text-xs">
-            You are viewing every Project that's made so far...
-          </p>
+          <p className="text-xs">You are viewing every Project that's made so far...</p>
         </div>
       </div>
       <hr />
@@ -497,9 +549,7 @@ const options = [
           </div>
           <div className="col-span-5 inline-block">
             <div className="float-right">
-              <button className="btn btn-sm m-1 text-sm normal-case font-medium">
-                Cancel
-              </button>
+              <button className="btn btn-sm m-1 text-sm normal-case font-medium">Cancel</button>
               <button
                 className="btn btn-sm bg-blue-700 hover:bg-blue-800 text-white ml-1 submit text-sm normal-case font-medium"
                 onClick={onSubmit}
@@ -512,10 +562,7 @@ const options = [
       </div>
 
       <dialog id="my_modal_2" className="modal">
-        <form
-          method="dialog"
-          className="modal-box rounded-md lg:min-w-[800px] p-1 min-h-[600px] relative"
-        >
+        <form method="dialog" className="modal-box rounded-md lg:min-w-[800px] p-1 min-h-[600px] relative">
           <div className="lg:grid grid-cols-10 gap-2 bg-white p-5 grid-rows-6">
             {/* ... */}
             <div className="col-span-5 row-span-1">
@@ -532,28 +579,45 @@ const options = [
                 />
               </div>
             </div>
-            <div className="col-span-5 row-start-2">
-              <div>
+            <div className="col-span-5 row-start-2 text-xs">
+              <p>
                 <label className="text-xs" htmlFor="job_no">
                   Assigned to
                 </label>
                 <select
                   onChange={(e) => onEmployeeIDSelect(e.target.value)}
                   value={emp_no}
-                  className=" font-normal select select-sm  w-full px-2 outline-none text-gray-600 bg-[#F2F3F5] rounded"
+                  className=" font-normal select select-sm  w-full px-2 outline-none text-gray-600 bg-[#F2F3F5] rounded text-xs"
                 >
-                  <option value="" disabled>
+                  <option disabled selected>
                     Select an Employee ID. First select an End Date
                   </option>
-                  {availableEmployees && availableEmployees.length > 0
-                    ? availableEmployees.map((employee) => (
-                        <>
-                          <option key={employee.emp_no}>{employee.emp_no}</option>
-                        </>
-                      ))
-                    : null}
+                  {groupedEmployees?.noUncompleted && groupedEmployees?.noUncompleted.length > 0 && (
+                    <>
+                      <option className=" bg-green-400 text-black" disabled>
+                        Available employees
+                      </option>
+                      {groupedEmployees.noUncompleted.map((employee) => (
+                        <option value={employee.emp_no}>
+                          {employee.name} {' - '} {employee.department}
+                        </option>
+                      ))}
+                    </>
+                  )}
+                  {groupedEmployees?.hasUncompleted && groupedEmployees?.hasUncompleted.length > 0 && (
+                    <>
+                      <option className=" bg-red-400 text-black" disabled>
+                        Employees with assigned tasks
+                      </option>
+                      {groupedEmployees?.hasUncompleted.map((employee) => (
+                        <option value={employee.emp_no}>
+                          {employee.name} {' - '} {employee.department}
+                        </option>
+                      ))}
+                    </>
+                  )}
                 </select>
-              </div>
+              </p>
             </div>
 
             <div className="col-span-5 row-start-3 inline relative">
@@ -566,15 +630,12 @@ const options = [
                       className=" py-2 w-full px-2 outline-none text-gray-600 bg-[#F2F3F5] rounded"
                       type="text"
                       placeholder="YYYY-MM-DD"
-                      value={startDate ? format(startDate, "yyyy-MM-dd") : ""}
+                      value={startDate ? format(startDate, 'yyyy-MM-dd') : ''}
                       disabled
                     />
                     <span className="flex items-center rounded rounded-l-none border-0 px-2 ">
                       <button onClick={renderStartDatePicker}>
-                        <img
-                          src={require("../resources/cal.png")}
-                          className=" justify-center items-center"
-                        />
+                        <img src={require('../resources/cal.png')} className=" justify-center items-center" />
                       </button>
                     </span>
                   </div>
@@ -603,15 +664,12 @@ const options = [
                       className=" py-2 w-full px-2 outline-none text-gray-600 bg-[#F2F3F5] rounded"
                       type="text"
                       placeholder="YYYY-MM-DD"
-                      value={endDate ? format(endDate, "yyyy-MM-dd") : ""}
+                      value={endDate ? format(endDate, 'yyyy-MM-dd') : ''}
                       disabled
                     />
                     <span className="flex items-center rounded rounded-l-none border-0 px-2 ">
                       <button onClick={renderEndDatePicker}>
-                        <img
-                          src={require("../resources/cal.png")}
-                          className=" justify-center items-center"
-                        />
+                        <img src={require('../resources/cal.png')} className=" justify-center items-center" />
                       </button>
                     </span>
                   </div>
@@ -639,7 +697,7 @@ const options = [
                   className="multiselect"
                   options={options}
                   value={selected}
-                  onChange={(e)=>setTaskItems(e)}
+                  onChange={(e) => setTaskItems(e)}
                   labelledBy="Select"
                 />
               </div>
@@ -658,9 +716,15 @@ const options = [
                     Select Status
                   </option>
 
-                  <option key="new" value="new">New Tasks</option>
-                  <option key="ongoing" value="ongoing">Working On</option>
-                  <option key="complete" value="complete">completed</option>
+                  <option key="new" value="new">
+                    New Tasks
+                  </option>
+                  <option key="ongoing" value="ongoing">
+                    Working On
+                  </option>
+                  <option key="complete" value="complete">
+                    completed
+                  </option>
                 </select>
               </div>
             </div>
@@ -677,6 +741,24 @@ const options = [
                 ></textarea>
               </div>
             </div>
+            {
+              taskStatus === 'complete' ? 
+              <div className="col-span-5 row-span-2 row-start-5">
+              <div>
+                <label className="text-xs" htmlFor="description">
+                  Remarks
+                </label>
+                <textarea
+                  className="textarea py-2 w-full px-2 outline-none text-gray-600 bg-[#fafa8fa4] rounded h-[100px]"
+                  id="taskRemarks"
+                  value={remarks}
+                  onChange={(e) => setRemarks(e.target.value)}
+                ></textarea>
+              </div>
+            </div>
+            :
+            <></>
+            }   
             <div className=" row-start-7">
               <label className="cursor-pointer label text-xs">Urgent</label>
               <input
@@ -698,8 +780,8 @@ const options = [
             </button>
             <button
               className="btn btn-sm bg-blue-700 hover:bg-blue-800 text-white ml-1 submit text-sm normal-case font-medium"
-            //   onClick={AddTaskOnSubmit}
-            onClick={()=>UpdateTaskOnSubmit()}
+              //   onClick={AddTaskOnSubmit}
+              onClick={() => UpdateTaskOnSubmit()}
             >
               Submit
             </button>
@@ -708,10 +790,7 @@ const options = [
       </dialog>
 
       <dialog id="my_modal_1" className="modal">
-        <form
-          method="dialog"
-          className="modal-box rounded-md lg:min-w-[800px] p-1 min-h-[600px] relative"
-        >
+        <form method="dialog" className="modal-box rounded-md lg:min-w-[800px] p-1 min-h-[600px] relative">
           <div className="lg:grid grid-cols-10 gap-2 bg-white p-5 grid-rows-6">
             {/* ... */}
             <div className="col-span-5 row-span-1">
@@ -728,28 +807,45 @@ const options = [
                 />
               </div>
             </div>
-            <div className="col-span-5 row-start-2">
-              <div>
+            <div className="col-span-5 row-start-2 text-xs">
+              <p>
                 <label className="text-xs" htmlFor="job_no">
                   Assigned to
                 </label>
                 <select
                   onChange={(e) => onEmployeeIDSelect(e.target.value)}
                   value={emp_no}
-                  className=" font-normal select select-sm  w-full px-2 outline-none text-gray-600 bg-[#F2F3F5] rounded"
+                  className=" font-normal select select-sm  w-full px-2 outline-none text-gray-600 bg-[#F2F3F5] rounded text-xs"
                 >
-                  <option disabled value="">
+                  <option disabled selected>
                     Select an Employee ID. First select an End Date
                   </option>
-                  {availableEmployees && availableEmployees.length > 0
-                    ? availableEmployees.map((employee) => (
-                        <>
-                          <option key={employee.emp_no}>{employee.emp_no}</option>
-                        </>
-                      ))
-                    : null}
+                  {groupedEmployees?.noUncompleted && groupedEmployees?.noUncompleted.length > 0 && (
+                    <>
+                      <option className=" bg-green-400 text-black" disabled>
+                        Available employees
+                      </option>
+                      {groupedEmployees.noUncompleted.map((employee) => (
+                        <option value={employee.emp_no}>
+                          {employee.name} {' - '} {employee.department}
+                        </option>
+                      ))}
+                    </>
+                  )}
+                  {groupedEmployees?.hasUncompleted && groupedEmployees?.hasUncompleted.length > 0 && (
+                    <>
+                      <option className=" bg-red-400 text-black" disabled>
+                        Employees with assigned tasks
+                      </option>
+                      {groupedEmployees?.hasUncompleted.map((employee) => (
+                        <option value={employee.emp_no}>
+                          {employee.name} {' - '} {employee.department}
+                        </option>
+                      ))}
+                    </>
+                  )}
                 </select>
-              </div>
+              </p>
             </div>
 
             <div className="col-span-5 row-start-3 inline relative">
@@ -762,15 +858,12 @@ const options = [
                       className=" py-2 w-full px-2 outline-none text-gray-600 bg-[#F2F3F5] rounded"
                       type="text"
                       placeholder="YYYY-MM-DD"
-                      value={startDate ? format(startDate, "yyyy-MM-dd") : ""}
+                      value={startDate ? format(startDate, 'yyyy-MM-dd') : ''}
                       disabled
                     />
                     <span className="flex items-center rounded rounded-l-none border-0 px-2 ">
                       <button onClick={renderStartDatePicker}>
-                        <img
-                          src={require("../resources/cal.png")}
-                          className=" justify-center items-center"
-                        />
+                        <img src={require('../resources/cal.png')} className=" justify-center items-center" />
                       </button>
                     </span>
                   </div>
@@ -799,15 +892,12 @@ const options = [
                       className=" py-2 w-full px-2 outline-none text-gray-600 bg-[#F2F3F5] rounded"
                       type="text"
                       placeholder="YYYY-MM-DD"
-                      value={endDate ? format(endDate, "yyyy-MM-dd") : ""}
+                      value={endDate ? format(endDate, 'yyyy-MM-dd') : ''}
                       disabled
                     />
                     <span className="flex items-center rounded rounded-l-none border-0 px-2 ">
                       <button onClick={renderEndDatePicker}>
-                        <img
-                          src={require("../resources/cal.png")}
-                          className=" justify-center items-center"
-                        />
+                        <img src={require('../resources/cal.png')} className=" justify-center items-center" />
                       </button>
                     </span>
                   </div>
@@ -835,7 +925,7 @@ const options = [
                   className="multiselect"
                   options={options}
                   value={selected}
-                  onChange={(e)=>setTaskItems(e)}
+                  onChange={(e) => setTaskItems(e)}
                   labelledBy="Select"
                 />
               </div>
@@ -854,9 +944,15 @@ const options = [
                     Select Status
                   </option>
 
-                  <option key="new" value="new">New Tasks</option>
-                  <option key="ongoing" value="ongoing">Working On</option>
-                  <option key="complete" value="complete">completed</option>
+                  <option key="new" value="new">
+                    New Tasks
+                  </option>
+                  <option key="ongoing" value="ongoing">
+                    Working On
+                  </option>
+                  <option key="complete" value="complete">
+                    completed
+                  </option>
                 </select>
               </div>
             </div>
@@ -873,6 +969,24 @@ const options = [
                 ></textarea>
               </div>
             </div>
+            {
+              taskStatus === 'complete' ? 
+              <div className="col-span-5 row-span-2 row-start-5">
+              <div>
+                <label className="text-xs" htmlFor="description">
+                  Remarks
+                </label>
+                <textarea
+                  className="textarea py-2 w-full px-2 outline-none text-gray-600 bg-[#fafa8fa4] rounded h-[100px]"
+                  id="taskRemarks"
+                  value={remarks}
+                  onChange={(e) => setRemarks(e.target.value)}
+                ></textarea>
+              </div>
+            </div>
+            :
+            <></>
+            }  
             <div className=" row-start-7">
               <label className="cursor-pointer label text-xs">Urgent</label>
               <input
@@ -894,8 +1008,8 @@ const options = [
             </button>
             <button
               className="btn btn-sm bg-blue-700 hover:bg-blue-800 text-white ml-1 submit text-sm normal-case font-medium"
-               onClick={AddTaskOnSubmit}
-            // onClick={()=>UpdateTaskOnSubmit()}
+              onClick={AddTaskOnSubmit}
+              // onClick={()=>UpdateTaskOnSubmit()}
             >
               Submit
             </button>
@@ -911,34 +1025,28 @@ const options = [
                 className="  min-h-[300px] w-[400px]"
                 key={status.id}
                 style={{
-                  margin: "16px",
-                  padding: "8px",
+                  margin: '16px',
+                  padding: '8px',
                 }}
               >
                 <div className=" bg-[#ededed] rounded-md text-sm font-medium flex justify-between content-between mb-2">
-                  {status.name === "new" ? (
+                  {status.name === 'new' ? (
                     <div className="flex p-1">
-                      {" "}
+                      {' '}
                       <img className=" w-3 ml-2" src={pinIcon} />
-                      <h3 className="px-2 text-[#5c5f62] font-semibold">
-                        New Tasks (5)
-                      </h3>
+                      <h3 className="px-2 text-[#5c5f62] font-semibold">New Tasks (5)</h3>
                     </div>
-                  ) : status.name === "ongoing" ? (
+                  ) : status.name === 'ongoing' ? (
                     <div className="flex p-1">
-                      {" "}
+                      {' '}
                       <img className=" w-3 ml-2" src={pcIcon} />
-                      <h3 className="px-2 text-[#5c5f62] font-semibold">
-                        Working On (5)
-                      </h3>
+                      <h3 className="px-2 text-[#5c5f62] font-semibold">Working On (5)</h3>
                     </div>
-                  ) : status.name === "complete" ? (
+                  ) : status.name === 'complete' ? (
                     <div className="flex p-1">
-                      {" "}
+                      {' '}
                       <img className=" w-3 ml-2" src={checkIcon} />
-                      <h3 className="px-2 text-[#5c5f62] font-semibold">
-                        Completed (5)
-                      </h3>
+                      <h3 className="px-2 text-[#5c5f62] font-semibold">Completed (5)</h3>
                     </div>
                   ) : null}
                   <div className="">
@@ -956,19 +1064,11 @@ const options = [
 
                 <Droppable droppableId={status.id} key={status.id} className="">
                   {(provided) => (
-                    <ul
-                      className="tasks  h-full"
-                      {...provided.droppableProps}
-                      ref={provided.innerRef}
-                    >
+                    <ul className="tasks  h-full" {...provided.droppableProps} ref={provided.innerRef}>
                       {tasksData
                         .filter((task) => task.status === status.name)
                         .map((task, index) => (
-                          <Draggable
-                            key={task.taskID}
-                            draggableId={task.taskID}
-                            index={index}
-                          >
+                          <Draggable key={task.taskID} draggableId={task.taskID} index={index}>
                             {(provided) => (
                               <li
                                 className="bg-white h-[110] shadow-[0px_0px_20px_0px_#00000003] rounded-[10px] p-1 inline-block m-1 ml-[0px] border w-full"
@@ -976,32 +1076,28 @@ const options = [
                                 ref={provided.innerRef}
                                 {...provided.dragHandleProps}
                               >
-                                <div>
-                                  <div className="flex justify-start items-start">
-                                    <input
-                                      type="checkbox"
-                                      name=""
-                                      id=""
-                                      className=" mt-1 m-2"
-                                    />
+                                <div className=" p-2">
+                                  <div className="flex justify-between">
                                     <div className="flex flex-col  w-[90%]">
-                                      <p className=" text-xs font-semibold truncate">
-                                        {task.task_name}
-                                        {/* {task.task_name.length && task.task_name.length > 50 ? task.task_name.substring(0,49) : task.task_name } */}
-                                      </p>
-                                      <p className=" text-xs text-[#5c5f62] truncate">
+                                      <p className=" text-xs font-semibold truncate">{task.task_name}</p>
+                                      <p className=" h-8 text-xs text-[#5c5f62] overflow-hidden line-clamp-2 my-1">
                                         {task.description}
                                       </p>
                                     </div>
-                                    <div onClick={()=>onEditClick(task.taskID)}>Edit</div>
+                                    {task.end_date && isBefore(task.end_date, new Date()) && (
+                                      <p className="p-1 h-fit w-fit rounded-lg font-semibold bg-red-400 text-white text-xs">
+                                        Overdue
+                                      </p>
+                                    )}
                                   </div>
-                                </div>
-                                <div className="flex">
-                                  <img className=" w-7 m-3" src={profileIcon} />
-                                  <p className="my-3 text-[#5c5f62]">
-                                    {task.end_date.toLocaleDateString()}
-                                  </p>
-                                  <p></p>
+                                  <div className="flex items-center justify-between">
+                                    <p className="text-[#5c5f62] text-sm">
+                                      {task.end_date.toLocaleDateString() + ' - ' + task.end_date.toLocaleDateString()}
+                                    </p>
+                                    <div onClick={() => onEditClick(task.taskID)}>
+                                      <img src={editIcon} className=" w-6" />
+                                    </div>
+                                  </div>
                                 </div>
                               </li>
                             )}

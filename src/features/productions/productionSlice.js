@@ -1,131 +1,90 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import productionService from "./productionService";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import productionService from './productionService';
 
 const initialState = {
   productions: [],
   production: {},
-  tasksByJobNo:[],
+  tasksByJobNo: [],
   isError: false,
   isSuccess: false,
   isLoading: false,
-  message: "",
-  createProductionIsSuccess:false,
-  createProductionIsError:false,
-  deleteProductionIsSuccess:false,
-  deleteProductionIsError:false
+  message: '',
+  createProductionIsSuccess: false,
+  createProductionIsError: false,
+  deleteProductionIsSuccess: false,
+  deleteProductionIsError: false,
+  updateProductionIsSuccess: false,
+  updateProductionIsError: false,
 };
 
-export const createProduction = createAsyncThunk(
-  "productions/create",
-  async (productionData, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await productionService.createProduction(productionData, token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
+export const createProduction = createAsyncThunk('productions/create', async (productionData, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.user.token;
+    return await productionService.createProduction(productionData, token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
   }
-);
+});
 
-export const updateProduction = createAsyncThunk(
-  "productions/update",
-  async (productionData, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await productionService.updateProduction(productionData, token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
+export const updateProduction = createAsyncThunk('productions/update', async (productionData, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.user.token;
+    return await productionService.updateProduction(productionData, token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
   }
-);
+});
 
-export const getProductions = createAsyncThunk(
-  "productions/getAll",
-  async (filters, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await productionService.getProductions(filters, token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
+export const getProductions = createAsyncThunk('productions/getAll', async (filters, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.user.token;
+    return await productionService.getProductions(filters, token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
   }
-);
+});
 
-
-export const getProduction = createAsyncThunk(
-  "productions/get",
-  async (productionId, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await productionService.getProduction(productionId, token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
+export const getProduction = createAsyncThunk('productions/get', async (productionId, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.user.token;
+    return await productionService.getProduction(productionId, token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
   }
-);
+});
 
-export const getProductionByJobNo = createAsyncThunk(
-  "productions/getByJobNo",
-  async (jobNo, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await productionService.getProductionByJobNo(jobNo, token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
+export const getProductionByJobNo = createAsyncThunk('productions/getByJobNo', async (jobNo, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.user.token;
+    return await productionService.getProductionByJobNo(jobNo, token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
   }
-);
+});
 
-export const deleteProduction = createAsyncThunk(
-  "productions/delete",
-  async (productionId, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await productionService.deleteProduction(productionId, token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
+export const deleteProduction = createAsyncThunk('productions/delete', async (productionId, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.user.token;
+    return await productionService.deleteProduction(productionId, token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
   }
-);
+});
 
 export const productionSlice = createSlice({
-  name: "production",
+  name: 'production',
   initialState,
   reducers: {
     reset: (state) => initialState,
@@ -136,13 +95,13 @@ export const productionSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(createProduction.fulfilled, (state) => {
-        console.log(state.production)
+        console.log(state.production);
         state.isLoading = false;
         state.isSuccess = true;
         state.createProductionIsSuccess = true;
       })
       .addCase(createProduction.rejected, (state, action) => {
-        console.log(state.production)
+        console.log(state.production);
         state.isLoading = false;
         state.isError = true;
         state.createProductionIsError = true;
@@ -152,16 +111,16 @@ export const productionSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(updateProduction.fulfilled, (state) => {
-        console.log(state.production)
-        state.createProductionIsSuccess = true;
+        console.log(state.production);
+        state.updateProductionIsSuccess = true;
         state.isLoading = false;
         state.isSuccess = true;
       })
       .addCase(updateProduction.rejected, (state, action) => {
-        console.log(state.production)
+        console.log(state.production);
         state.isLoading = false;
         state.isError = true;
-        state.createProductionIsError = true;
+        state.updateProductionIsError = true;
         state.message = action.payload;
       })
       .addCase(getProductions.pending, (state) => {
@@ -210,14 +169,14 @@ export const productionSlice = createSlice({
       .addCase(deleteProduction.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.deleteProductionIsSuccess= true;
+        state.deleteProductionIsSuccess = true;
       })
       .addCase(deleteProduction.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
-        state.deleteProductionIsError= true;
+        state.deleteProductionIsError = true;
         state.message = action.payload;
-      })
+      });
   },
 });
 

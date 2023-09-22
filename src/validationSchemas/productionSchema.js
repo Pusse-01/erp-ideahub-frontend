@@ -1,5 +1,5 @@
-import Joi from "joi";
-import { taskSchema,taskSchemaUpdate,arraySchema,arraySchemaUpdate } from "./taskValidation";
+import Joi from 'joi';
+import { taskSchema, taskSchemaUpdate, arraySchema, arraySchemaUpdate } from './taskValidation';
 
 const productionSchema = Joi.object({
   index_no: Joi.number().integer(),
@@ -14,7 +14,7 @@ const productionSchema = Joi.object({
   description: Joi.string().allow('').required().messages({
     'string.empty': 'Description field can be empty',
   }),
-  tasks : Joi.array().items(taskSchema).required()
+  tasks: Joi.array().items(taskSchema).required(),
 });
 
 export default productionSchema;

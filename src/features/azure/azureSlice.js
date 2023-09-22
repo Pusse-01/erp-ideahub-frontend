@@ -1,55 +1,41 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import azureService from "./azureService";
-import { toast } from "react-toastify";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import azureService from './azureService';
+import { toast } from 'react-toastify';
 
 const initialState = {
-  urls:'',
+  urls: '',
   isError: false,
   isSuccess: false,
   isLoading: false,
-  message: "",
+  message: '',
   deleteFileIsError: false,
   deleteFileIsSuccess: false,
 };
 
-export const getURLs = createAsyncThunk(
-  "azure/getURLs",
-  async (filters, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await azureService.getURLs(filters, token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
+export const getURLs = createAsyncThunk('azure/getURLs', async (filters, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.user.token;
+    return await azureService.getURLs(filters, token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
   }
-);
+});
 
-export const deleteFile = createAsyncThunk(
-  "azure/delete",
-  async (filters, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await azureService.deleteFile(filters, token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
+export const deleteFile = createAsyncThunk('azure/delete', async (filters, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.user.token;
+    return await azureService.deleteFile(filters, token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
   }
-);
+});
 
 export const azureSlice = createSlice({
-  name: "azure",
+  name: 'azure',
   initialState,
   reducers: {
     reset: (state) => initialState,

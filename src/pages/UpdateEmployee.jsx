@@ -1,23 +1,18 @@
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react';
 
-import { useDispatch, useSelector } from "react-redux";
-import Spinner from "../components/Spinner";
-import { useNavigate, useParams } from "react-router-dom";
-import { useState } from "react";
-import {reset, 
-  getDepartments,
-  getEmployee,
-  updateEmployee,
-} from "../features/employees/employeeSlice";
+import { useDispatch, useSelector } from 'react-redux';
+import Spinner from '../components/Spinner';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useState } from 'react';
+import { reset, getDepartments, getEmployee, updateEmployee } from '../features/employees/employeeSlice';
 
-import { toast } from "react-toastify";
+import { toast } from 'react-toastify';
 
-import profileIcon from "../resources/profile-svgrepo-com.svg";
+import profileIcon from '../resources/profile-svgrepo-com.svg';
 
-
-import { format } from "date-fns";
-import { DayPicker } from "react-day-picker";
-import "react-day-picker/dist/style.css";
+import { format } from 'date-fns';
+import { DayPicker } from 'react-day-picker';
+import 'react-day-picker/dist/style.css';
 
 function UpdateEmployee() {
   const { jobs, isLoading, isSuccess } = useSelector((state) => state.job);
@@ -28,40 +23,40 @@ function UpdateEmployee() {
     isSuccess: employeeIsSuccess,
     createEmployeeIsError,
     createEmployeeIsSuccess,
-    message: employeeMessage
+    message: employeeMessage,
   } = useSelector((state) => state.employee);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const {employeeId} = useParams()
+  const { employeeId } = useParams();
 
-  const [activeTab, setActiveTab] = useState("");
+  const [activeTab, setActiveTab] = useState('');
 
-  const [name, setName] = useState("");
+  const [name, setName] = useState('');
   const [role, setRole] = useState(null);
   const [department_ID, setDepartment_ID] = useState();
-  const [shift_timing_start, setShift_timing_start] = useState("");
-  const [shift_timing_end, setShift_timing_end] = useState("");
+  const [shift_timing_start, setShift_timing_start] = useState('');
+  const [shift_timing_end, setShift_timing_end] = useState('');
   const [dep_manager, setDep_manager] = useState(false);
-  const [photo_url, setPhoto_url] = useState("");
+  const [photo_url, setPhoto_url] = useState('');
 
   const [joinDate, setJoinDate] = useState(null);
   const [joinDateIsRendered, setJoinDateIsRendered] = useState(false);
 
   const dayPickerStyles = {
-    caption: { position: "relative" }, // Center the caption text
-    caption_label: { left: "90px", fontWeight: "500", color: "#4e5969" },
+    caption: { position: 'relative' }, // Center the caption text
+    caption_label: { left: '90px', fontWeight: '500', color: '#4e5969' },
     nav_button_previous: {
-      position: "absolute",
-      left: "2px",
-      color: "#4e5969",
+      position: 'absolute',
+      left: '2px',
+      color: '#4e5969',
     }, // Position the previous button on the left
-    nav_button_next: { color: "#4e5969" }, // Position the next button on the right
-    head: { color: "#86909c" },
-    nav_icon: { height: "10px" },
-    row: { border: "2 px" },
-    day: { color: "#272e3b" },
+    nav_button_next: { color: '#4e5969' }, // Position the next button on the right
+    head: { color: '#86909c' },
+    nav_icon: { height: '10px' },
+    row: { border: '2 px' },
+    day: { color: '#272e3b' },
     // selected: {
     //   backgroundColor: 'red !important',
     //   // Add other styles as needed
@@ -94,31 +89,31 @@ function UpdateEmployee() {
     }
 
     if (createEmployeeIsSuccess) {
-      toast.success('Employee Updated!')
+      toast.success('Employee Updated!');
       dispatch(reset());
-      navigate("/employees");
+      navigate('/employees');
     }
   }, [createEmployeeIsError, dispatch, createEmployeeIsSuccess, employeeMessage]);
 
   useEffect(() => {
-    dispatch(getEmployee(employeeId))
+    dispatch(getEmployee(employeeId));
     dispatch(getDepartments());
   }, []);
 
   useEffect(() => {
-    if(employee){
-        setRole(employee.role)
-        setName(employee.name)
-        setDepartment_ID(employee.department_id)
-        setShift_timing_start(employee.shift_timing_start)
-        setShift_timing_end(employee.shift_timing_end)
+    if (employee) {
+      setRole(employee.role);
+      setName(employee.name);
+      setDepartment_ID(employee.department_id);
+      setShift_timing_start(employee.shift_timing_start);
+      setShift_timing_end(employee.shift_timing_end);
 
-        if(employee.join_date){
-            setJoinDate( new Date(employee.join_date), 'yyyy-MM-dd' )
-        }
-        
-        setDep_manager(employee.dep_manager)
-        setPhoto_url(employee.photo_url)
+      if (employee.join_date) {
+        setJoinDate(new Date(employee.join_date), 'yyyy-MM-dd');
+      }
+
+      setDep_manager(employee.dep_manager);
+      setPhoto_url(employee.photo_url);
     }
   }, [employee]);
 
@@ -148,9 +143,8 @@ function UpdateEmployee() {
         shift_timing_end,
         join_date: joinDate,
         dep_manager,
-        photo_url:
-          "https://robohash.org/49bac6f3e27e9ea18cf2459b8b9c2209?set=set2&bgset=&size=200x200",
-          emp_no: employeeId
+        photo_url: 'https://robohash.org/49bac6f3e27e9ea18cf2459b8b9c2209?set=set2&bgset=&size=200x200',
+        emp_no: employeeId,
       })
     );
   };
@@ -165,9 +159,7 @@ function UpdateEmployee() {
         <div className=" lg:flex items-center justify-center bg-white w-[92%] p-1 lg:p-5 lg:px-7 m-9">
           <div className="lg:grid grid-cols-10 gap-2 bg-white p-5 ">
             <div className="col-span-5">
-              <h3 className=" float-left font-medium text-2xl">
-                Edit Employee Profile
-              </h3>
+              <h3 className=" float-left font-medium text-2xl">Edit Employee Profile</h3>
             </div>
             <div className="col-span-5 row-span-2">
               <div className=" float-right flex justify-center items-center p-2 bg-[#e4e4e4] w-40 mb-1">
@@ -213,10 +205,7 @@ function UpdateEmployee() {
                   {departments.length > 0
                     ? departments.map((department) => (
                         <>
-                          <option
-                            key={department.dep_id}
-                            value={department.dep_id}
-                          >
+                          <option key={department.dep_id} value={department.dep_id}>
                             {department.name}
                           </option>
                         </>
@@ -264,15 +253,12 @@ function UpdateEmployee() {
                         class=" py-2 w-full px-2 outline-none text-gray-600 bg-[#F2F3F5] rounded"
                         type="text"
                         placeholder="YYYY-MM-DD"
-                        value={joinDate ? format(joinDate, "yyyy-MM-dd") : ""}
+                        value={joinDate ? format(joinDate, 'yyyy-MM-dd') : ''}
                         disabled
                       />
                       <span class="flex items-center rounded rounded-l-none border-0 px-2 ">
                         <button onClick={renderJoinDatePicker}>
-                          <img
-                            src={require("../resources/cal.png")}
-                            className=" justify-center items-center"
-                          />
+                          <img src={require('../resources/cal.png')} className=" justify-center items-center" />
                         </button>
                       </span>
                     </form>
@@ -347,9 +333,7 @@ function UpdateEmployee() {
             </div>
             <div className=" row-start-8 col-span-10 inline-block">
               <div className="float-right">
-                <button className="btn btn-sm m-1 text-sm normal-case font-medium">
-                  Cancel
-                </button>
+                <button className="btn btn-sm m-1 text-sm normal-case font-medium">Cancel</button>
                 <button
                   className="btn btn-sm bg-blue-700 hover:bg-blue-800 text-white ml-1 submit text-sm normal-case font-medium"
                   onClick={onSubmit}

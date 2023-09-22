@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react';
 
 import {
   getEnquiryCountAll,
@@ -6,20 +6,20 @@ import {
   getEnquiryCount,
   getEnquiries,
   reset,
-} from "../features/enquiries/enquirySlice";
-import { useDispatch, useSelector } from "react-redux";
-import Spinner from "../components/Spinner";
-import EnquiryItem from "../components/EnquiryItem";
-import HeadCard from "../components/HeadCard";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+} from '../features/enquiries/enquirySlice';
+import { useDispatch, useSelector } from 'react-redux';
+import Spinner from '../components/Spinner';
+import EnquiryItem from '../components/EnquiryItem';
+import HeadCard from '../components/HeadCard';
+import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
-import folderIcon from "../resources/folder.svg";
-import infoIcon from "../resources/Info.svg";
-import refreshIcon from "../resources/refresh.svg";
-import { toast } from "react-toastify";
-import EnquiryItemDesign from "../components/EnquiryItemDesign";
-import { getDesigns } from "../features/designs/designSlice";
+import folderIcon from '../resources/folder.svg';
+import infoIcon from '../resources/Info.svg';
+import refreshIcon from '../resources/refresh.svg';
+import { toast } from 'react-toastify';
+import EnquiryItemDesign from '../components/EnquiryItemDesign';
+import { getDesigns } from '../features/designs/designSlice';
 
 function QuotationDashboardEnquiries() {
   const {
@@ -43,9 +43,9 @@ function QuotationDashboardEnquiries() {
 
   const dispatch = useDispatch();
 
-  const [enquiryWithDesigns, setEnquiryWithDesigns] = useState([])
+  const [enquiryWithDesigns, setEnquiryWithDesigns] = useState([]);
 
-  const [activeTab, setActiveTab] = useState("any");
+  const [activeTab, setActiveTab] = useState('any');
   const [daysCount, setDaysCount] = useState(30);
 
   useEffect(() => {
@@ -67,7 +67,7 @@ function QuotationDashboardEnquiries() {
       toast.error(message);
     }
     if (deleteEnquiryIsSuccess) {
-      toast.success("Enquiry Deleted!");
+      toast.success('Enquiry Deleted!');
       dispatch(
         getEnquiries({
           stateFilter: activeTab,
@@ -82,13 +82,14 @@ function QuotationDashboardEnquiries() {
   }, [deleteEnquiryIsError, deleteEnquiryIsSuccess]);
 
   useEffect(() => {
-
-    if(activeTab==='designs'){
-      dispatch(getDesigns({
-        "stateFilter": 'any',
-        "daysCount": daysCount
-      }))
-    }else{
+    if (activeTab === 'designs') {
+      dispatch(
+        getDesigns({
+          stateFilter: 'any',
+          daysCount: daysCount,
+        })
+      );
+    } else {
       dispatch(
         getEnquiries({
           stateFilter: activeTab,
@@ -99,12 +100,11 @@ function QuotationDashboardEnquiries() {
   }, [activeTab, daysCount]);
 
   useEffect(() => {
-
-    if(designs && designs.length > 0){
+    if (designs && designs.length > 0) {
       const newArray = [];
 
       const seenInquiryNos = new Set();
-      
+
       for (const obj of designs) {
         if (!seenInquiryNos.has(obj.inquiry_no)) {
           seenInquiryNos.add(obj.inquiry_no);
@@ -114,19 +114,15 @@ function QuotationDashboardEnquiries() {
             status: obj.status,
             brief: obj.brief,
             inquiry_no: obj.inquiry_no,
-            index_no:obj.inquiry_no,
+            index_no: obj.inquiry_no,
           });
         }
       }
-      
-      setEnquiryWithDesigns(newArray)
+
+      setEnquiryWithDesigns(newArray);
     }
 
-    
-
     //console.log(newArray);
-    
-
   }, [designs]);
 
   if (isLoading) {
@@ -141,33 +137,19 @@ function QuotationDashboardEnquiries() {
     setActiveTab(e.target.id);
   };
 
-  console.log("Before rendering EnquiryItem", enquiries); // Add this log statement to check the enquiries array before mapping
+  console.log('Before rendering EnquiryItem', enquiries); // Add this log statement to check the enquiries array before mapping
 
   return (
     <>
       <div className="drawer-content-custom f9">
         <div className="grid grid-cols-3 gap-7 w-[92%] mt-7 ">
-          <HeadCard
-            icon={folderIcon}
-            value={enquiryCountAll}
-            heading={"Total Enquiries"}
-          />
-          <HeadCard
-            icon={infoIcon}
-            value={enquiryCountRevision}
-            heading={"In Revision"}
-          />
-          <HeadCard
-            icon={refreshIcon}
-            value={enquiryCount}
-            heading={"Enquiry count"}
-          />
+          <HeadCard icon={folderIcon} value={enquiryCountAll} heading={'Total Enquiries'} />
+          <HeadCard icon={infoIcon} value={enquiryCountRevision} heading={'In Revision'} />
+          <HeadCard icon={refreshIcon} value={enquiryCount} heading={'Enquiry count'} />
         </div>
         <div className=" inline-block bg-white mt-5 w-[92%] p-5">
           <h className="font-bold text-2xl">Job Inquiries</h>
-          <p className=" font-normal text-base text-[#9FA1A6]">
-            You Have requests awaiting your approval
-          </p>
+          <p className=" font-normal text-base text-[#9FA1A6]">You Have requests awaiting your approval</p>
         </div>
         <hr />
         {/* Pending Approved Revision rejected */}
@@ -177,7 +159,7 @@ function QuotationDashboardEnquiries() {
               id="designs"
               onClick={clickedTab}
               className={`tab tab-bordered text-black hover:text-[#5c4ec9] hover:border-[#5c4ec9] ${
-                activeTab === "designs" ? "active-tab" : ""
+                activeTab === 'designs' ? 'active-tab' : ''
               }`}
             >
               Designs
@@ -186,7 +168,7 @@ function QuotationDashboardEnquiries() {
               id="any"
               onClick={clickedTab}
               className={`tab tab-bordered text-black hover:text-[#5c4ec9] hover:border-[#5c4ec9] ${
-                activeTab === "any" ? "active-tab" : ""
+                activeTab === 'any' ? 'active-tab' : ''
               }`}
             >
               Total Requests
@@ -195,7 +177,7 @@ function QuotationDashboardEnquiries() {
               id="Approved"
               onClick={clickedTab}
               className={`tab tab-bordered text-black hover:text-[#5c4ec9] hover:border-[#5c4ec9] ${
-                activeTab === "Approved" ? "active-tab" : ""
+                activeTab === 'Approved' ? 'active-tab' : ''
               }`}
             >
               Approved Requests
@@ -204,7 +186,7 @@ function QuotationDashboardEnquiries() {
               id="Pending"
               onClick={clickedTab}
               className={`tab tab-bordered text-black hover:text-[#5c4ec9] hover:border-[#5c4ec9] ${
-                activeTab === "Pending" ? "active-tab" : ""
+                activeTab === 'Pending' ? 'active-tab' : ''
               }`}
             >
               Pending Requests
@@ -214,24 +196,12 @@ function QuotationDashboardEnquiries() {
 
         <div className=" lg:flex items-center justify-start bg-white w-[92%] p-1 lg:p-5">
           <div className="dropdown dropdown-bottom dropdown-end m-1">
-            <label
-              tabIndex={0}
-              className="btn min-h-[40px] h-[40px] min-w-[180px] m-0 "
-            >
-              <img
-                src={require("../resources/call.png")}
-                className=" justify-center items-center"
-              />
-              {daysCount !== "-1" ? `last ${daysCount} days` : "All"}
-              <img
-                src={require("../resources/darrow.png")}
-                className=" justify-center items-center"
-              />
+            <label tabIndex={0} className="btn min-h-[40px] h-[40px] min-w-[180px] m-0 ">
+              <img src={require('../resources/call.png')} className=" justify-center items-center" />
+              {daysCount !== '-1' ? `last ${daysCount} days` : 'All'}
+              <img src={require('../resources/darrow.png')} className=" justify-center items-center" />
             </label>
-            <ul
-              tabIndex={0}
-              className="dropdown-content z-[1] menu  shadow bg-base-100 rounded-box w-40 "
-            >
+            <ul tabIndex={0} className="dropdown-content z-[1] menu  shadow bg-base-100 rounded-box w-40 ">
               <li>
                 <a id="30" onClick={clickedDateRange}>
                   Last 30 days
@@ -258,10 +228,7 @@ function QuotationDashboardEnquiries() {
           <form class="flex flex-row focus-within:outline-[#1b53c5] focus-within:outline rounded bg-[#F2F3F5] min-h-0 h-[40px] m-1 w-[310px]">
             <span class="flex items-center rounded rounded-l-none border-0 px-2 ">
               <button>
-                <img
-                  src={require("../resources/charm_search.png")}
-                  className=" justify-center items-center"
-                />
+                <img src={require('../resources/charm_search.png')} className=" justify-center items-center" />
               </button>
             </span>
             <input
@@ -280,7 +247,7 @@ function QuotationDashboardEnquiries() {
             >
               Create Quote
               <img
-                src={require("../resources/ic_round-keyboard-arrow-right.png")}
+                src={require('../resources/ic_round-keyboard-arrow-right.png')}
                 className=" justify-center items-center"
               />
             </button>
@@ -300,30 +267,29 @@ function QuotationDashboardEnquiries() {
         <div className="grid grid-cols-9  grid-flow-row bg-white w-[92%] gap-1 lg:gap-2 text-sm lg:text-base">
           {/* {<EnquiryItem key={enquiries.data[0]._id} enquiry={enquiries.data[0]} />} */}
 
-          {
-            activeTab === 'designs' ? 
+          {activeTab === 'designs' ? (
             <>
-            { enquiryWithDesigns && enquiryWithDesigns.length > 0
-              ? enquiryWithDesigns.map((enquiry) => (
-                  <>
-                    <EnquiryItemDesign key={enquiry._id} enquiry={enquiry} />
-                    <hr className="col-span-9 mx-3 my-3" />
-                  </>
-                ))
-              : null}
-              </>
-            : 
+              {enquiryWithDesigns && enquiryWithDesigns.length > 0
+                ? enquiryWithDesigns.map((enquiry) => (
+                    <>
+                      <EnquiryItemDesign key={enquiry._id} enquiry={enquiry} />
+                      <hr className="col-span-9 mx-3 my-3" />
+                    </>
+                  ))
+                : null}
+            </>
+          ) : (
             <>
-
-          {enquiries.length > 0
-            ? enquiries.map((enquiry) => (
-                <>
-                  <EnquiryItemDesign key={enquiry._id} enquiry={enquiry} />
-                  <hr className="col-span-9 mx-3 my-3" />
-                </>
-              ))
-            : null}
-            </> }
+              {enquiries.length > 0
+                ? enquiries.map((enquiry) => (
+                    <>
+                      <EnquiryItemDesign key={enquiry._id} enquiry={enquiry} />
+                      <hr className="col-span-9 mx-3 my-3" />
+                    </>
+                  ))
+                : null}
+            </>
+          )}
         </div>
       </div>
     </>

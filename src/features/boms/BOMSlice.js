@@ -1,75 +1,52 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import BOMService from "../boms/BOMService";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import BOMService from '../boms/BOMService';
 
 const initialState = {
   BOMs: [],
   BOM: {},
-  BOMCountCompleted: "",
-  BOMCountPending:'',
-  BOMCountNotArrived:'',
+  BOMCountCompleted: '',
+  BOMCountPending: '',
+  BOMCountNotArrived: '',
   isError: false,
   isSuccess: false,
   isLoading: false,
-  createBOMIsSuccess:false,
+  createBOMIsSuccess: false,
   createBOMIsError: false,
-  message: "",
+  message: '',
 };
 
-export const createBOM = createAsyncThunk(
-  "BOMs/create",
-  async (BOMData, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await BOMService.createBOM(BOMData, token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
+export const createBOM = createAsyncThunk('BOMs/create', async (BOMData, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.user.token;
+    return await BOMService.createBOM(BOMData, token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
   }
-);
+});
 
-export const getBOMs = createAsyncThunk(
-  "BOMs/getAll",
-  async (filters, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await BOMService.getBOMs(filters, token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
+export const getBOMs = createAsyncThunk('BOMs/getAll', async (filters, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.user.token;
+    return await BOMService.getBOMs(filters, token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
   }
-);
+});
 
-
-export const getBOM = createAsyncThunk(
-  "BOMs/get",
-  async (BOMId, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await BOMService.getBOM(BOMId, token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
+export const getBOM = createAsyncThunk('BOMs/get', async (BOMId, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.user.token;
+    return await BOMService.getBOM(BOMId, token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
   }
-);
-
+});
 
 // export const closeBOM = createAsyncThunk(
 //   "BOMs/close",
@@ -79,7 +56,7 @@ export const getBOM = createAsyncThunk(
 //       return await BOMService.closeBOM(BOMId, token);
 //     } catch (error) {
 //       const message =
-//         (error.response && 
+//         (error.response &&
 //           error.response.data &&
 //           error.response.data.message) ||
 //         error.message ||
@@ -89,62 +66,41 @@ export const getBOM = createAsyncThunk(
 //   }
 // );
 
-export const getBOMCountCompleted = createAsyncThunk(
-  "BOMs/getBOMCountCompleted",
-  async (_, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await BOMService.getBOMCountCompleted(token);
-    } catch (error) {
-      const message =
-        (error.response && 
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
+export const getBOMCountCompleted = createAsyncThunk('BOMs/getBOMCountCompleted', async (_, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.user.token;
+    return await BOMService.getBOMCountCompleted(token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
   }
-);
+});
 
-export const getBOMCountPending = createAsyncThunk(
-  "BOMs/getBOMCountPending",
-  async (_, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await BOMService.getBOMCountPending(token);
-    } catch (error) {
-      const message =
-        (error.response && 
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
+export const getBOMCountPending = createAsyncThunk('BOMs/getBOMCountPending', async (_, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.user.token;
+    return await BOMService.getBOMCountPending(token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
   }
-);
+});
 
-export const getBOMCountNotArrived = createAsyncThunk(
-  "BOMs/getBOMCountNotArrived",
-  async (_, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await BOMService.getBOMCountNotArrived(token);
-    } catch (error) {
-      const message =
-        (error.response && 
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
+export const getBOMCountNotArrived = createAsyncThunk('BOMs/getBOMCountNotArrived', async (_, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.user.token;
+    return await BOMService.getBOMCountNotArrived(token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
   }
-);
+});
 
 export const BOMSlice = createSlice({
-  name: "BOM",
+  name: 'BOM',
   initialState,
   reducers: {
     reset: (state) => initialState,
@@ -155,13 +111,13 @@ export const BOMSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(createBOM.fulfilled, (state) => {
-        console.log(state.BOM)
+        console.log(state.BOM);
         state.isLoading = false;
         //state.isSuccess = true;
         state.createBOMIsSuccess = true;
       })
       .addCase(createBOM.rejected, (state, action) => {
-        console.log(state.BOM)
+        console.log(state.BOM);
         state.isLoading = false;
         // state.isError = true;
         state.createBOMIsError = true;
@@ -232,7 +188,7 @@ export const BOMSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
-      })
+      });
     //   .addCase(closeBOM.fulfilled, (state, action) => {
     //     state.isLoading = false;
     //     state.BOMs.map((BOM)=> BOM._id === action.payload._id ?

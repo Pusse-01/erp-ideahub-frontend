@@ -1,5 +1,5 @@
-import axios from "axios";
-import API_BASE_URL from "../../config";
+import axios from 'axios';
+import API_BASE_URL from '../../config';
 //const API_URL = 'http://localhost:8080/auth'
 const API_URL = `${API_BASE_URL}/inquiry`;
 
@@ -42,7 +42,6 @@ const getEnquiry = async (enquiryId, token) => {
   return response.data;
 };
 
-
 //get user enquirys
 const closeEnquiry = async (enquiryId, token) => {
   const config = {
@@ -79,7 +78,7 @@ const getEnquiryByID = async (enquiryID, token) => {
   };
 
   const response = await axios.get(API_URL + '/GetInquirybyID/' + enquiryID, config);
-  console.log(response)
+  console.log(response);
 
   return response.data.data[0];
 };
@@ -135,7 +134,7 @@ const getEnquiries = async (filters, token) => {
   };
 
   const response = await axios.post(API_URL + '/GetInquiry', filters, config);
-  console.log(response.data)
+  console.log(response.data);
 
   return response.data.data;
 };
@@ -173,7 +172,7 @@ const deleteEnquiry = async (enquiryID, token) => {
   };
 
   const response = await axios.delete(API_URL + '/DeleteInquiry/' + enquiryID, config);
-  console.log(response.data)
+  console.log(response.data);
 
   return response.data;
 };
@@ -189,7 +188,7 @@ const enquiryService = {
   getEnquiryCount,
   getEnquiryCountRevision,
   updateEnquiry,
-  deleteEnquiry
+  deleteEnquiry,
 };
 
 export default enquiryService;

@@ -1,5 +1,5 @@
-import axios from "axios";
-import API_BASE_URL from "../../config";
+import axios from 'axios';
+import API_BASE_URL from '../../config';
 //const API_URL = 'http://localhost:8080/auth'
 const API_URL = `${API_BASE_URL}/production`;
 
@@ -49,7 +49,7 @@ const getProductions = async (filters, token) => {
   };
 
   const response = await axios.post(API_URL + '/getProductions', filters, config);
-  console.log(response.data)
+  console.log(response.data);
 
   return response.data.data;
 };
@@ -89,7 +89,7 @@ const deleteProduction = async (productionId, token) => {
   };
 
   const response = await axios.delete(API_URL + '/DeleteProduction/' + productionId, config);
-  console.log(response.data)
+  console.log(response.data);
   return response.data.data;
 };
 
@@ -100,7 +100,7 @@ const productionService = {
   updateProductionStatus,
   updateProduction,
   deleteProduction,
-  getProductionByJobNo
+  getProductionByJobNo,
 };
 
 export default productionService;

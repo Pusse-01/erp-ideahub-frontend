@@ -1,5 +1,5 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import notificationService from "../notifications/notificationService";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import notificationService from '../notifications/notificationService';
 
 const initialState = {
   notifications: [],
@@ -7,52 +7,38 @@ const initialState = {
   isError: false,
   isSuccess: false,
   isLoading: false,
-  message: "",
-  updateNotificationIsSuccess:false,
-  updateNotificationIsError:false,
+  message: '',
+  updateNotificationIsSuccess: false,
+  updateNotificationIsError: false,
 };
 
-
 export const setViewedNotifications = createAsyncThunk(
-  "notifications/setViewedNotifications",
+  'notifications/setViewedNotifications',
   async (notificationData, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
       return await notificationService.setViewedNotifications(notificationData, token);
     } catch (error) {
       const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
+        (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
 
-export const getNotifications = createAsyncThunk(
-  "notifications/getNotifications",
-  async (role, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await notificationService.getNotifications(role, token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
+export const getNotifications = createAsyncThunk('notifications/getNotifications', async (role, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.user.token;
+    return await notificationService.getNotifications(role, token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
   }
-);
-
-
+});
 
 export const notificationSlice = createSlice({
-  name: "notification",
+  name: 'notification',
   initialState,
   reducers: {
     reset: (state) => initialState,
@@ -63,16 +49,16 @@ export const notificationSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(setViewedNotifications.fulfilled, (state) => {
-        console.log(state.notification)
+        console.log(state.notification);
         state.updateNotificationIsSuccess = true;
         state.isLoading = false;
         state.isSuccess = true;
       })
       .addCase(setViewedNotifications.rejected, (state, action) => {
-        console.log(state.notification)
+        console.log(state.notification);
         state.isLoading = false;
         state.isError = true;
-        state.updateNotificationIsError = true
+        state.updateNotificationIsError = true;
         state.message = action.payload;
       })
       .addCase(getNotifications.pending, (state) => {
@@ -87,7 +73,7 @@ export const notificationSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
-      })
+      });
   },
 });
 

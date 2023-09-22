@@ -1,28 +1,34 @@
-import React from "react";
-import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 //import { deletePurchasing } from "../features/purchasings/purchasingSlice";
 
 function PurchasingItem({ purchasing }) {
   console.log(purchasing);
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-//   const handleDeletePurchasing = () =>{
-//     console.log("delete purchasing ran "+purchasing.index_no)
-//     dispatch(deletePurchasing(parseInt(purchasing.index_no) ))
-//   }
+  //   const handleDeletePurchasing = () =>{
+  //     console.log("delete purchasing ran "+purchasing.index_no)
+  //     dispatch(deletePurchasing(parseInt(purchasing.index_no) ))
+  //   }
 
- const showStatus = () =>{
-  switch(purchasing.status){
-    case 'Pending' : return <div className=" rounded p-2 bg-[#FBF5C4] text-[#8B5401] inline-block text-xs lg:text-sm  ">Pending</div>
-    case 'Approved' : return <div className=" rounded p-2 bg-[#FBF5C4] text-[#8B5401] inline-block text-xs lg:text-sm">Approved</div>
-    case 'Revision' : return <div className=" rounded p-2 bg-[#FBF5C4] text-[#8B5401] inline-block text-xs lg:text-sm">Revision</div>
-    case 'Rejected' : return <div className=" rounded p-2 bg-[#FBF5C4] text-[#8B5401] inline-block text-xs lg:text-sm">Rejected</div>
-    case 'Completed' : return <div className=" rounded p-2 bg-[#97FAB8] text-[#14AE5C] text-xs lg:text-sm inline-block">Complete</div>
-  }
- }
-  
+  const showStatus = () => {
+    switch (purchasing.status) {
+      case 'Pending':
+        return (
+          <div className=" rounded p-2 bg-[#FBF5C4] text-[#8B5401] inline-block text-xs lg:text-sm  ">Pending</div>
+        );
+      case 'Approved':
+        return <div className=" rounded p-2 bg-[#FBF5C4] text-[#8B5401] inline-block text-xs lg:text-sm">Approved</div>;
+      case 'Revision':
+        return <div className=" rounded p-2 bg-[#FBF5C4] text-[#8B5401] inline-block text-xs lg:text-sm">Revision</div>;
+      case 'Rejected':
+        return <div className=" rounded p-2 bg-[#FBF5C4] text-[#8B5401] inline-block text-xs lg:text-sm">Rejected</div>;
+      case 'Completed':
+        return <div className=" rounded p-2 bg-[#97FAB8] text-[#14AE5C] text-xs lg:text-sm inline-block">Complete</div>;
+    }
+  };
 
   return (
     <>

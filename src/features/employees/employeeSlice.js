@@ -1,172 +1,115 @@
-
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import employeeService from "../employees/employeeService";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import employeeService from '../employees/employeeService';
 
 const initialState = {
   employees: [],
   employee: {},
-  employeeCount: "",
-  departmentmangersCount:"",
-  departments:[],
+  employeeCount: '',
+  departmentmangersCount: '',
+  departments: [],
   isError: false,
   isSuccess: false,
   isLoading: false,
-  message: "",
+  message: '',
   createEmployeeIsError: false,
   createEmployeeIsSuccess: false,
   deleteEmployeeIsError: false,
-  deleteEmployeeIsSuccess: false
+  deleteEmployeeIsSuccess: false,
 };
 
-export const createEmployee = createAsyncThunk(
-  "employees/create",
-  async (employeeData, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await employeeService.createEmployee(employeeData, token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
+export const createEmployee = createAsyncThunk('employees/create', async (employeeData, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.user.token;
+    return await employeeService.createEmployee(employeeData, token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
   }
-);
+});
 
-export const updateEmployee = createAsyncThunk(
-  "employees/update",
-  async (employeeData, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await employeeService.updateEmployee(employeeData, token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
+export const updateEmployee = createAsyncThunk('employees/update', async (employeeData, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.user.token;
+    return await employeeService.updateEmployee(employeeData, token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
   }
-);
+});
 
-export const getEmployees = createAsyncThunk(
-  "employees/getAll",
-  async (filters, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await employeeService.getEmployees(filters, token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
+export const getEmployees = createAsyncThunk('employees/getAll', async (filters, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.user.token;
+    return await employeeService.getEmployees(filters, token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
   }
-);
+});
 
-
-export const getEmployee = createAsyncThunk(
-  "employees/get",
-  async (employeeId, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await employeeService.getEmployee(employeeId, token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
+export const getEmployee = createAsyncThunk('employees/get', async (employeeId, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.user.token;
+    return await employeeService.getEmployee(employeeId, token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
   }
-);
+});
 
-export const deleteEmployee = createAsyncThunk(
-  "employees/delete",
-  async (employeeId, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await employeeService.deleteEmployee(employeeId, token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
+export const deleteEmployee = createAsyncThunk('employees/delete', async (employeeId, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.user.token;
+    return await employeeService.deleteEmployee(employeeId, token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
   }
-);
+});
 
-export const getEmployeeCount = createAsyncThunk(
-  "employees/getCountAll",
-  async (_, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await employeeService.getEmployeeCount(token);
-    } catch (error) {
-      const message =
-        (error.response && 
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
+export const getEmployeeCount = createAsyncThunk('employees/getCountAll', async (_, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.user.token;
+    return await employeeService.getEmployeeCount(token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
   }
-);
+});
 
 export const getDepartmentmangersCount = createAsyncThunk(
-  "employees/getDepartmentmangersCount",
+  'employees/getDepartmentmangersCount',
   async (_, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
       return await employeeService.getDepartmentmangersCount(token);
     } catch (error) {
       const message =
-        (error.response && 
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
+        (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
 
-
-export const getDepartments = createAsyncThunk(
-  "employees/getDepartments",
-  async (_, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await employeeService.getDepartments(token);
-    } catch (error) {
-      const message =
-        (error.response && 
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
+export const getDepartments = createAsyncThunk('employees/getDepartments', async (_, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.user.token;
+    return await employeeService.getDepartments(token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
   }
-);
-
+});
 
 export const employeeSlice = createSlice({
-  name: "employee",
+  name: 'employee',
   initialState,
   reducers: {
     reset: (state) => initialState,
@@ -177,13 +120,13 @@ export const employeeSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(createEmployee.fulfilled, (state) => {
-        console.log(state.employee)
+        console.log(state.employee);
         state.isLoading = false;
         state.isSuccess = true;
         state.createEmployeeIsSuccess = true;
       })
       .addCase(createEmployee.rejected, (state, action) => {
-        console.log(state.employee)
+        console.log(state.employee);
         state.isLoading = false;
         state.isError = true;
         state.createEmployeeIsError = true;
@@ -193,13 +136,13 @@ export const employeeSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(updateEmployee.fulfilled, (state) => {
-        console.log(state.employee)
+        console.log(state.employee);
         state.isLoading = false;
         state.isSuccess = true;
         state.createEmployeeIsSuccess = true;
       })
       .addCase(updateEmployee.rejected, (state, action) => {
-        console.log(state.employee)
+        console.log(state.employee);
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
@@ -284,7 +227,7 @@ export const employeeSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
-      })
+      });
   },
 });
 

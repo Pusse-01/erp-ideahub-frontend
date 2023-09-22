@@ -1,26 +1,24 @@
-import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
-import { toast } from "react-toastify";
-import { reset, createEnquiry, getEnquiryIDs, getEnquiryByID } from "../features/enquiries/enquirySlice";
-import Spinner from "../components/Spinner";
-import BackButton from "../components/BackButton";
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { reset, createEnquiry, getEnquiryIDs, getEnquiryByID } from '../features/enquiries/enquirySlice';
+import Spinner from '../components/Spinner';
+import BackButton from '../components/BackButton';
 
-import { format } from "date-fns";
-import { DayPicker } from "react-day-picker";
-import "react-day-picker/dist/style.css";
-import { createJob, getJob, createSubTask, reset as jobReset } from "../features/jobs/jobSlice";
+import { format } from 'date-fns';
+import { DayPicker } from 'react-day-picker';
+import 'react-day-picker/dist/style.css';
+import { createJob, getJob, createSubTask, reset as jobReset } from '../features/jobs/jobSlice';
 
 function NewJobSubTask() {
   const { user } = useSelector((state) => state.auth);
 
-  const { isLoading, isError, isSuccess, message, enquiryIDs, enquiry } = useSelector(
-    (state) => state.enquiry
-  );
+  const { isLoading, isError, isSuccess, message, enquiryIDs, enquiry } = useSelector((state) => state.enquiry);
 
   const {
-    createJobIsSuccess, 
-    createJobIsError, 
+    createJobIsSuccess,
+    createJobIsError,
     message: jobMessage,
     isLoading: jobIsLoading,
     isSuccess: jobIsSuccess,
@@ -33,43 +31,38 @@ function NewJobSubTask() {
 
   //in frontend
 
-  const [main_job_id, setMain_job_id] = useState("");
+  const [main_job_id, setMain_job_id] = useState('');
 
-  const [client_name, setClient_name] = useState("");
-  const [project_name, setProject_name] = useState("");
+  const [client_name, setClient_name] = useState('');
+  const [project_name, setProject_name] = useState('');
   const [site_visit, setSite_visit] = useState(false);
-  const [inquiry_number, setInquiry_number] = useState("");
-  
-  const [priority_level, setPriority_level] = useState("1");
-  const [brief, setBrief] = useState("");
-  const [status, setStatus] = useState("Pending");
-  const [description, setDescription] = useState("This is a sample description");
+  const [inquiry_number, setInquiry_number] = useState('');
+
+  const [priority_level, setPriority_level] = useState('1');
+  const [brief, setBrief] = useState('');
+  const [status, setStatus] = useState('Pending');
+  const [description, setDescription] = useState('This is a sample description');
 
   const [project_start, setProject_start] = useState(null);
   const [projectStartIsRendered, setProjectStartIsRendered] = useState(false);
 
   const [manufacturing_start, setManufacturing_start] = useState(null);
-  const [manufacturing_startIsRendered, setManufacturing_startIsRendered] =
-    useState(false);
+  const [manufacturing_startIsRendered, setManufacturing_startIsRendered] = useState(false);
 
   const [Purchasing_completion, setPurchasing_completion] = useState(null);
-  const [Purchasing_completionIsRendered, setPurchasing_completionIsRendered] =
-    useState(false);
+  const [Purchasing_completionIsRendered, setPurchasing_completionIsRendered] = useState(false);
 
   const [bom_completion, setBom_completion] = useState(null);
-  const [bom_completionIsRendered, setBom_completionIsRendered] =
-    useState(false);
+  const [bom_completionIsRendered, setBom_completionIsRendered] = useState(false);
 
   const [manufacturing_end, setManufacturing_end] = useState(null);
-  const [manufacturing_endIsRendered, setManufacturing_endIsRendered] =
-    useState(false);
+  const [manufacturing_endIsRendered, setManufacturing_endIsRendered] = useState(false);
 
   const [internal_QC, setInternal_QC] = useState(null);
   const [internal_QCIsRendered, setInternal_QCIsRendered] = useState(false);
 
   const [installation_process, setInstallation_process] = useState(null);
-  const [installation_processIsRendered, setInstallation_processIsRendered] =
-    useState(false);
+  const [installation_processIsRendered, setInstallation_processIsRendered] = useState(false);
 
   const [external_QC, setExternal_QC] = useState(null);
   const [external_QCIsRendered, setExternal_QCIsRendered] = useState(false);
@@ -81,18 +74,18 @@ function NewJobSubTask() {
   const [completionIsRendered, setCompletionIsRendered] = useState(false);
 
   const dayPickerStyles = {
-    caption: { position: "relative" }, // Center the caption text
-    caption_label: { left: "90px", fontWeight: "500", color: "#4e5969" },
+    caption: { position: 'relative' }, // Center the caption text
+    caption_label: { left: '90px', fontWeight: '500', color: '#4e5969' },
     nav_button_previous: {
-      position: "absolute",
-      left: "2px",
-      color: "#4e5969",
+      position: 'absolute',
+      left: '2px',
+      color: '#4e5969',
     }, // Position the previous button on the left
-    nav_button_next: { color: "#4e5969" }, // Position the next button on the right
-    head: { color: "#86909c" },
-    nav_icon: { height: "10px" },
-    row: { border: "2 px" },
-    day: { color: "#272e3b" },
+    nav_button_next: { color: '#4e5969' }, // Position the next button on the right
+    head: { color: '#86909c' },
+    nav_icon: { height: '10px' },
+    row: { border: '2 px' },
+    day: { color: '#272e3b' },
     // selected: {
     //   backgroundColor: 'red !important',
     //   // Add other styles as needed
@@ -102,39 +95,37 @@ function NewJobSubTask() {
   useEffect(() => {
     if (isError) {
       toast.error(message);
-    }
-    else if (createJobIsError) {
+    } else if (createJobIsError) {
       toast.error(jobMessage);
     }
 
     if (createJobIsSuccess) {
-      toast.success('Job Added!')
+      toast.success('Job Added!');
       dispatch(jobReset());
-      navigate("/jobs");
+      navigate('/jobs');
     }
 
     dispatch(jobReset());
   }, [createJobIsError, dispatch, createJobIsSuccess, navigate, jobMessage]);
 
-  useEffect(()=>{
-    console.log('first')
-    dispatch(getEnquiryIDs())
+  useEffect(() => {
+    console.log('first');
+    dispatch(getEnquiryIDs());
     dispatch(getJob(jobId));
-  },[])
+  }, []);
 
   useEffect(() => {
     // This useEffect will run whenever the Redux state 'enquiry' is updated
-    
-      // If client_name and project_name are available in the Redux state,
-      // update the local component state accordingly
-      setClient_name(enquiry.client_name);
-      setProject_name(enquiry.project_name);
-      setSite_visit(enquiry.site_visit)
-    
+
+    // If client_name and project_name are available in the Redux state,
+    // update the local component state accordingly
+    setClient_name(enquiry.client_name);
+    setProject_name(enquiry.project_name);
+    setSite_visit(enquiry.site_visit);
   }, [enquiry]);
 
   useEffect(() => {
-    setMain_job_id(job.main_job_id)
+    setMain_job_id(job.main_job_id);
   }, [job]);
 
   const onSubmit = (e) => {
@@ -160,7 +151,7 @@ function NewJobSubTask() {
         external_QC,
         description,
         //details
-        
+
         // client_name,
         // project_name,
         // contactNo,
@@ -283,23 +274,17 @@ function NewJobSubTask() {
     setCompletionIsRendered(!completionIsRendered);
   };
 
-  const onEnquiryIDSelect = (enquiryID) =>{
-    setInquiry_number(parseInt(enquiryID))
-    dispatch(getEnquiryByID(enquiryID))
-    
-  }
-
- 
-
+  const onEnquiryIDSelect = (enquiryID) => {
+    setInquiry_number(parseInt(enquiryID));
+    dispatch(getEnquiryByID(enquiryID));
+  };
 
   return (
     <div className="drawer-content-custom f9">
       <div className=" inline-block bg-white mt-5 w-[92%] p-5">
         <div className=" float-left">
           <h1 className="font-bold ">Job Number</h1>
-          <p className="text-xs">
-            You are viewing every Job Number that's made so far...
-          </p>
+          <p className="text-xs">You are viewing every Job Number that's made so far...</p>
         </div>
         {/* <div className="float-right">
           <button className="btn btn-sm bg-[#5c4ec9] text-white hover:bg-[#4b3bc2] ">Create Job</button>
@@ -361,20 +346,26 @@ function NewJobSubTask() {
               <label className=" text-xs" for="">
                 Job ID
               </label>
-              <select onChange={(e) => onEnquiryIDSelect(e.target.value)} value={enquiry.index_no} className="select select-sm select-bordered font-normal text-sm w-full">
-              <option disabled selected >Select an enquiry ID</option>
+              <select
+                onChange={(e) => onEnquiryIDSelect(e.target.value)}
+                value={enquiry.index_no}
+                className="select select-sm select-bordered font-normal text-sm w-full"
+              >
+                <option disabled selected>
+                  Select an enquiry ID
+                </option>
                 {enquiryIDs.length > 0
-                    ? enquiryIDs.map((enquiryID) => (
-                        <>
-                          <option >{enquiryID.index_no}</option>
-                        </>
-                      ))
-              : null}
+                  ? enquiryIDs.map((enquiryID) => (
+                      <>
+                        <option>{enquiryID.index_no}</option>
+                      </>
+                    ))
+                  : null}
                 {/* <option>Who shot first?</option>
                 <option>Han Solo</option>
                 <option>Greedo</option> */}
               </select>
-  
+
               {/* <input
                 className="input input-sm input-bordered w-full"
                 type="text"
@@ -396,9 +387,7 @@ function NewJobSubTask() {
             </p>
           </div>
           <div className="col-span-3">
-            <label class="cursor-pointer label text-xs">
-              Site visit required
-            </label>
+            <label class="cursor-pointer label text-xs">Site visit required</label>
             <input
               type="checkbox"
               class="toggle toggle-primary toggle-xs ml-1"
@@ -433,14 +422,10 @@ function NewJobSubTask() {
                     value={project_start ? format(project_start, 'yyyy-MM-dd') : ''}
                     disabled
                     // onChange={handleProject_startDateSelect}
-
                   />
                   <span class="flex items-center rounded rounded-l-none border-0 px-2 ">
                     <button onClick={renderProjectStartDatePicker}>
-                      <img
-                        src={require("../resources/cal.png")}
-                        className=" justify-center items-center"
-                      />
+                      <img src={require('../resources/cal.png')} className=" justify-center items-center" />
                     </button>
                   </span>
                 </form>
@@ -470,18 +455,12 @@ function NewJobSubTask() {
                     class=" py-2 w-full px-2 outline-none text-gray-600 bg-[#F2F3F5] rounded"
                     type="text"
                     placeholder="YYYY-MM-DD"
-                    value={
-                      bom_completion
-                        ? format(bom_completion, 'yyyy-MM-dd') : ''
-                    }
+                    value={bom_completion ? format(bom_completion, 'yyyy-MM-dd') : ''}
                     disabled
                   />
                   <span class="flex items-center rounded rounded-l-none border-0 px-2 ">
                     <button onClick={renderBom_completionDatePicker}>
-                      <img
-                        src={require("../resources/cal.png")}
-                        className=" justify-center items-center"
-                      />
+                      <img src={require('../resources/cal.png')} className=" justify-center items-center" />
                     </button>
                   </span>
                 </form>
@@ -502,9 +481,7 @@ function NewJobSubTask() {
           </div>
 
           <div className="col-span-2 inline relative">
-            <label class="cursor-pointer label text-xs">
-              Purchasing completion
-            </label>
+            <label class="cursor-pointer label text-xs">Purchasing completion</label>
 
             <div class="flex flex-col">
               <div class="mx-auto my-auto w-full sm:w-full md:w-full">
@@ -513,18 +490,12 @@ function NewJobSubTask() {
                     class=" py-2 w-full px-2 outline-none text-gray-600 bg-[#F2F3F5] rounded"
                     type="text"
                     placeholder="YYYY-MM-DD"
-                    value={
-                      Purchasing_completion
-                        ? format(Purchasing_completion, 'yyyy-MM-dd') : ''
-                    }
+                    value={Purchasing_completion ? format(Purchasing_completion, 'yyyy-MM-dd') : ''}
                     disabled
                   />
                   <span class="flex items-center rounded rounded-l-none border-0 px-2 ">
                     <button onClick={renderPurchasing_completionDatePicker}>
-                      <img
-                        src={require("../resources/cal.png")}
-                        className=" justify-center items-center"
-                      />
+                      <img src={require('../resources/cal.png')} className=" justify-center items-center" />
                     </button>
                   </span>
                 </form>
@@ -545,9 +516,7 @@ function NewJobSubTask() {
           </div>
 
           <div className="col-span-2 inline relative">
-            <label class="cursor-pointer label text-xs">
-              Manufacturing Start
-            </label>
+            <label class="cursor-pointer label text-xs">Manufacturing Start</label>
 
             <div class="flex flex-col">
               <div class="mx-auto my-auto w-full sm:w-full md:w-full">
@@ -556,18 +525,12 @@ function NewJobSubTask() {
                     class=" py-2 w-full px-2 outline-none text-gray-600 bg-[#F2F3F5] rounded"
                     type="text"
                     placeholder="YYYY-MM-DD"
-                    value={
-                      manufacturing_start
-                        ? format(manufacturing_start, 'yyyy-MM-dd') : ''
-                    }
+                    value={manufacturing_start ? format(manufacturing_start, 'yyyy-MM-dd') : ''}
                     disabled
                   />
                   <span class="flex items-center rounded rounded-l-none border-0 px-2 ">
                     <button onClick={renderManufacturing_startDatePicker}>
-                      <img
-                        src={require("../resources/cal.png")}
-                        className=" justify-center items-center"
-                      />
+                      <img src={require('../resources/cal.png')} className=" justify-center items-center" />
                     </button>
                   </span>
                 </form>
@@ -588,9 +551,7 @@ function NewJobSubTask() {
           </div>
 
           <div className="col-span-2 inline relative">
-            <label class="cursor-pointer label text-xs">
-              Manufacturing End
-            </label>
+            <label class="cursor-pointer label text-xs">Manufacturing End</label>
 
             <div class="flex flex-col">
               <div class="mx-auto my-auto w-full sm:w-full md:w-full">
@@ -599,18 +560,12 @@ function NewJobSubTask() {
                     class=" py-2 w-full px-2 outline-none text-gray-600 bg-[#F2F3F5] rounded"
                     type="text"
                     placeholder="YYYY-MM-DD"
-                    value={
-                      manufacturing_end
-                        ? format(manufacturing_end, 'yyyy-MM-dd') : ''
-                    }
+                    value={manufacturing_end ? format(manufacturing_end, 'yyyy-MM-dd') : ''}
                     disabled
                   />
                   <span class="flex items-center rounded rounded-l-none border-0 px-2 ">
                     <button onClick={renderManufacturing_endDatePicker}>
-                      <img
-                        src={require("../resources/cal.png")}
-                        className=" justify-center items-center"
-                      />
+                      <img src={require('../resources/cal.png')} className=" justify-center items-center" />
                     </button>
                   </span>
                 </form>
@@ -640,18 +595,12 @@ function NewJobSubTask() {
                     class=" py-2 w-full px-2 outline-none text-gray-600 bg-[#F2F3F5] rounded"
                     type="text"
                     placeholder="YYYY-MM-DD"
-                    value={
-                      internal_QC
-                        ? format(internal_QC, 'yyyy-MM-dd') : ''
-                    }
+                    value={internal_QC ? format(internal_QC, 'yyyy-MM-dd') : ''}
                     disabled
                   />
                   <span class="flex items-center rounded rounded-l-none border-0 px-2 ">
                     <button onClick={renderInternal_QCDatePicker}>
-                      <img
-                        src={require("../resources/cal.png")}
-                        className=" justify-center items-center"
-                      />
+                      <img src={require('../resources/cal.png')} className=" justify-center items-center" />
                     </button>
                   </span>
                 </form>
@@ -672,9 +621,7 @@ function NewJobSubTask() {
           </div>
 
           <div className="col-span-2  inline relative">
-            <label class="cursor-pointer label text-xs">
-              Installation Process
-            </label>
+            <label class="cursor-pointer label text-xs">Installation Process</label>
 
             <div class="flex flex-col">
               <div class="mx-auto my-auto w-full sm:w-full md:w-full">
@@ -683,18 +630,12 @@ function NewJobSubTask() {
                     class=" py-2 w-full px-2 outline-none text-gray-600 bg-[#F2F3F5] rounded"
                     type="text"
                     placeholder="YYYY-MM-DD"
-                    value={
-                      installation_process
-                        ? format(installation_process, 'yyyy-MM-dd') : ''
-                    }
+                    value={installation_process ? format(installation_process, 'yyyy-MM-dd') : ''}
                     disabled
                   />
                   <span class="flex items-center rounded rounded-l-none border-0 px-2 ">
                     <button onClick={renderInstallation_processDatePicker}>
-                      <img
-                        src={require("../resources/cal.png")}
-                        className=" justify-center items-center"
-                      />
+                      <img src={require('../resources/cal.png')} className=" justify-center items-center" />
                     </button>
                   </span>
                 </form>
@@ -724,18 +665,12 @@ function NewJobSubTask() {
                     class=" py-2 w-full px-2 outline-none text-gray-600 bg-[#F2F3F5] rounded"
                     type="text"
                     placeholder="YYYY-MM-DD"
-                    value={
-                      external_QC
-                        ? format(external_QC, 'yyyy-MM-dd') : ''
-                    }
+                    value={external_QC ? format(external_QC, 'yyyy-MM-dd') : ''}
                     disabled
                   />
                   <span class="flex items-center rounded rounded-l-none border-0 px-2 ">
                     <button onClick={renderExternal_QCDatePicker}>
-                      <img
-                        src={require("../resources/cal.png")}
-                        className=" justify-center items-center"
-                      />
+                      <img src={require('../resources/cal.png')} className=" justify-center items-center" />
                     </button>
                   </span>
                 </form>
@@ -765,18 +700,12 @@ function NewJobSubTask() {
                     class=" py-2 w-full px-2 outline-none text-gray-600 bg-[#F2F3F5] rounded"
                     type="text"
                     placeholder="YYYY-MM-DD"
-                    value={
-                      project_end
-                        ? format(project_end, 'yyyy-MM-dd') : ''
-                    }
+                    value={project_end ? format(project_end, 'yyyy-MM-dd') : ''}
                     disabled
                   />
                   <span class="flex items-center rounded rounded-l-none border-0 px-2 ">
                     <button onClick={renderProject_endDatePicker}>
-                      <img
-                        src={require("../resources/cal.png")}
-                        className=" justify-center items-center"
-                      />
+                      <img src={require('../resources/cal.png')} className=" justify-center items-center" />
                     </button>
                   </span>
                 </form>
@@ -806,17 +735,12 @@ function NewJobSubTask() {
                     class=" py-2 w-full px-2 outline-none text-gray-600 bg-[#F2F3F5] rounded"
                     type="text"
                     placeholder="YYYY-MM-DD"
-                    value={
-                      completion ? format(completion, 'yyyy-MM-dd') : ''
-                    }
+                    value={completion ? format(completion, 'yyyy-MM-dd') : ''}
                     disabled
                   />
                   <span class="flex items-center rounded rounded-l-none border-0 px-2 ">
                     <button onClick={renderCompletionDatePicker}>
-                      <img
-                        src={require("../resources/cal.png")}
-                        className=" justify-center items-center"
-                      />
+                      <img src={require('../resources/cal.png')} className=" justify-center items-center" />
                     </button>
                   </span>
                 </form>

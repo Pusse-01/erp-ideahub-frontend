@@ -1,244 +1,179 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import jobService from "../jobs/jobService";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import jobService from '../jobs/jobService';
 
 const initialState = {
   jobs: [],
   job: {},
-  jobIDs:[],
-  jobCount: "",
-  jobCountRevision:'',
-  jobCountProduction:'',
+  jobIDs: [],
+  jobCount: '',
+  jobCountRevision: '',
+  jobCountProduction: '',
   isError: false,
   isSuccess: false,
   isLoading: false,
-  message: "",
-  createJobIsSuccess:false,
-  createJobIsError:false,
-  deleteJobIsSuccess:false,
-  deleteJobIsError:false
+  message: '',
+  createJobIsSuccess: false,
+  createJobIsError: false,
+  deleteJobIsSuccess: false,
+  deleteJobIsError: false,
 };
 
-export const createJob = createAsyncThunk(
-  "jobs/create",
-  async (jobData, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await jobService.createJob(jobData, token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
+export const createJob = createAsyncThunk('jobs/create', async (jobData, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.user.token;
+    return await jobService.createJob(jobData, token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
   }
-);
+});
 
-export const updateJob = createAsyncThunk(
-  "jobs/update",
-  async (jobData, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await jobService.updateJob(jobData, token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
+export const updateJob = createAsyncThunk('jobs/update', async (jobData, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.user.token;
+    return await jobService.updateJob(jobData, token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
   }
-);
+});
 
-export const getJobs = createAsyncThunk(
-  "jobs/getAll",
-  async (filters, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await jobService.getJobs(filters, token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
+export const getJobs = createAsyncThunk('jobs/getAll', async (filters, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.user.token;
+    return await jobService.getJobs(filters, token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
   }
-);
+});
 
-
-export const getJob = createAsyncThunk(
-  "jobs/get",
-  async (jobId, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await jobService.getJob(jobId, token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
+export const getJob = createAsyncThunk('jobs/get', async (jobId, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.user.token;
+    return await jobService.getJob(jobId, token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
   }
-);
+});
 
-
-export const closeJob = createAsyncThunk(
-  "jobs/close",
-  async (jobId, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await jobService.closeJob(jobId, token);
-    } catch (error) {
-      const message =
-        (error.response && 
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
+export const closeJob = createAsyncThunk('jobs/close', async (jobId, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.user.token;
+    return await jobService.closeJob(jobId, token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
   }
-);
+});
 
-export const getJobCountAll = createAsyncThunk(
-  "jobs/getCountAll",
-  async (_, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await jobService.getJobCountAll(token);
-    } catch (error) {
-      const message =
-        (error.response && 
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
+export const getJobCountAll = createAsyncThunk('jobs/getCountAll', async (_, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.user.token;
+    return await jobService.getJobCountAll(token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
   }
-);
+});
 
-export const getJobCountRevision = createAsyncThunk(
-  "jobs/getCountRevision",
-  async (_, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await jobService.getJobCountRevision(token);
-    } catch (error) {
-      const message =
-        (error.response && 
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
+export const getJobCountRevision = createAsyncThunk('jobs/getCountRevision', async (_, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.user.token;
+    return await jobService.getJobCountRevision(token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
   }
-);
+});
 
-export const getJobCountProduction = createAsyncThunk(
-  "jobs/getCountProduction",
-  async (_, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await jobService.getJobCountProduction(token);
-    } catch (error) {
-      const message =
-        (error.response && 
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
+export const getJobCountProduction = createAsyncThunk('jobs/getCountProduction', async (_, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.user.token;
+    return await jobService.getJobCountProduction(token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
   }
-);
+});
 
-export const getJobIDs = createAsyncThunk(
-  "jobs/getAllIDs",
-  async (_, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await jobService.getJobIDs(token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
+export const getJobIDs = createAsyncThunk('jobs/getAllIDs', async (_, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.user.token;
+    return await jobService.getJobIDs(token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
   }
-);
+});
 
-
-export const GetJobIdsProductionExists = createAsyncThunk(
-  "jobs/GetJobIdsProductionExists",
-  async (_, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await jobService.GetJobIdsProductionExists(token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
+export const GetJobIdsQCExists = createAsyncThunk('jobs/GetJobIdsQCExists', async (_, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.user.token;
+    return await jobService.GetJobIdsQCExists(token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
   }
-);
+});
 
-export const createSubTask = createAsyncThunk(
-  "jobs/createSubTask",
-  async (jobData, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await jobService.createSubTask(jobData, token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
+export const GetJobIdsBOMExists = createAsyncThunk('jobs/GetJobIdsBOMExists', async (_, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.user.token;
+    return await jobService.GetJobIdsBOMExists(token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
   }
-);
+});
 
-export const deleteJob = createAsyncThunk(
-  "jobs/delete",
-  async (jobId, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await jobService.deleteJob(jobId, token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
+export const GetJobIdsProductionExists = createAsyncThunk('jobs/GetJobIdsProductionExists', async (_, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.user.token;
+    return await jobService.GetJobIdsProductionExists(token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
   }
-);
+});
+
+export const createSubTask = createAsyncThunk('jobs/createSubTask', async (jobData, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.user.token;
+    return await jobService.createSubTask(jobData, token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
+  }
+});
+
+export const deleteJob = createAsyncThunk('jobs/delete', async (jobId, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.user.token;
+    return await jobService.deleteJob(jobId, token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
+  }
+});
 
 export const jobSlice = createSlice({
-  name: "job",
+  name: 'job',
   initialState,
   reducers: {
     reset: (state) => initialState,
@@ -249,13 +184,13 @@ export const jobSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(createJob.fulfilled, (state) => {
-        console.log(state.job)
+        console.log(state.job);
         state.isLoading = false;
         state.isSuccess = true;
         state.createJobIsSuccess = true;
       })
       .addCase(createJob.rejected, (state, action) => {
-        console.log(state.job)
+        console.log(state.job);
         state.isLoading = false;
         state.isError = true;
         state.createJobIsError = true;
@@ -265,13 +200,13 @@ export const jobSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(updateJob.fulfilled, (state) => {
-        console.log(state.job)
+        console.log(state.job);
         state.createJobIsSuccess = true;
         state.isLoading = false;
         state.isSuccess = true;
       })
       .addCase(updateJob.rejected, (state, action) => {
-        console.log(state.job)
+        console.log(state.job);
         state.isLoading = false;
         state.isError = true;
         state.createJobIsError = true;
@@ -345,8 +280,7 @@ export const jobSlice = createSlice({
       })
       .addCase(closeJob.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.jobs.map((job)=> job._id === action.payload._id ?
-        (job.status = 'closed') : job )
+        state.jobs.map((job) => (job._id === action.payload._id ? (job.status = 'closed') : job));
       })
       .addCase(getJobIDs.pending, (state) => {
         state.isLoading = true;
@@ -374,17 +308,43 @@ export const jobSlice = createSlice({
         state.isError = true;
         state.message = action.payload;
       })
+      .addCase(GetJobIdsQCExists.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(GetJobIdsQCExists.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.jobIDs = action.payload;
+      })
+      .addCase(GetJobIdsQCExists.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(GetJobIdsBOMExists.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(GetJobIdsBOMExists.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.jobIDs = action.payload;
+      })
+      .addCase(GetJobIdsBOMExists.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
       .addCase(createSubTask.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(createSubTask.fulfilled, (state) => {
-        console.log(state.job)
+        console.log(state.job);
         state.isLoading = false;
         state.isSuccess = true;
         state.createJobIsSuccess = true;
       })
       .addCase(createSubTask.rejected, (state, action) => {
-        console.log(state.job)
+        console.log(state.job);
         state.isLoading = false;
         state.isError = true;
         state.createJobIsError = true;
@@ -396,14 +356,14 @@ export const jobSlice = createSlice({
       .addCase(deleteJob.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.deleteJobIsSuccess= true;
+        state.deleteJobIsSuccess = true;
       })
       .addCase(deleteJob.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
-        state.deleteJobIsError= true;
+        state.deleteJobIsError = true;
         state.message = action.payload;
-      })
+      });
   },
 });
 

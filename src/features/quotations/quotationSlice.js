@@ -1,5 +1,5 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import quotationService from "../quotations/quotationService";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import quotationService from '../quotations/quotationService';
 
 const initialState = {
   quotations: [],
@@ -7,105 +7,70 @@ const initialState = {
   isError: false,
   isSuccess: false,
   isLoading: false,
-  message: "",
+  message: '',
   createQuotationIsError: false,
   createQuotationIsSuccess: false,
   deleteQuotationIsError: false,
   deleteQuotationIsSuccess: false,
 };
 
-export const createQuotation = createAsyncThunk(
-  "quotations/create",
-  async (quotationData, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await quotationService.createQuotation(quotationData, token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
+export const createQuotation = createAsyncThunk('quotations/create', async (quotationData, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.user.token;
+    return await quotationService.createQuotation(quotationData, token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
   }
-);
+});
 
-export const updateQuotationStatus = createAsyncThunk(
-  "quotations/update",
-  async (quotationData, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await quotationService.updateQuotationStatus(quotationData, token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
+export const updateQuotationStatus = createAsyncThunk('quotations/update', async (quotationData, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.user.token;
+    return await quotationService.updateQuotationStatus(quotationData, token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
   }
-);
+});
 
-export const getQuotations = createAsyncThunk(
-  "quotations/getAll",
-  async (filters, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await quotationService.getQuotations(filters, token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
+export const getQuotations = createAsyncThunk('quotations/getAll', async (filters, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.user.token;
+    return await quotationService.getQuotations(filters, token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
   }
-);
+});
 
-export const getQuotation = createAsyncThunk(
-  "quotations/get",
-  async (quotationId, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await quotationService.getQuotation(quotationId, token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
+export const getQuotation = createAsyncThunk('quotations/get', async (quotationId, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.user.token;
+    return await quotationService.getQuotation(quotationId, token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
   }
-);
+});
 
-export const deleteQuotation = createAsyncThunk(
-  "quotations/delete",
-  async (quotationId, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await quotationService.deleteQuotation(quotationId, token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
+export const deleteQuotation = createAsyncThunk('quotations/delete', async (quotationId, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.user.token;
+    return await quotationService.deleteQuotation(quotationId, token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
   }
-);
+});
 
 export const quotationSlice = createSlice({
-  name: "quotation",
+  name: 'quotation',
   initialState,
   reducers: {
     reset: (state) => initialState,

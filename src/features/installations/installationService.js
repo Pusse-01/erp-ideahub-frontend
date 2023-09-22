@@ -1,5 +1,5 @@
-import axios from "axios";
-import API_BASE_URL from "../../config";
+import axios from 'axios';
+import API_BASE_URL from '../../config';
 const API_URL = `${API_BASE_URL}/installation`;
 
 //create a new installation
@@ -10,26 +10,22 @@ const createInstallation = async (installationData, files, token) => {
   files.forEach((file, index) => {
     formData.append(index, file); // Change the key if needed
   });
-  formData.append("index_no", installationData.index_no || 1);
-  formData.append("installation_date", installationData.installation_date);
-  formData.append("job_no", installationData.job_no);
-  formData.append("description", installationData.description);
-  formData.append("feedback", installationData.feedback);
-  formData.append("client_name", installationData.client_name);
-  formData.append("files", JSON.stringify(installationData.files));
+  formData.append('index_no', installationData.index_no || 1);
+  formData.append('installation_date', installationData.installation_date);
+  formData.append('job_no', installationData.job_no);
+  formData.append('description', installationData.description);
+  formData.append('feedback', installationData.feedback);
+  formData.append('client_name', installationData.client_name);
+  formData.append('files', JSON.stringify(installationData.files));
 
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
-      "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
+      'Content-Type': `multipart/form-data; boundary=${formData._boundary}`,
     },
   };
 
-  const response = await axios.post(
-    `${API_BASE_URL}/azure` + "/createInstallations",
-    formData,
-    config
-  );
+  const response = await axios.post(`${API_BASE_URL}/azure` + '/createInstallations', formData, config);
   return response.data;
 };
 
@@ -55,7 +51,7 @@ const getInstallations = async (filters, token) => {
   };
 
   const response = await axios.post(API_URL + '/GetInstallations', filters, config);
-  console.log(response.data)
+  console.log(response.data);
 
   return response.data.data;
 };
@@ -91,7 +87,7 @@ const installationService = {
   getInstallations,
   getInstallation,
   updateInstallation,
-  deleteInstallation
+  deleteInstallation,
 };
 
 export default installationService;

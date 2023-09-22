@@ -1,40 +1,37 @@
-import axios from 'axios'
-import API_BASE_URL from '../../config'
+import axios from 'axios';
+import API_BASE_URL from '../../config';
 
 //const API_URL = 'http://localhost:5000/api/users'
-const API_URL = `${API_BASE_URL}/auth`
+const API_URL = `${API_BASE_URL}/auth`;
 
 const register = async (userData) => {
-    const response = await axios.post(API_URL + '/Register', userData)
+  const response = await axios.post(API_URL + '/Register', userData);
 
-    if (response.data) {
-        localStorage.setItem('user', JSON.stringify(response.data))
-    }
+  if (response.data) {
+    localStorage.setItem('user', JSON.stringify(response.data));
+  }
 
-    return response.data
-}
+  return response.data;
+};
 
 const login = async (userData) => {
+  const response = await axios.post(API_URL + '/Login', userData);
 
-    console.log("i was called")
+  if (response.data) {
+    localStorage.setItem('user', JSON.stringify(response.data));
+  }
 
-    const response = await axios.post(API_URL + '/Login', userData)
-
-    if (response.data) {
-        localStorage.setItem('user', JSON.stringify(response.data))
-    }
-
-    return response.data
-}
+  return response.data;
+};
 
 const logout = () => {
-    localStorage.removeItem('user')
-}
+  localStorage.removeItem('user');
+};
 
 const authService = {
-    register,
-    login,
-    logout
-}
+  register,
+  login,
+  logout,
+};
 
-export default authService
+export default authService;

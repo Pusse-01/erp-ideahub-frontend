@@ -1,5 +1,5 @@
-import axios from "axios";
-import API_BASE_URL from "../../config";
+import axios from 'axios';
+import API_BASE_URL from '../../config';
 const API_URL = `${API_BASE_URL}/qc`;
 
 //create a new qc
@@ -25,7 +25,7 @@ const getQCs = async (curser, token) => {
   };
 
   //const response = await axios.get(API_URL, config);
-  const response = await axios.get(API_URL + '/getQC/' + curser, config);
+  const response = await axios.get(API_URL + '/getQCs/' + curser, config);
 
   return response.data.data;
 };
@@ -38,11 +38,10 @@ const getQC = async (qcId, token) => {
     },
   };
 
-  const response = await axios.get(API_URL + qcId, config);
+  const response = await axios.get(API_URL + '/getQC/' + qcId, config);
 
-  return response.data;
+  return response.data.data;
 };
-
 
 const qcService = {
   createQC,

@@ -1,6 +1,5 @@
-
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import installationService from "../installations/installationService";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import installationService from '../installations/installationService';
 
 const initialState = {
   installations: [],
@@ -8,107 +7,73 @@ const initialState = {
   isError: false,
   isSuccess: false,
   isLoading: false,
-  message: "",
+  message: '',
   createInstallationIsError: false,
   createInstallationIsSuccess: false,
   deleteInstallationIsError: false,
-  deleteInstallationIsSuccess: false
+  deleteInstallationIsSuccess: false,
 };
 
 export const createInstallation = createAsyncThunk(
-  "installations/create",
-  async ({installationData, selectedFiles}, thunkAPI) => {
+  'installations/create',
+  async ({ installationData, selectedFiles }, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
       return await installationService.createInstallation(installationData, selectedFiles, token);
     } catch (error) {
       const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
+        (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
 
-export const updateInstallation = createAsyncThunk(
-  "installations/update",
-  async (installationData, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await installationService.updateInstallation(installationData, token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
+export const updateInstallation = createAsyncThunk('installations/update', async (installationData, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.user.token;
+    return await installationService.updateInstallation(installationData, token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
   }
-);
+});
 
-export const getInstallations = createAsyncThunk(
-  "installations/getAll",
-  async (filters, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await installationService.getInstallations(filters, token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
+export const getInstallations = createAsyncThunk('installations/getAll', async (filters, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.user.token;
+    return await installationService.getInstallations(filters, token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
   }
-);
+});
 
-
-export const getInstallation = createAsyncThunk(
-  "installations/get",
-  async (installationId, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await installationService.getInstallation(installationId, token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
+export const getInstallation = createAsyncThunk('installations/get', async (installationId, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.user.token;
+    return await installationService.getInstallation(installationId, token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
   }
-);
+});
 
-export const deleteInstallation = createAsyncThunk(
-  "installations/delete",
-  async (installationId, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await installationService.deleteInstallation(installationId, token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
+export const deleteInstallation = createAsyncThunk('installations/delete', async (installationId, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.user.token;
+    return await installationService.deleteInstallation(installationId, token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
   }
-);
-
+});
 
 export const installationSlice = createSlice({
-  name: "installation",
+  name: 'installation',
   initialState,
   reducers: {
     reset: (state) => initialState,
@@ -119,13 +84,13 @@ export const installationSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(createInstallation.fulfilled, (state) => {
-        console.log(state.installation)
+        console.log(state.installation);
         state.isLoading = false;
         state.isSuccess = true;
         state.createInstallationIsSuccess = true;
       })
       .addCase(createInstallation.rejected, (state, action) => {
-        console.log(state.installation)
+        console.log(state.installation);
         state.isLoading = false;
         state.isError = true;
         state.createInstallationIsError = true;
@@ -135,13 +100,13 @@ export const installationSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(updateInstallation.fulfilled, (state) => {
-        console.log(state.installation)
+        console.log(state.installation);
         state.isLoading = false;
         state.isSuccess = true;
         state.createInstallationIsSuccess = true;
       })
       .addCase(updateInstallation.rejected, (state, action) => {
-        console.log(state.installation)
+        console.log(state.installation);
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
@@ -187,8 +152,7 @@ export const installationSlice = createSlice({
         state.isError = true;
         state.deleteInstallationIsError = true;
         state.message = action.payload;
-      })
-      
+      });
   },
 });
 

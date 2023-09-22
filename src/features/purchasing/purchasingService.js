@@ -1,5 +1,5 @@
-import axios from "axios";
-import API_BASE_URL from "../../config";
+import axios from 'axios';
+import API_BASE_URL from '../../config';
 //const API_URL = 'http://localhost:8080/auth'
 const API_URL = `${API_BASE_URL}/purchase`;
 
@@ -11,11 +11,7 @@ const createPurchasing = async (purchasingData, token) => {
     },
   };
 
-  const response = await axios.post(
-    API_URL + "/Addrequest",
-    purchasingData,
-    config
-  );
+  const response = await axios.post(API_URL + '/Addrequest', purchasingData, config);
 
   return response.data;
 };
@@ -28,7 +24,7 @@ const getPurchasings = async (filters, token) => {
     },
   };
 
-  const response = await axios.post(API_URL + "/Getrequests", filters, config);
+  const response = await axios.post(API_URL + '/Getrequests', filters, config);
   console.log(response.data);
 
   return response.data.data;
@@ -42,10 +38,7 @@ const getPurchasing = async (purchasingId, token) => {
     },
   };
 
-  const response = await axios.get(
-    API_URL + "/GetrequestById/" + purchasingId,
-    config
-  );
+  const response = await axios.get(API_URL + '/GetrequestById/' + purchasingId, config);
 
   return response.data.data;
 };
@@ -58,10 +51,7 @@ const GetrequestsCountPending = async (token) => {
     },
   };
 
-  const response = await axios.get(
-    API_URL + "/GetrequestsCountPending",
-    config
-  );
+  const response = await axios.get(API_URL + '/GetrequestsCountPending', config);
 
   return response.data.data.count;
 };
@@ -74,7 +64,7 @@ const GetrequestsCountOdered = async (token) => {
     },
   };
 
-  const response = await axios.get(API_URL + "/GetrequestsCountOdered", config);
+  const response = await axios.get(API_URL + '/GetrequestsCountOdered', config);
 
   return response.data.data.count;
 };
@@ -86,11 +76,7 @@ const UpdaterequestStatus = async (purchasingData, token) => {
     },
   };
 
-  const response = await axios.put(
-    API_URL + "/UpdaterequestStatus",
-    purchasingData,
-    config
-  );
+  const response = await axios.put(API_URL + '/UpdaterequestStatus', purchasingData, config);
 
   return response.data;
 };
@@ -103,10 +89,7 @@ const Deleterequest = async (purchasingId, token) => {
     },
   };
 
-  const response = await axios.delete(
-    API_URL + "/Deleterequest/" + purchasingId,
-    config
-  );
+  const response = await axios.delete(API_URL + '/Deleterequest/' + purchasingId, config);
   return response.data.data;
 };
 

@@ -1,5 +1,5 @@
-import axios from "axios";
-import API_BASE_URL from "../../config";
+import axios from 'axios';
+import API_BASE_URL from '../../config';
 //const API_URL = 'http://localhost:8080/auth'
 const API_URL = `${API_BASE_URL}/bom`;
 
@@ -25,7 +25,7 @@ const getBOMs = async (filters, token) => {
   };
 
   const response = await axios.post(API_URL + '/GetBOMS', filters, config);
-  console.log(response.data)
+  console.log(response.data);
 
   return response.data.data;
 };
@@ -91,7 +91,7 @@ const BOMService = {
   getBOM,
   getBOMCountCompleted,
   getBOMCountPending,
-  getBOMCountNotArrived
+  getBOMCountNotArrived,
 };
 
 export default BOMService;

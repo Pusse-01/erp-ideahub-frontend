@@ -1,25 +1,23 @@
-import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import { reset, createTicket } from "../features/tickets/ticketSlice";
-import Spinner from "../components/Spinner";
-import BackButton from "../components/BackButton";
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { reset, createTicket } from '../features/tickets/ticketSlice';
+import Spinner from '../components/Spinner';
+import BackButton from '../components/BackButton';
 
 function NewTicket() {
   const { user } = useSelector((state) => state.auth);
 
-  const { isLoading, isError, isSuccess, message } = useSelector(
-    (state) => state.ticket
-  );
+  const { isLoading, isError, isSuccess, message } = useSelector((state) => state.ticket);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [name, setName] = useState(user.name);
   const [email, setEmail] = useState(user.email);
-  const [product, setProduct] = useState("");
-  const [description, setDescription] = useState("");
+  const [product, setProduct] = useState('');
+  const [description, setDescription] = useState('');
 
   useEffect(() => {
     if (isError) {
@@ -28,7 +26,7 @@ function NewTicket() {
 
     if (isSuccess) {
       dispatch(reset());
-      navigate("/tickets");
+      navigate('/tickets');
     }
 
     dispatch(reset());
@@ -58,22 +56,12 @@ function NewTicket() {
           </div>
           <div className="form-group">
             <label htmlFor="name">Customer Email</label>
-            <input
-              type="email"
-              value={email}
-              className="form-control"
-              disabled
-            />
+            <input type="email" value={email} className="form-control" disabled />
           </div>
           <form onSubmit={onSubmit}>
             <div className="form-group">
               <label htmlFor="product">Product</label>
-              <select
-                name="product"
-                id="product"
-                value={product}
-                onChange={(e) => setProduct(e.target.value)}
-              >
+              <select name="product" id="product" value={product} onChange={(e) => setProduct(e.target.value)}>
                 <option value="iPhone">iPhone</option>
                 <option value="Macbook Pro">Macbook Pro</option>
                 <option value="iMac">iMac</option>

@@ -35,7 +35,10 @@ export const qcSchema = Joi.object({
         'any.required': 'Task ID is required.',
         'number.base': 'Task ID must be a number.',
       }),
+      task_name: Joi.string().required().messages({
+        'any.required': 'Task Name are required.',
+        'string.empty': 'Task Name cannot be empty.',
+      }),
     })
   ),
 });
-

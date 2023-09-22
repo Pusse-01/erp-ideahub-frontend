@@ -1,5 +1,5 @@
-import axios from "axios";
-import API_BASE_URL from "../../config";
+import axios from 'axios';
+import API_BASE_URL from '../../config';
 //const API_URL = 'http://localhost:8080/auth'
 const API_URL = `${API_BASE_URL}/job`;
 
@@ -25,7 +25,7 @@ const getJobs = async (filters, token) => {
   };
 
   const response = await axios.post(API_URL + '/GetJobs', filters, config);
-  console.log(response.data)
+  console.log(response.data);
 
   return response.data.data;
 };
@@ -42,7 +42,6 @@ const getJob = async (jobId, token) => {
 
   return response.data.data;
 };
-
 
 //get user jobs
 const closeJob = async (jobId, token) => {
@@ -112,6 +111,30 @@ const getJobIDs = async (token) => {
   return response.data.data;
 };
 
+const GetJobIdsQCExists = async (token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios.get(API_URL + '/GetJobIdsQCExists', config);
+
+  return response.data.data;
+};
+
+const GetJobIdsBOMExists = async (token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios.get(API_URL + '/GetJobIdsBOMExists', config);
+
+  return response.data.data;
+};
+
 //Get Job Ids Production Exists
 const GetJobIdsProductionExists = async (token) => {
   const config = {
@@ -121,12 +144,10 @@ const GetJobIdsProductionExists = async (token) => {
   };
 
   const response = await axios.get(API_URL + '/GetJobIdsProductionExists', config);
-  console.log(response)
+  console.log(response);
 
   return response.data.data;
 };
-
-
 
 //create a new sub task
 const createSubTask = async (jobData, token) => {
@@ -162,7 +183,7 @@ const deleteJob = async (jobId, token) => {
   };
 
   const response = await axios.delete(API_URL + '/DeleteJob/' + jobId, config);
-  console.log(response.data)
+  console.log(response.data);
   return response.data.data;
 };
 
@@ -178,7 +199,9 @@ const jobService = {
   createSubTask,
   updateJob,
   deleteJob,
-  GetJobIdsProductionExists
+  GetJobIdsProductionExists,
+  GetJobIdsQCExists,
+  GetJobIdsBOMExists,
 };
 
 export default jobService;

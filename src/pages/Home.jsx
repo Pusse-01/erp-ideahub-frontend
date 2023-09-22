@@ -1,6 +1,6 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { FaQuestionCircle, FaTicketAlt } from "react-icons/fa";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { FaQuestionCircle, FaTicketAlt } from 'react-icons/fa';
 
 function Home() {
   return (

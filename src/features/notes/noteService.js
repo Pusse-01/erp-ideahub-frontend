@@ -1,36 +1,35 @@
-import axios from "axios";
+import axios from 'axios';
 
-const API_URL = '/api/tickets/'
+const API_URL = '/api/tickets/';
 
-
-  //get ticket notes
-  const getNotes = async (ticketId, token) => {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-  
-    const response = await axios.get(API_URL+ ticketId + '/notes', config);
-  
-    return response.data;
+//get ticket notes
+const getNotes = async (ticketId, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   };
 
-  //create ticket note
-  const createNote = async (noteText, ticketId, token) => {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-  
-    const response = await axios.post(API_URL+ ticketId + '/notes',{text: noteText}, config);
-  
-    return response.data;
-  };
-  const noteService = {
-    getNotes,
-    createNote
-  }
+  const response = await axios.get(API_URL + ticketId + '/notes', config);
 
-  export default noteService
+  return response.data;
+};
+
+//create ticket note
+const createNote = async (noteText, ticketId, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios.post(API_URL + ticketId + '/notes', { text: noteText }, config);
+
+  return response.data;
+};
+const noteService = {
+  getNotes,
+  createNote,
+};
+
+export default noteService;
