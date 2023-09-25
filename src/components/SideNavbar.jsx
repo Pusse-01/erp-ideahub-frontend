@@ -85,9 +85,9 @@ function SideNavbar() {
           ::{' '}
         </label>
       </div>
-      <div className="drawer lg:drawer-open w-14 float-left lg:w-1/4 z-10 block">
+      <div className="drawer lg:drawer-open w-14 float-left lg:w-1/4 z-10 block min-h-[93vh]">
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-        <div className="drawer-side p-1 min-h-[90vh">
+        <div className="drawer-side p-1 ">
           <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
           <ul className="menu bg-base-100 text-base-content px-6 rounded-lg">
             {user && user.data.role === 1 ? (
@@ -319,7 +319,7 @@ function SideNavbar() {
             ) : (
               <></>
             )}
-            <hr />
+            {/* <hr /> */}
 
             {/* designs */}
             {user && user.data.role === 2 ? (
@@ -380,7 +380,7 @@ function SideNavbar() {
             ) : (
               <></>
             )}
-            <hr />
+            {/* <hr /> */}
 
             {/* quotations */}
             {user && user.data.role === 3 ? (
@@ -444,7 +444,7 @@ function SideNavbar() {
             ) : (
               <></>
             )}
-            <hr />
+            {/* <hr /> */}
 
             {/* bom */}
             {user && user.data.role === 4 ? (
@@ -523,7 +523,7 @@ function SideNavbar() {
             ) : (
               <></>
             )}
-            <hr />
+            {/* <hr /> */}
 
             {/* manufacturing */}
             {user && user.data.role === 5 ? (
@@ -623,7 +623,7 @@ function SideNavbar() {
             ) : (
               <></>
             )}
-            <hr />
+            {/* <hr /> */}
 
             {/* QC */}
             {user && user.data.role === 6 ? (
@@ -702,10 +702,10 @@ function SideNavbar() {
             ) : (
               <></>
             )}
-            <hr />
           </ul>
 
-          <div>
+        </div>
+        <div className=' absolute bottom-1 pl-3'>
             <ul className="menu bg-base-100 text-base-content px-6 rounded-lg">
               {user ? (
                 <li onClick={onLogout} className="font-medium">
@@ -730,7 +730,6 @@ function SideNavbar() {
                 </>
               )}
             </ul>
-          </div>
         </div>
       </div>
     </>

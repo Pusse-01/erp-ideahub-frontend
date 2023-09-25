@@ -4,14 +4,14 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout, reset } from '../features/auth/authSlice';
 import settingsIcon from '../resources/settings.svg';
-import ideahubIcon from '../resources/ideahub.svg';
 import { getNotifications, setViewedNotifications } from '../features/notifications/notificationSlice';
 import { useEffect } from 'react';
 import { io } from 'socket.io-client';
+import { formatDistanceToNow } from 'date-fns';
 
 import notificationsFilledIcon from '../resources/notifications-filled.svg';
 import notificationsIcon from '../resources/notifications.svg';
-import dismissIcon from '../resources/red-x-icon.svg';
+import eyeIcon from '../resources/eye.svg';
 
 import { toast } from 'react-toastify';
 import API_BASE_URL from '../config';
@@ -71,9 +71,22 @@ function Header() {
     };
   }, []);
 
-  const setViewedNotification = (notification_id) => {
-    const role = user.data.role;
+  const setViewedNotification = (viewed, notification_id) => {
+    const role = user.data.email;
+    if (viewed && viewed.length > 0 && viewed.includes(role)) {
+      return;
+    }
     dispatch(setViewedNotifications({ role: role, notification_ids: [notification_id] }));
+    setTimeout(() => {
+      dispatch(getNotifications(user.data.role));
+    }, 250);
+  };
+
+  const getTooltipText = (values) => {
+    if (values.length === 0) {
+      return 'none'; // Return none when there are no values
+    }
+    return values
   };
 
   return (
@@ -96,28 +109,48 @@ function Header() {
             />
           </div> */}
 
-          <div className="dropdown dropdown-end">
+          <div className="dropdown dropdown-end  ">
             <button className="btn btn-ghost btn-circle m-1">
               <img className="h-5 w-5" src={notifications.length > 0 ? notificationsFilledIcon : notificationsIcon} />
             </button>
-            <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-lg w-38 mr-1">
+            <ul
+              tabIndex={0}
+              className="dropdown-content z-[1] p-2 shadow bg-base-100 rounded-lg mr-1 h-[80vh] overflow-scroll overflow-y-auto flex flex-col"
+            >
               {notifications &&
                 notifications.map((notification) => (
                   <>
-                    <li className=" w-[400px] grid grid-cols-10">
+                    <li className=" lg:w-[650px] w-[450px] grid grid-cols-10 p-2  my-1 rounded-lg shadow-[1px_3px_4px_2px_rgba(0,0,0,0.12)]">
                       <div className=" col-span-8 flex flex-col items-start">
-                        <p>
+                        <p className=" text-sm font-semibold">
                           {notification.type} - {notification.category}
                         </p>
-                        <p>Ref - {notification.key}</p>
+                        <p className=" text-sm font-medium">{notification.key}</p>
+                        <p className=" text-xs font-medium text-[#000000a8]">
+                          {formatDistanceToNow(new Date(notification.created_date), { addSuffix: true }) || ''}
+                        </p>
                       </div>
-                      <div className="col-span-2 flex items-center justify-center">
-                        <button onClick={() => setViewedNotification(notification.index_no)} className=" ">
-                          <img src={dismissIcon} alt="X" className=" w-4" />
-                        </button>
+                      {/* <div  className="col-span-1 flex items-center justify-center hover:bg-slate-50 rounded-lg">
+                          <img src={tickIcon} alt="X" className=" w-6" />
+                      </div> */}
+                      <div
+                        className="col-start-10 flex items-center justify-center hover:bg-slate-50 rounded-lg tooltip tooltip-left max-w-[220px]"
+                        data-tip={getTooltipText(notification.viewed)}
+                      >
+                        {notification.viewed.length > 0 && notification.viewed.includes(user.data.email) ? (
+                          ''
+                        ) : (
+                          <div className=" bg-[#5d5fef] rounded-full w-3 h-3 absolute top-1 right-1"></div>
+                        )}
+
+                        <img
+                          src={eyeIcon}
+                          alt="X"
+                          className=" w-6"
+                          onClick={() => setViewedNotification(notification.viewed, notification.index_no)}
+                        />
                       </div>
                     </li>
-                    <hr className="mx-2" />
                   </>
                 ))}
             </ul>
