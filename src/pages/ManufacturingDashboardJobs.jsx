@@ -102,7 +102,6 @@ function ManufacturingDashboardJobs() {
         </div>
         <div className=" inline-block bg-white mt-5 w-[92%] p-5">
           <h className="font-bold text-2xl">Projects</h>
-          <p className=" font-normal text-base text-[#9FA1A6]">You Have requests awaiting your approval</p>
         </div>
         <hr />
         {/* Pending Approved Revision rejected */}
@@ -165,7 +164,7 @@ function ManufacturingDashboardJobs() {
           </div>
         </div>
 
-        <div className=" lg:flex items-center justify-start bg-white w-[92%] p-1 lg:p-5">
+        <div className=" lg:flex items-center justify-between bg-white w-[92%] p-1 lg:p-5">
           <div className="dropdown dropdown-bottom dropdown-end m-1">
             <label tabIndex={0} className="btn min-h-[40px] h-[40px] min-w-[180px] m-0 ">
               <img src={require('../resources/call.png')} className=" justify-center items-center" />
@@ -196,7 +195,7 @@ function ManufacturingDashboardJobs() {
             </ul>
           </div>
 
-          <form class="flex flex-row focus-within:outline-[#1b53c5] focus-within:outline rounded bg-[#F2F3F5] min-h-0 h-[40px] m-1 w-[310px]">
+          {/* <form class="flex flex-row focus-within:outline-[#1b53c5] focus-within:outline rounded bg-[#F2F3F5] min-h-0 h-[40px] m-1 w-[310px]">
             <span class="flex items-center rounded rounded-l-none border-0 px-2 ">
               <button>
                 <img src={require('../resources/charm_search.png')} className=" justify-center items-center" />
@@ -209,7 +208,7 @@ function ManufacturingDashboardJobs() {
               // value={project_start ? project_start.toISOString().slice(0, 10) : null}
               // onChange={handleProject_startDateSelect}
             />
-          </form>
+          </form> */}
 
           {location.pathname && location.pathname === '/jobs' ? (
             <Link to="/new-job" className="font-medium">
@@ -240,25 +239,25 @@ function ManufacturingDashboardJobs() {
           )}
         </div>
 
-        <div className="grid grid-cols-12 grid-flow-row bg-white w-[92%] gap-1 lg:gap-2 text-sm lg:text-base">
-          <div className="col-start-1 "></div>
-          <div className="col-start-2 ">No.</div>
-          <div className="col-start-3 col-span-1 ">Job Number</div>
-          <div className="col-start-4 col-span-2 ">Project Name</div>
-          <div className="col-start-6 col-span-2 m-[-2px]">Description</div>
-          <div className="col-start-8 col-span-2 ">Production Status</div>
-          <div className="col-start-10 col-span-2 pl-1">Remarks</div>
-          <hr className="col-span-12 mx-3 my-3" />
+        <div className="grid grid-cols-11 grid-flow-row bg-white w-[92%] gap-1 lg:gap-2 text-sm lg:text-base">
+          {/* <div className="col-start-1 "></div> */}
+          {/* <div className="col-start-2 ">No.</div> */}
+          <div className="col-start-2 col-span-1 ">Job Number</div>
+          <div className="col-start-3 col-span-2 ">Project Name</div>
+          <div className="col-start-5 col-span-2 m-[-2px]">Description</div>
+          <div className="col-start-7 col-span-2 ">Production Status</div>
+          <div className="col-start-9 col-span-2 pl-1">Remarks</div>
+          <hr className="col-span-11 mx-3 my-3" />
         </div>
 
-        <div className="grid grid-cols-12  grid-flow-row bg-white w-[92%] gap-1 lg:gap-2 text-sm lg:text-base">
+        <div className="grid grid-cols-11  grid-flow-row bg-white w-[92%] gap-1 lg:gap-2 text-sm lg:text-base">
           {/* {<JobItem key={jobs.data[0]._id} job={jobs.data[0]} />} */}
 
           {jobs.length > 0
             ? jobs.map((job) => (
                 <>
                   <JobItem key={job._id} job={job} />
-                  <hr className="col-span-12 mx-3 my-3" />
+                  <hr className="col-span-11 mx-3 my-3" />
                 </>
               ))
             : null}

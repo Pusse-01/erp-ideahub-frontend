@@ -43,7 +43,7 @@ function QCItem({ qc }) {
 
   return (
     <>
-      <div className="col-start-1 flex items-center ">{qc.index_no}</div>
+      {/* <div className="col-start-1 flex items-center ">{qc.index_no}</div> */}
       <div className="col-start-2 flex items-center overflow-hidden whitespace-nowrap overflow-ellipsis">
         {qc.job_no}
       </div>

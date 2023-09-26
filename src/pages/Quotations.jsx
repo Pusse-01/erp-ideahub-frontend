@@ -89,7 +89,6 @@ function Quotations() {
         <div className="grid grid-cols-3 gap-7 w-[92%] mt-7 "></div>
         <div className=" inline-block bg-white mt-5 w-[92%] p-5">
           <h className="font-bold text-2xl">Estimations</h>
-          <p className=" font-normal text-base text-[#9FA1A6]">You Have requests awaiting your approval</p>
         </div>
         <hr />
         {/* Pending Approved Revision rejected */}
@@ -135,7 +134,7 @@ function Quotations() {
           </div>
         </div>
 
-        <div className=" lg:flex items-center justify-start bg-white w-[92%] p-1 lg:p-5">
+        <div className="flex items-center justify-between bg-white w-[92%] p-1 lg:p-5">
           <div className="dropdown dropdown-bottom dropdown-end m-1">
             <label tabIndex={0} className="btn min-h-[40px] h-[40px] min-w-[180px] m-0 ">
               <img src={require('../resources/call.png')} className=" justify-center items-center" />
@@ -166,19 +165,6 @@ function Quotations() {
             </ul>
           </div>
 
-          <form class="flex flex-row focus-within:outline-[#1b53c5] focus-within:outline rounded bg-[#F2F3F5] min-h-0 h-[40px] m-1 w-[310px]">
-            <span class="flex items-center rounded rounded-l-none border-0 px-2 ">
-              <button>
-                <img src={require('../resources/charm_search.png')} className=" justify-center items-center" />
-              </button>
-            </span>
-            <input
-              class=" py-2 lg:w-full px-2 outline-none text-gray-600 bg-[#F2F3F5] rounded text-sm  min-w-[120px]"
-              type="text"
-              placeholder="Search or type a command (Ctrl + G)"
-            />
-          </form>
-
           {location.pathname && location.pathname === '/quotations' ? (
             <Link to="/new-quotation" className="font-medium">
               <button
@@ -197,22 +183,22 @@ function Quotations() {
           )}
         </div>
 
-        <div className="grid grid-cols-11  grid-flow-row bg-white w-[92%] gap-1 lg:gap-2 text-sm lg:text-base">
-          <div className="col-start-1 flex items-center ">{}</div>
+        <div className="grid grid-cols-14  grid-flow-row bg-white w-[92%] gap-1 lg:gap-2 text-sm lg:text-base">
+          {/* <div className="col-start-1 flex items-center ">{}</div> */}
           <div className="col-start-2 col-span-2 flex items-center ">Customer Name</div>
           <div className="col-start-4 col-span-2 flex items-center">Status</div>
           <div className="col-start-6 col-span-2 flex items-center ">Order ID</div>
-          <div className="col-start-8 col-span-2 flex items-center ">Estimations</div>
-          <div className="col-start-10 col-span-2 flex items-center ">Started Date</div>
-          <hr className="col-span-11 mx-3 my-3" />
+          <div className="col-start-8 col-span-3 flex items-center ">Estimations</div>
+          <div className="col-start-11 col-span-2 flex items-center ">Started Date</div>
+          <hr className="col-span-12 mx-3 my-3" />
         </div>
 
-        <div className="grid grid-cols-11  grid-flow-row bg-white w-[92%] gap-1 lg:gap-2 text-sm lg:text-base">
+        <div className="grid grid-cols-14  grid-flow-row bg-white w-[92%] gap-1 lg:gap-2 text-sm lg:text-base">
           {quotations.length > 0
             ? quotations.map((quotation) => (
                 <>
                   <QuotationItem key={quotation._id} quotation={quotation} />
-                  <hr className="col-span-10 mx-3 my-3" />
+                  <hr className="col-span-12 mx-3 my-3" />
                 </>
               ))
             : null}

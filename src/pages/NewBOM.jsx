@@ -490,7 +490,6 @@ function NewQuotation() {
             </ul>
           </div>
           <h1 className="font-bold text-2xl">BOMs</h1>
-          <p className="text-xs">You are viewing every BOMs that's made so far...</p>
         </div>
       </div>
       <hr />
@@ -534,7 +533,7 @@ function NewQuotation() {
                   {jobIDs.length > 0
                     ? jobIDs.map((job_no, index) => (
                         <>
-                          <option key={index}>{job_no.job_no}</option>
+                          <option key={index} value={job_no.job_no}>{job_no.main_job_id.slice(38)}</option>
                         </>
                       ))
                     : ''}

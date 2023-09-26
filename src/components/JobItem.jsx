@@ -33,21 +33,21 @@ function JobItem({ job }) {
 
   return (
     <>
-      <div className="col-start-1 flex items-center "></div>
-      <div className="col-start-2 flex items-center ">{job.job_no}</div>
-      <div className="col-start-3 col-span-1 flex items-center ">{job.main_job_id.slice(38)}</div>
-      <div className="col-start-4 col-span-2 flex items-center ">{job.project_name}</div>
-      <div className="col-start-6 col-span-2 flex items-center "> {job.description}</div>
+      {/* <div className="col-start-1 flex items-center "></div> */}
+      {/* <div className="col-start-2 flex items-center ">{job.job_no}</div> */}
+      <div className="col-start-2 col-span-1 flex items-center ">{job.main_job_id.slice(38)}</div>
+      <div className="col-start-3 col-span-2 flex items-center ">{job.project_name}</div>
+      <div className="col-start-5 col-span-2 flex items-center "> {job.description}</div>
       {(location.pathname && location.pathname === '/jobs-view') || '/jobs-view-design' ? (
-        <div className="col-start-8 col-span-2 flex items-center ">{job.stage}</div>
+        <div className="col-start-7 col-span-2 flex items-center ">{job.stage}</div>
       ) : (
-        <div className="col-start-8 col-span-2 flex items-center ">{showStatus()}</div>
+        <div className="col-start-7 col-span-2 flex items-center ">{showStatus()}</div>
       )}
       {/* <div className="col-start-8 col-span-2 flex items-center ">{showStatus()}</div> */}
-      <div className="col-start-10 col-span-2 pl-1">{job.brief}</div>
+      <div className="col-start-9 col-span-2 pl-1 flex items-center">{job.brief}</div>
 
       {location.pathname && location.pathname === '/jobs' ? (
-        <div className="col-start-12 col-span-1">
+        <div className="col-start-11 col-span-1">
           <div className="dropdown dropdown-end  ">
             <label tabIndex={0} className=" m-1 text-3xl">
               ...
@@ -74,7 +74,7 @@ function JobItem({ job }) {
       )}
 
       {location.pathname && location.pathname === '/manufacturing' ? (
-        <div className="col-start-12 col-span-1">
+        <div className="col-start-11 col-span-1">
           <div className="dropdown dropdown-end  ">
             <label tabIndex={0} className=" m-1 text-3xl">
               ...
@@ -106,7 +106,7 @@ function JobItem({ job }) {
       )}
 
       {location.pathname && location.pathname === '/jobs-view-design' ? (
-        <div className="col-start-12 col-span-1">
+        <div className="col-start-11 col-span-1">
           <div className="dropdown dropdown-end  ">
             <label tabIndex={0} className=" m-1 text-3xl">
               ...

@@ -149,7 +149,6 @@ function DesignDashboardEnquiries() {
         </div>
         <div className=" inline-block bg-white mt-5 w-[92%] p-5">
           <h className="font-bold text-2xl">Job Inquiries</h>
-          <p className=" font-normal text-base text-[#9FA1A6]">You Have requests awaiting your approval</p>
         </div>
         <hr />
         {/* Pending Approved Revision rejected */}
@@ -194,7 +193,7 @@ function DesignDashboardEnquiries() {
           </div>
         </div>
 
-        <div className=" lg:flex items-center justify-start bg-white w-[92%] p-1 lg:p-5">
+        <div className=" lg:flex items-center justify-between bg-white w-[92%] p-1 lg:p-5">
           <div className="dropdown dropdown-bottom dropdown-end m-1">
             <label tabIndex={0} className="btn min-h-[40px] h-[40px] min-w-[180px] m-0 ">
               <img src={require('../resources/call.png')} className=" justify-center items-center" />
@@ -225,7 +224,7 @@ function DesignDashboardEnquiries() {
             </ul>
           </div>
 
-          <form class="flex flex-row focus-within:outline-[#1b53c5] focus-within:outline rounded bg-[#F2F3F5] min-h-0 h-[40px] m-1 w-[310px]">
+          {/* <form class="flex flex-row focus-within:outline-[#1b53c5] focus-within:outline rounded bg-[#F2F3F5] min-h-0 h-[40px] m-1 w-[310px]">
             <span class="flex items-center rounded rounded-l-none border-0 px-2 ">
               <button>
                 <img src={require('../resources/charm_search.png')} className=" justify-center items-center" />
@@ -238,7 +237,7 @@ function DesignDashboardEnquiries() {
               // value={project_start ? project_start.toISOString().slice(0, 10) : null}
               // onChange={handleProject_startDateSelect}
             />
-          </form>
+          </form> */}
 
           <Link to="/new-design" className="font-medium">
             <button

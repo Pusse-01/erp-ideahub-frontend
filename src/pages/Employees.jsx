@@ -198,21 +198,7 @@ function Employees() {
           </div>
         </div>
 
-        <div className=" lg:flex items-center justify-center bg-white w-[92%] p-1 lg:p-5 lg:px-7">
-          <form class="flex flex-row focus-within:outline-[#1b53c5] focus-within:outline rounded bg-[#F2F3F5] min-h-0 h-[40px] m-1 w-[310px] lg:w-full">
-            <span class="flex items-center rounded rounded-l-none border-0 px-2 ">
-              <button>
-                <img src={require('../resources/charm_search.png')} className=" justify-center items-center" />
-              </button>
-            </span>
-            <input
-              class=" py-2 lg:w-full px-2 outline-none text-gray-600 bg-[#F2F3F5] rounded text-sm  min-w-[280px]"
-              type="text"
-              placeholder="Search or type a command (Ctrl + G)"
-              // value={project_start ? project_start.toISOString().slice(0, 10) : null}
-              // onChange={handleProject_startDateSelect}
-            />
-          </form>
+        <div className="flex items-center justify-end bg-white w-[92%] p-1 lg:p-5 lg:px-7">
 
           {/* <Link to="/new-job" className="font-medium">
             

@@ -17,6 +17,7 @@ import installationReducer from '../features/installations/installationSlice';
 import qcReducer from '../features/qcs/qcSlice';
 import purchasingReducer from '../features/purchasing/purchasingSlice';
 import notificationsReducer from '../features/notifications/notificationSlice';
+import qscostingReducer from '../features/qscosting/QSCostingSlice';
 
 export const store = configureStore({
   reducer: {
@@ -38,5 +39,6 @@ export const store = configureStore({
     qc: qcReducer,
     purchasing: purchasingReducer,
     notification: notificationsReducer,
+    qscosting: qscostingReducer,
   },
 });

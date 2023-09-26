@@ -197,7 +197,6 @@ function Stores() {
         </div>
         <div className=" inline-block bg-white mt-5 w-[92%] p-5">
           <h className="font-bold text-2xl">Inventory</h>
-          <p className=" font-normal text-base text-[#9FA1A6]">All items available in stores</p>
         </div>
         <hr />
         <div className=" grid grid-cols-12 grid-flow-row gap-1 lg:gap-2 bg-white w-[92%] p-1 lg:p-5">

@@ -41,9 +41,29 @@ const CreateBOMPDF = async (data, token) => {
   downloadLink.click();
 };
 
+const CreateQSCostingPDF = async (data, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      responseType: 'arraybuffer', // Tell Axios to expect a binary response
+    },
+  };
+
+  const response = await axios.post(API_URL + '/CreateQSCostPDF', data, config);
+
+  const pdf = response.data.pdfBase64;
+  const linkSource = `data:application/pdf;base64,${pdf}`;
+  const downloadLink = document.createElement('a');
+  const fileName = 'qscosting_' + data.index_no + '.pdf';
+  downloadLink.href = linkSource;
+  downloadLink.download = fileName;
+  downloadLink.click();
+};
+
 const pdfService = {
   DownloadQuotationPDF,
   CreateBOMPDF,
+  CreateQSCostingPDF,
 };
 
 export default pdfService;

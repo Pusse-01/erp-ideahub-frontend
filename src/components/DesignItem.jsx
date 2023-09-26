@@ -32,13 +32,12 @@ function DesignItem({ design }) {
 
   return (
     <>
-      <div className="col-start-1 "></div>
-      <div className="col-start-2 col-span-2">{design.project_name}</div>
-      <div className="col-start-4 col-span-2  ">{design.client_name}</div>
-      <div className="col-start-6 col-span-2  ">{showStatus()}</div>
-      <div className="col-start-8 col-span-2 ">{design.inquiry_no}</div>
-      <div className="col-start-10 col-span-2 ">{design.vname}</div>
-      <div className="col-start-12 col-span-2 ">Last Update</div>
+      <div className="col-start-2 col-span-2 flex items-center">{design.inquiry_no}</div>
+      <div className="col-start-4 col-span-2 flex items-center">{design.project_name}</div>
+      <div className="col-start-6 col-span-2 flex items-center">{design.client_name}</div>
+      <div className="col-start-8 col-span-2 flex items-center">{showStatus()}</div>      
+      <div className="col-start-10 col-span-2 flex items-center">{design.vname}</div>
+      <div className="col-start-12 col-span-2 flex items-center">Last Update</div>
       <div className="col-start-14 col-span-1 ">
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className=" m-1 text-3xl">

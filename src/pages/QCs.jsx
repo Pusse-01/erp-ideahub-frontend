@@ -80,7 +80,7 @@ function QCs() {
         <div className=" lg:flex items-center justify-start bg-white w-[92%] p-1 lg:p-5"></div>
 
         <div className="grid grid-cols-9 grid-flow-row bg-white w-[92%] gap-1 lg:gap-2 text-sm lg:text-base p-3 pl-6">
-          <div className="col-start-1  ">No</div>
+          {/* <div className="col-start-1  ">No</div> */}
           <div className="col-start-2 ">Job No</div>
           <div className="col-start-3 col-span-2  ">Project Name</div>
           <div className="col-start-5 col-span-2  ">description</div>

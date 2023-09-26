@@ -35,11 +35,10 @@ function EmployeeItem({ employee }) {
 
   return (
     <>
-      <div className="col-start-1  "></div>
-      <div className="col-start-2  ">{employee.emp_no}</div>
-      <div className="col-start-3 col-span-2  ">{employee.name}</div>
-      <div className="col-start-5 col-span-2 ">{employee.role}</div>
-      <div className="col-start-7 col-span-2  "> {showDepartment()}</div>
+      <div className="col-start-2 flex items-center">{employee.emp_no}</div>
+      <div className="col-start-3 col-span-2 flex items-center">{employee.name}</div>
+      <div className="col-start-5 col-span-2 flex items-center">{employee.role}</div>
+      <div className="col-start-7 col-span-2 flex items-center"> {showDepartment()}</div>
       {/* <div className="col-start-9 col-span-2  ">{employee.brief}</div> */}
       <div className="col-start-9 col-span-1 ">
         <div className="dropdown dropdown-end">

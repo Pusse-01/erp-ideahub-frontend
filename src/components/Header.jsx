@@ -91,7 +91,7 @@ function Header() {
 
   return (
     <header className="header">
-      <div className="navbar bg-base-100 h-10 pl-15">
+      <div className="navbar bg-base-100 h-[7vh] pl-15">
         <div className="navbar-start">
           <Link to="/">
             <img src={require('./logo.png')} className="pl-6 h-6 lg:h-full" />

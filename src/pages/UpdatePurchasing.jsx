@@ -225,7 +225,6 @@ function UpdatePurchasing() {
       <div className=" inline-block bg-white mt-5 w-[92%] p-5">
         <div className=" float-left">
           <h1 className="font-bold ">Purchasing</h1>
-          <p className="text-xs">You can check the product here...</p>
         </div>
       </div>
       <hr />

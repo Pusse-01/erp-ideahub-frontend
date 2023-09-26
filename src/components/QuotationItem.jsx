@@ -56,18 +56,32 @@ function QuotationItem({ quotation }) {
 
   return (
     <>
-      <div className="col-start-1 flex items-center ">{}</div>
-      <div className="col-start-2 col-span-2 flex items-center ">{quotation.client_name}</div>
-      <div className="col-start-4 col-span-2 flex items-center">{showStatus()}</div>
-      <div className="col-start-6 col-span-2 flex items-center ">{quotation.index_no}</div>
+      {/* <div className="col-start-1 flex items-center ">{}</div> */}
+      <div className="col-start-2 col-span-2 flex items-center ">{quotation.index_no}</div>
+      <div className="col-start-4 col-span-2 flex items-center ">{quotation.client_name}</div>
+      <div className="col-start-6 col-span-2 flex items-center">{showStatus()}</div>      
       <div className="col-start-8 col-span-2 flex items-center ">
         <button className="btn btn-sm" onClick={() => handleDownload()}>
           Estimation PDF
         </button>
       </div>
-      <div className="col-start-10 col-span-2 flex items-center ">
+      <div className="col-start-11 col-span-2 flex items-center ">
         {' '}
         {quotation.created_date ? format(new Date(quotation.created_date), 'yyyy-MM-dd') : ''}
+      </div>
+      <div className="col-start-13 col-span-1 ">
+        <div className="dropdown dropdown-end">
+          <label tabIndex={0} className=" m-1 text-3xl">
+            ...
+          </label>
+          <ul tabIndex={0} className="dropdown-content z-[1] menu shadow bg-base-100 rounded-box">
+            <li>
+              <Link to={`/new-qscosting/${quotation.index_no}`} className="">
+                Create QS Costing
+              </Link>
+            </li>
+          </ul>
+        </div>
       </div>
     </>
   );

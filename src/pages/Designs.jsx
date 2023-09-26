@@ -78,9 +78,6 @@ function Designs() {
         </div> */}
         <div className=" inline-block bg-white mt-5 w-[92%] p-5">
           <h className="font-bold text-2xl">Designs</h>
-          <p className=" font-normal text-base text-[#9FA1A6]">
-            You are viewing the total number of orders placed so far
-          </p>
         </div>
         <hr />
         {/* Pending Approved Revision rejected */}
@@ -143,7 +140,7 @@ function Designs() {
           </div>
         </div>
 
-        <div className=" lg:flex items-center justify-start bg-white w-[92%] p-1 lg:p-5">
+        <div className="flex items-center justify-between bg-white w-[92%] p-1 lg:p-5">
           <div className="dropdown dropdown-bottom dropdown-end m-1">
             <label tabIndex={0} className="btn min-h-[40px] h-[40px] min-w-[180px] m-0 ">
               <img src={require('../resources/call.png')} className=" justify-center items-center" />
@@ -174,21 +171,6 @@ function Designs() {
             </ul>
           </div>
 
-          <form class="flex flex-row focus-within:outline-[#1b53c5] focus-within:outline rounded bg-[#F2F3F5] min-h-0 h-[40px] m-1 w-[310px]">
-            <span class="flex items-center rounded rounded-l-none border-0 px-2 ">
-              <button>
-                <img src={require('../resources/charm_search.png')} className=" justify-center items-center" />
-              </button>
-            </span>
-            <input
-              class=" py-2 lg:w-full px-2 outline-none text-gray-600 bg-[#F2F3F5] rounded text-sm  min-w-[120px]"
-              type="text"
-              placeholder="Search or type a command (Ctrl + G)"
-              // value={project_start ? project_start.toISOString().slice(0, 10) : null}
-              // onChange={handleProject_startDateSelect}
-            />
-          </form>
-
           <Link to="/new-design" className="font-medium">
             <button
               type="button"
@@ -203,12 +185,11 @@ function Designs() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-14  grid-flow-row bg-white w-[92%] gap-1 lg:gap-2 text-sm lg:text-base">
-          <div className="col-start-1 "></div>
-          <div className="col-start-2 col-span-2">Project Name</div>
-          <div className="col-start-4 col-span-2  ">Customer Name</div>
-          <div className="col-start-6 col-span-2 ">Status</div>
-          <div className="col-start-8 col-span-2 ">Order ID</div>
+        <div className="grid grid-cols-14 grid-flow-row bg-white w-[92%] gap-1 lg:gap-2 text-sm lg:text-base">
+          <div className="col-start-2 col-span-2 ">Order ID</div>
+          <div className="col-start-4 col-span-2">Project Name</div>
+          <div className="col-start-6 col-span-2  ">Customer Name</div>
+          <div className="col-start-8 col-span-2 ">Status</div>
           <div className="col-start-10 col-span-2 ">Design Version</div>
           <div className="col-start-12 col-span-2 ">Last Update</div>
           <div className="col-start-14 col-span-1 "></div>
@@ -216,7 +197,7 @@ function Designs() {
         </div>
 
         {/* grid-flow-row */}
-        <div className="grid grid-cols-14   bg-white w-[92%] gap-1 lg:gap-2 text-sm lg:text-base">
+        <div className="grid grid-cols-14 bg-white w-[92%] gap-1 lg:gap-2 text-sm lg:text-base">
           {/* {<DesignItem key={designs.data[0]._id} design={designs.data[0]} />} */}
 
           {designs.length > 0

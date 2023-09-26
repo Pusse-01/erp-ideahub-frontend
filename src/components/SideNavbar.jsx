@@ -79,7 +79,7 @@ function SideNavbar() {
 
   return (
     <>
-      <div className="drawer-content-custom ">
+      <div className="drawer-content-custom lg:hidden">
         <label htmlFor="my-drawer-2" className=" drawer-button lg:hidden bg-white">
           {' '}
           ::{' '}

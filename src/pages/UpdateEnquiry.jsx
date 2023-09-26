@@ -90,7 +90,6 @@ function UpdateEnquiry() {
       <div className=" inline-block bg-white mt-9 w-[92%] p-5">
         <div className=" float-left">
           <h1 className="font-bold ">Job Enquiries</h1>
-          <p className="text-xs">You are viewing every Estimation that's made so far...</p>
         </div>
         <Link to="/new-job" className={`float-right ${sub_task ? 'hidden' : ''}`}>
           <button

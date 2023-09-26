@@ -219,7 +219,6 @@ function NewDesign() {
       <div className=" inline-block bg-white mt-5 w-[92%] p-5">
         <div className=" float-left">
           <h1 className="font-bold ">Designs</h1>
-          <p className="text-xs">You are viewing every designs that made so far...</p>
         </div>
       </div>
       <hr />

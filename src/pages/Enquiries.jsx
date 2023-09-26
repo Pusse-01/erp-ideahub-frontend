@@ -84,9 +84,6 @@ function Enquiries() {
         </div>
         <div className=" inline-block bg-white mt-5 w-[92%] p-5">
           <h className="font-bold text-2xl">Job Inquiries</h>
-          <p className=" font-normal text-base text-[#9FA1A6]">
-            You have requests awaiting your approval
-          </p>
         </div>
         <hr />
         {/* Pending Approved Revision rejected */}

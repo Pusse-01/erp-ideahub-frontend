@@ -272,7 +272,6 @@ function NewJob() {
       <div className=" inline-block bg-white mt-5 w-[92%] p-5">
         <div className=" float-left">
           <h1 className="font-bold ">Job Number</h1>
-          <p className="text-xs">You are viewing every Job Number that's made so far...</p>
         </div>
         {/* <div className="float-right">
           <button className="btn btn-sm bg-[#5c4ec9] text-white hover:bg-[#4b3bc2] ">Create Job</button>

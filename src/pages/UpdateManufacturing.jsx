@@ -489,7 +489,6 @@ function UpdateManufacturing() {
       <div className=" inline-block bg-white mt-5 w-[92%] p-5">
         <div className=" float-left">
           <h1 className="font-bold ">Project</h1>
-          <p className="text-xs">You are viewing every Project that's made so far...</p>
         </div>
       </div>
       <hr />

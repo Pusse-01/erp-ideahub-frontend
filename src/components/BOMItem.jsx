@@ -55,12 +55,12 @@ function BOMItem({ BOM }) {
 
   return (
     <>
-      <div className="col-start-1  "></div>
-      <div className="col-start-2  ">{BOM.job_no}</div>
-      <div className="col-start-3 col-span-2  ">{BOM.main_job_id}</div>
-      <div className="col-start-5 col-span-2  ">{BOM.description}</div>
-      <div className="col-start-7 col-span-2  "> {showStatus()}</div>
-      <div className="col-start-9 col-span-2">
+      <div className="col-start-1 flex items-center"></div>
+      <div className="col-start-2 flex items-center">{BOM.job_no}</div>
+      <div className="col-start-3 col-span-2 flex items-center">{BOM.main_job_id}</div>
+      <div className="col-start-5 col-span-2 flex items-center">{BOM.description}</div>
+      <div className="col-start-7 col-span-2 flex items-center"> {showStatus()}</div>
+      <div className="col-start-9 col-span-2 flex items-center">
         <button className="btn btn-sm" onClick={handleDownload}>
           Download File
         </button>

@@ -48,6 +48,7 @@ import Laborers from './pages/Laborers';
 import UpdatePurchasing from './pages/UpdatePurchasing';
 import ViewQC from './pages/ViewQC';
 import Labourers from './pages/Labourers';
+import NewQSCosting from './pages/NewQSCosting';
 
 function App() {
   const { user } = useSelector((state) => state.auth);
@@ -199,6 +200,9 @@ function App() {
             </Route>
             <Route path="/labourers" element={<PrivateRoute />}>
               <Route path="/labourers" element={<Labourers />} />
+            </Route>
+            <Route path="/new-qscosting/:quotationIndexNo" element={<PrivateRoute />}>
+              <Route path="/new-qscosting/:quotationIndexNo" element={<NewQSCosting />} />
             </Route>
           </Routes>
         </div>

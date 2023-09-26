@@ -107,6 +107,7 @@ function NewEnquiry() {
                 type="text"
                 id="contactNo"
                 value={contactNo}
+                placeholder='011 1234567'
                 onChange={(e) => setContactNo(e.target.value)}
               />
             </p>

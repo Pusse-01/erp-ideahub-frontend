@@ -23,7 +23,7 @@ function Login() {
 
   useEffect(() => {
     if (isError) {
-      toast.error(message);
+      toast.error("Login Failed");
     }
 
     if (isSuccess || user) {
